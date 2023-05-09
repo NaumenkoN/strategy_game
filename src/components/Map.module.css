@@ -1,0 +1,27 @@
+.map {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    border: 2px solid black;
+    display: grid;
+    /* grid-template-columns: 7.24vh auto 7.24vh;
+    grid-template-rows: repeat(13, 7.24vh); */
+    grid-template-areas:
+        "1 2 3 4 5 6 7 8 9 10 11 12 13"
+        "48 f f f f f f f f f f f 14"
+        "47 f f f f f f f f f f f 15"
+        "46 f f f f f f f f f f f 16"
+        "45 f f f f f f f f f f f 17"
+        "44 f f f f f f f f f f f 18"
+        "43 f f f f f f f f f f f 19"
+        "42 f f f f f f f f f f f 20"
+        "41 f f f f f f f f f f f 21"
+        "40 f f f f f f f f f f f 22"
+        "39 f f f f f f f f f f f 23"
+        "38 f f f f f f f f f f f 24"
+        "37 36 35 34 33 32 31 30 29 28 27 26 25";
+}
+
+ul {
+    padding: 0;
+}
