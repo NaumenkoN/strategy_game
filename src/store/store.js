@@ -5,4 +5,5 @@ const store = configureStore({
     reducer: { playerPositions: playerPositionReducer },
 });
 
+const a = 1;
 export default store;
