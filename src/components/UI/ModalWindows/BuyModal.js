@@ -10,10 +10,8 @@ const BuyModal = () => {
     const player1Steps = useSelector((state) => state.dice.playersPosition.player1);
     const player2Steps = useSelector((state) => state.dice.playersPosition.player2);
     const fields = useSelector((state) => state.fields.fields);
-    const activeField =
-        (isOpenBuyModalPlayer1 && player1Steps) || (isOpenBuyModalPlayer2 && player2Steps);
-    const activePlayer =
-        (isOpenBuyModalPlayer1 && "player1") || (isOpenBuyModalPlayer2 && "player2");
+    const activeField = (isOpenBuyModalPlayer1 && player1Steps) || (isOpenBuyModalPlayer2 && player2Steps);
+    const activePlayer = (isOpenBuyModalPlayer1 && "player1") || (isOpenBuyModalPlayer2 && "player2");
 
     const closeBuyModalHandler = () => {
         dispatch(closeBuyModal());
@@ -36,7 +34,7 @@ const BuyModal = () => {
                     <h1>{activePlayer}, You whant to buy?</h1>
                     <div>
                         <button onClick={buyFieldHandler}>yeas</button>
-                        <button>no</button>
+                        <button onClick={closeBuyModalHandler}>no</button>
                     </div>
                 </div>
             </div>

@@ -21,26 +21,36 @@ const diceAndPositionsSlice = createSlice({
             state.secondDice = Math.trunc(Math.random() * 6) + 1;
         },
         addStep(state) {
+            const addSteps = state.firstDice + state.secondDice;
             if (state.activePlayer === 1) {
-                const addSteps = state.firstDice + state.secondDice;
                 const totalSteps = state.playersPosition.player1 + addSteps;
                 if (totalSteps > 48) {
                     state.playersPosition.player1 = totalSteps - 48 - addSteps;
                 }
                 state.playersPosition.player1 += addSteps;
-                state.playersPosition.player1IsActive = false;
-                state.playersPosition.player2IsActive = true;
+                if (state.firstDice === state.secondDice) {
+                    return;
+                }
+                if (state.firstDice !== state.secondDice) {
+                    state.playersPosition.player1IsActive = false;
+                    state.playersPosition.player2IsActive = true;
+                }
             }
             if (state.activePlayer === 2) {
                 state.playersPosition.player2IsActive = true;
-                const addSteps = state.firstDice + state.secondDice;
+
                 const totalSteps = state.playersPosition.player2 + addSteps;
                 if (totalSteps > 48) {
                     state.playersPosition.player2 = totalSteps - 48 - addSteps;
                 }
                 state.playersPosition.player2 += addSteps;
-                state.playersPosition.player2IsActive = false;
-                state.playersPosition.player1IsActive = true;
+                if (state.firstDice === state.secondDice) {
+                    return;
+                }
+                if (state.firstDice !== state.secondDice) {
+                    state.playersPosition.player2IsActive = false;
+                    state.playersPosition.player1IsActive = true;
+                }
             }
         },
         nextTurn(state) {
