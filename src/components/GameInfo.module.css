@@ -1,9 +1,20 @@
 .field {
     grid-area: f;
-    background-color: #dd2121;
+    background-color: #ffffff;
+    width: 99.5%;
+    height: 99.15%;
+
+    margin-bottom: 0.2rem;
 }
 
 li {
     list-style-type: none;
-    border: 1px solid black;
+}
+
+.moove-button {
+    margin: 1rem 47%;
+}
+
+.dice {
+    margin: 1rem 38%;
 }

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import playerPositionReducer from "./playerPosition";
+import diceReducer from "./diceAndPlayerPositions";
+import fields from "./fields";
 
 const store = configureStore({
-    reducer: { playerPositions: playerPositionReducer },
+    reducer: { dice: diceReducer, fields: fields },
 });
 
-const a = 1;
 export default store;

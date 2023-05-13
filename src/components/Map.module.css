@@ -2,7 +2,7 @@
     margin: 0;
     width: 100vw;
     height: 100vh;
-    border: 2px solid black;
+
     display: grid;
     /* grid-template-columns: 7.24vh auto 7.24vh;
     grid-template-rows: repeat(13, 7.24vh); */
