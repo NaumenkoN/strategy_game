@@ -4,6 +4,7 @@ import Player2 from "./UI/Players/Player2";
 
 import { useSelector, useDispatch } from "react-redux";
 import { rentalCounting, openBuyModal, openJailModal, openRouletteModal } from "../store/fields";
+import { inJail } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
 
 const WalkingRoad = () => {
@@ -12,56 +13,62 @@ const WalkingRoad = () => {
     const player2Steps = useSelector((state) => state.dice.playersPosition.player2);
     // const player1money = useSelector((state)=> state.fields.player1.money)
     // const player2money = useSelector((state)=> state.fields.player2.money)
+    const p1InJail = useSelector((state) => state.dice.playersPosition.p1InJail);
+    const p2InJail = useSelector((state) => state.dice.playersPosition.p2InJail);
     const fields = useSelector((state) => state.fields.fields);
 
     // playground
-    console.log(fields);
+    console.log(`p1: ${p1InJail},p2: ${p2InJail}`);
 
-    // ----- CHECKING FIELD TO BUY IS EMPTY OR NOT
-
-    useEffect(() => {
-        if (player1Steps && fields[`${player1Steps}`].status === "empty") {
-            dispatch(openBuyModal(["player1", player1Steps]));
-        }
-        if (player1Steps && fields[`${player1Steps}`].status === "player2") {
-            dispatch(rentalCounting(["player1", player1Steps, "player2"]));
-        }
-    }, [player1Steps]);
+    // ----- Player1 cheking position
 
     useEffect(() => {
-        if (player2Steps && fields[`${player2Steps}`].status === "empty") {
-            dispatch(openBuyModal(["player2", player1Steps]));
-        }
-        if (player2Steps && fields[`${player2Steps}`].status === "player1") {
-            dispatch(rentalCounting(["player2", player2Steps, "player1"]));
-        }
-    }, [player2Steps]);
+        // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
 
-    // ----- CHECKING FIELD IS JAIL
+        // if (player1Steps && fields[`${player1Steps}`].status === "empty") {
+        //     dispatch(openBuyModal(["player1", player1Steps]));
+        // }
+        // if (player1Steps && fields[`${player1Steps}`].status === "player2") {
+        //     dispatch(rentalCounting(["player1", player1Steps, "player2"]));
+        // }
+        // ----- CHECKING FIELD IS JAIL
 
-    useEffect(() => {
-        if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
-            dispatch(openJailModal());
-        }
-    }, [player2Steps]);
-
-    useEffect(() => {
         if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
             dispatch(openJailModal());
+            dispatch(inJail("p1InJail"));
         }
+
+        // ----- CHECKING FIELD IS ROULETTE
+
+        // if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
+        //     dispatch(openRouletteModal());
+        // }
     }, [player1Steps]);
 
-    // ----- CHECKING FIELD IS ROULETTE
+    // ----- Player2 cheking position
 
     useEffect(() => {
-        if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
-            dispatch(openRouletteModal());
+        // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
+
+        // if (player2Steps && fields[`${player2Steps}`].status === "empty") {
+        //     dispatch(openBuyModal(["player2", player2Steps]));
+        // }
+        // if (player2Steps && fields[`${player2Steps}`].status === "player1") {
+        //     dispatch(rentalCounting(["player2", player2Steps, "player1"]));
+        // }
+
+        // ----- CHECKING FIELD IS JAIL
+
+        if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
+            dispatch(openJailModal());
+            dispatch(inJail("p2InJail"));
         }
-    }, [player1Steps]);
-    useEffect(() => {
-        if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
-            dispatch(openRouletteModal());
-        }
+
+        // ----- CHECKING FIELD IS ROULETTE
+
+        // if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
+        //     dispatch(openRouletteModal());
+        // }
     }, [player2Steps]);
 
     return (
