@@ -2,6 +2,7 @@ import styles from "./Map.module.css";
 import GameInfo from "./GameInfo";
 import WalkingRoad from "./WalkingRoad";
 import BuyModal from "./UI/ModalWindows/BuyModal";
+import FightModal from "./UI/ModalWindows/FightModal";
 import JailModal from "./UI/ModalWindows/JailModal";
 import RouletteModal from "./UI/ModalWindows/RouletteModal";
 import EnoughtlessMoneyModal from "./UI/ModalWindows/EnoughtlessMoneyModal";
@@ -13,9 +14,12 @@ const Map = () => {
     const jailModalIsOpen = useSelector((state) => state.fields.isOpenJailModal);
     const rouletteModalIsOpen = useSelector((state) => state.fields.isOpenRouletteModal);
     const enoughtlessMoneyModalIsOpen = useSelector((state) => state.fields.isOpenEnoughtlessMoneyModal);
+    const openFightModal = useSelector((state) => state.fields.isOpenFightModal);
+    console.log(openFightModal);
 
     return (
         <ul className={styles.map}>
+            {openFightModal && <FightModal />}
             {buyModalIsOpen && <BuyModal />}
             {jailModalIsOpen && <JailModal />}
             {rouletteModalIsOpen && <RouletteModal />}

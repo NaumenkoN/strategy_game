@@ -59,11 +59,16 @@ const fieldsSlice = createSlice({
         isOpenJailModal: false,
         isOpenRouletteModal: false,
         isOpenEnoughtlessMoneyModal: false,
+        isOpenFightModal: false,
     },
     reducers: {
         rentalCounting(state, action) {
             state[`${action.payload[0]}`].money -= state.fields[`${action.payload[1]}`].rentalAmount;
             state[`${action.payload[2]}`].money += state.fields[`${action.payload[1]}`].rentalAmount;
+        },
+        fightWithdrawal(state, action) {
+            state[`${action.payload[0]}`].money += 50;
+            state[`${action.payload[1]}`].money -= 50;
         },
         openBuyModal(state, action) {
             if (state[`${action.payload[0]}`].money >= state.fields[`${action.payload[1]}`].price) {
@@ -105,11 +110,20 @@ const fieldsSlice = createSlice({
                 fieldsSlice.caseReducers.closeBuyModal(state);
             }
         },
+        openFightModal(state, action) {
+            state.isOpenFightModal = true;
+        },
+        closeFightModal(state) {
+            state.isOpenFightModal = false;
+        },
     },
 });
 
 export default fieldsSlice.reducer;
 export const {
+    fightWithdrawal,
+    openFightModal,
+    closeFightModal,
     buyField,
     rentalCounting,
     openBuyModal,

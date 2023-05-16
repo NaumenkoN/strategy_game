@@ -3,7 +3,7 @@ import Player1 from "./UI/Players/Player1";
 import Player2 from "./UI/Players/Player2";
 
 import { useSelector, useDispatch } from "react-redux";
-import { rentalCounting, openBuyModal, openJailModal, openRouletteModal } from "../store/fields";
+import { rentalCounting, openBuyModal, openJailModal, openRouletteModal, openFightModal } from "../store/fields";
 import { inJail } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
 
@@ -18,13 +18,11 @@ const WalkingRoad = () => {
     const fields = useSelector((state) => state.fields.fields);
 
     // playground
-    console.log(`p1: ${p1InJail},p2: ${p2InJail}`);
 
     // ----- Player1 cheking position
 
     useEffect(() => {
         // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
-
         // if (player1Steps && fields[`${player1Steps}`].status === "empty") {
         //     dispatch(openBuyModal(["player1", player1Steps]));
         // }
@@ -32,14 +30,11 @@ const WalkingRoad = () => {
         //     dispatch(rentalCounting(["player1", player1Steps, "player2"]));
         // }
         // ----- CHECKING FIELD IS JAIL
-
-        if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
-            dispatch(openJailModal());
-            dispatch(inJail("p1InJail"));
-        }
-
+        // if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
+        //     dispatch(openJailModal());
+        //     dispatch(inJail("p1InJail"));
+        // }
         // ----- CHECKING FIELD IS ROULETTE
-
         // if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
         //     dispatch(openRouletteModal());
         // }
@@ -49,27 +44,28 @@ const WalkingRoad = () => {
 
     useEffect(() => {
         // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
-
         // if (player2Steps && fields[`${player2Steps}`].status === "empty") {
         //     dispatch(openBuyModal(["player2", player2Steps]));
         // }
         // if (player2Steps && fields[`${player2Steps}`].status === "player1") {
         //     dispatch(rentalCounting(["player2", player2Steps, "player1"]));
         // }
-
         // ----- CHECKING FIELD IS JAIL
-
-        if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
-            dispatch(openJailModal());
-            dispatch(inJail("p2InJail"));
-        }
-
+        // if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
+        //     dispatch(openJailModal());
+        //     dispatch(inJail("p2InJail"));
+        // }
         // ----- CHECKING FIELD IS ROULETTE
-
         // if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
         //     dispatch(openRouletteModal());
         // }
     }, [player2Steps]);
+
+    useEffect(() => {
+        if (player1Steps === player2Steps && player1Steps !== 1) {
+            dispatch(openFightModal());
+        }
+    }, [player1Steps, player2Steps]);
 
     return (
         <>

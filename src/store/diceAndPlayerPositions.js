@@ -13,6 +13,9 @@ const diceAndPositionsSlice = createSlice({
     initialState: {
         firstDice: 0,
         secondDice: 0,
+        showFightDices: false,
+        fightDicesIsDropted: false,
+        winner: 0,
         playersPosition: { ...playersPosition, ...playersIsActive, ...playersInJail },
         activePlayer: activePlayer,
     },
@@ -26,11 +29,22 @@ const diceAndPositionsSlice = createSlice({
                 return;
             }
             state.activePlayer += 1;
-            console.log("+1");
         },
         dropTwoDices(state) {
             state.firstDice = Math.trunc(Math.random() * 6) + 1;
             state.secondDice = Math.trunc(Math.random() * 6) + 1;
+        },
+        showFightDices(state) {
+            state.showFightDices = true;
+            state.fightDicesIsDropted = true;
+        },
+        hideFightDices(state) {
+            state.showFightDices = false;
+            state.fightDicesIsDropted = false;
+            state.winner = 0;
+        },
+        winner(state, action) {
+            state.winner = action.payload;
         },
         addStep(state) {
             const addSteps = state.firstDice + state.secondDice;
@@ -89,6 +103,7 @@ const diceAndPositionsSlice = createSlice({
 });
 
 export default diceAndPositionsSlice.reducer;
-export const { dropTwoDices, addStep, nextTurn, inJail } = diceAndPositionsSlice.actions;
+export const { dropTwoDices, addStep, nextTurn, inJail, showFightDices, hideFightDices, winner } =
+    diceAndPositionsSlice.actions;
 
 export const thunk = () => (dispatch, getState) => dispatch(dropTwoDices());
