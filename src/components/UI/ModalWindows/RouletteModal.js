@@ -9,6 +9,7 @@ const BuyModal = () => {
     const closeRouletteModalHandler = () => {
         dispatch(closeRouletteModal());
     };
+    console.log("roulettemodal");
     return (
         <>
             <div className={styles.backdrop}></div>

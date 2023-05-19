@@ -3,7 +3,7 @@ import { closeBuyModal, buyField } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
 
-const BuyModal = () => {
+const BuyCommercialModal = () => {
     const dispatch = useDispatch();
     const isOpenBuyModalPlayer1 = useSelector((state) => state.fields.player1.isOpenBuyModal);
     const isOpenBuyModalPlayer2 = useSelector((state) => state.fields.player2.isOpenBuyModal);
@@ -18,10 +18,10 @@ const BuyModal = () => {
     };
 
     const buyFieldHandler = () => {
-        dispatch(buyField([activeField, activePlayer, "living"]));
+        dispatch(buyField([activeField, activePlayer, "commercial"]));
     };
 
-    console.log("buymodal");
+    console.log("buycommercialmodal");
 
     return (
         <>
@@ -31,7 +31,7 @@ const BuyModal = () => {
                     x
                 </button>
                 <div className={styles.info}>
-                    <h1>Empty Field #{activeField}</h1>
+                    <h1>Empty Commercial Field #{activeField}</h1>
                     <h2>Price: {fields[`${activeField}`].price}</h2>
                     <h1>{activePlayer}, You whant to buy?</h1>
                     <div>
@@ -43,4 +43,4 @@ const BuyModal = () => {
         </>
     );
 };
-export default BuyModal;
+export default BuyCommercialModal;

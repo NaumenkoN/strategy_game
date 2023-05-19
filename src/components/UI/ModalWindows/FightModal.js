@@ -19,6 +19,7 @@ const FightModal = () => {
         dispatch(showFightDices());
     };
 
+    console.log("fightmodal");
     // cheking who`s winn in the fight
 
     useEffect(() => {

@@ -9,6 +9,8 @@ const BuyModal = () => {
     const closeJailModalHandler = (e) => {
         dispatch(closeJailModal());
     };
+
+    console.log("jailmodal");
     return (
         <>
             <div className={styles.backdrop}></div>

@@ -3,7 +3,14 @@ import Player1 from "./UI/Players/Player1";
 import Player2 from "./UI/Players/Player2";
 
 import { useSelector, useDispatch } from "react-redux";
-import { rentalCounting, openBuyModal, openJailModal, openRouletteModal, openFightModal } from "../store/fields";
+import {
+    rentalCounting,
+    openBuyModal,
+    openJailModal,
+    openRouletteModal,
+    openFightModal,
+    circlePassMoney,
+} from "../store/fields";
 import { inJail } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
 
@@ -16,19 +23,22 @@ const WalkingRoad = () => {
     const p1InJail = useSelector((state) => state.dice.playersPosition.p1InJail);
     const p2InJail = useSelector((state) => state.dice.playersPosition.p2InJail);
     const fields = useSelector((state) => state.fields.fields);
+    const p1circlesPassed = useSelector((state) => state.dice.playersPosition.p1circle);
+    const p2circlesPassed = useSelector((state) => state.dice.playersPosition.p2circle);
 
     // playground
 
-    // ----- Player1 cheking position
+    console.log(fields);
 
+    // ----- Player1 cheking position
     useEffect(() => {
-        // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
-        // if (player1Steps && fields[`${player1Steps}`].status === "empty") {
-        //     dispatch(openBuyModal(["player1", player1Steps]));
-        // }
-        // if (player1Steps && fields[`${player1Steps}`].status === "player2") {
-        //     dispatch(rentalCounting(["player1", player1Steps, "player2"]));
-        // }
+        // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
+        if (player1Steps && fields[`${player1Steps}`].status === "empty") {
+            dispatch(openBuyModal(["player1", player1Steps, "living"]));
+        }
+        if (player1Steps && fields[`${player1Steps}`].status === "player2") {
+            dispatch(rentalCounting(["player1", player1Steps, "player2"]));
+        }
         // ----- CHECKING FIELD IS JAIL
         // if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
         //     dispatch(openJailModal());
@@ -38,18 +48,21 @@ const WalkingRoad = () => {
         // if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
         //     dispatch(openRouletteModal());
         // }
+        // ----- CHEKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL
+        if (player1Steps && fields[`${player1Steps}`].status === "emptyC") {
+            dispatch(openBuyModal(["player1", player1Steps, "commercial"]));
+        }
     }, [player1Steps]);
 
     // ----- Player2 cheking position
-
     useEffect(() => {
-        // ----- CHECKING FIELD TO BUY IS EMPTY IF NOT PAYING RENTAL
-        // if (player2Steps && fields[`${player2Steps}`].status === "empty") {
-        //     dispatch(openBuyModal(["player2", player2Steps]));
-        // }
-        // if (player2Steps && fields[`${player2Steps}`].status === "player1") {
-        //     dispatch(rentalCounting(["player2", player2Steps, "player1"]));
-        // }
+        // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
+        if (player2Steps && fields[`${player2Steps}`].status === "empty") {
+            dispatch(openBuyModal(["player2", player2Steps, "living"]));
+        }
+        if (player2Steps && fields[`${player2Steps}`].status === "player1") {
+            dispatch(rentalCounting(["player2", player2Steps, "player1"]));
+        }
         // ----- CHECKING FIELD IS JAIL
         // if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
         //     dispatch(openJailModal());
@@ -59,13 +72,24 @@ const WalkingRoad = () => {
         // if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
         //     dispatch(openRouletteModal());
         // }
+        // ----- CHEKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL
+        if (player2Steps && fields[`${player2Steps}`].status === "emptyC") {
+            dispatch(openBuyModal(["player2", player2Steps, "commercial"]));
+        }
     }, [player2Steps]);
 
+    // ----- (FIGHT) checking is players on one position
+    // useEffect(() => {
+    //     if (player1Steps === player2Steps && player1Steps !== 1) {
+    //         dispatch(openFightModal());
+    //     }
+    // }, [player1Steps, player2Steps]);
+
+    // ----- check did a player is pass the circle
     useEffect(() => {
-        if (player1Steps === player2Steps && player1Steps !== 1) {
-            dispatch(openFightModal());
-        }
-    }, [player1Steps, player2Steps]);
+        p1circlesPassed && dispatch(circlePassMoney("player1"));
+        p2circlesPassed && dispatch(circlePassMoney("player2"));
+    }, [p1circlesPassed, p2circlesPassed]);
 
     return (
         <>

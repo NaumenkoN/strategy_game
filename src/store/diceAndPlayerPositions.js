@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const activePlayer = 1;
 const playersPosition = { player1: 1, player2: 1 };
 const playersInJail = { p1InJail: 0, p2InJail: 0 };
+const circlesPassed = { p1circle: false, p2circle: false };
 const playersIsActive = {
     player1IsActive: true,
     player2IsActive: false,
@@ -16,7 +17,7 @@ const diceAndPositionsSlice = createSlice({
         showFightDices: false,
         fightDicesIsDropted: false,
         winner: 0,
-        playersPosition: { ...playersPosition, ...playersIsActive, ...playersInJail },
+        playersPosition: { ...playersPosition, ...playersIsActive, ...playersInJail, ...circlesPassed },
         activePlayer: activePlayer,
     },
     reducers: {
@@ -48,17 +49,22 @@ const diceAndPositionsSlice = createSlice({
         },
         addStep(state) {
             const addSteps = state.firstDice + state.secondDice;
-            const totalSteps = state.playersPosition.player1 + addSteps;
-            if (state.activePlayer === 1) {
-                if (state.playersPosition.p1InJail === 0) {
-                    if (totalSteps > 48) {
-                        state.playersPosition.player1 = totalSteps - 48 - addSteps;
-                    }
-                    state.playersPosition.player1 += addSteps;
 
+            if (state.activePlayer === 1) {
+                state.playersPosition.p2circle = false;
+                const totalSteps = state.playersPosition.player1 + addSteps;
+                if (state.playersPosition.p1InJail === 0) {
                     if (state.firstDice !== state.secondDice) {
                         state.playersPosition.player1IsActive = false;
                         state.playersPosition.player2IsActive = true;
+                    }
+                    if (totalSteps > 48) {
+                        state.playersPosition.p1circle = true;
+
+                        state.playersPosition.player1 = totalSteps - 48;
+                    }
+                    if (totalSteps <= 48) {
+                        state.playersPosition.player1 += addSteps;
                     }
                 }
                 if (state.playersPosition.p1InJail > 0 && state.firstDice === state.secondDice) {
@@ -72,17 +78,21 @@ const diceAndPositionsSlice = createSlice({
             }
 
             if (state.activePlayer === 2) {
+                state.playersPosition.p1circle = false;
+                const totalSteps = state.playersPosition.player2 + addSteps;
                 if (state.playersPosition.p2InJail === 0) {
-                    const totalSteps = state.playersPosition.player2 + addSteps;
-
-                    if (totalSteps > 48) {
-                        state.playersPosition.player2 = totalSteps - 48 - addSteps;
-                    }
-                    state.playersPosition.player2 += addSteps;
-
                     if (state.firstDice !== state.secondDice) {
                         state.playersPosition.player2IsActive = false;
                         state.playersPosition.player1IsActive = true;
+                    }
+
+                    if (totalSteps > 48) {
+                        state.playersPosition.p2circle = true;
+
+                        state.playersPosition.player2 = totalSteps - 48;
+                    }
+                    if (totalSteps <= 48) {
+                        state.playersPosition.player2 += addSteps;
                     }
                 }
                 if (state.playersPosition.p2InJail > 0 && state.firstDice === state.secondDice) {
@@ -106,4 +116,4 @@ export default diceAndPositionsSlice.reducer;
 export const { dropTwoDices, addStep, nextTurn, inJail, showFightDices, hideFightDices, winner } =
     diceAndPositionsSlice.actions;
 
-export const thunk = () => (dispatch, getState) => dispatch(dropTwoDices());
+// export const thunk = () => (dispatch, getState) => dispatch(dropTwoDices());

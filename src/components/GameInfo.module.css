@@ -22,3 +22,18 @@ li {
 p {
     margin: 0 30%;
 }
+
+.sell-stocks {
+    margin-left: 30%;
+}
+
+.control-buttons--group {
+    display: flex;
+    flex-direction: column;
+    width: 10rem;
+    margin-left: 25%;
+}
+
+.control-buttons--group button {
+    margin-top: 1rem;
+}
