@@ -1,5 +1,5 @@
 import styles from "./SellStocksModal.module.css";
-import { closeSellStocksModal, selling } from "../../../store/fields";
+import { closeSellStocksModal, sellingStocks } from "../../../store/fields";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ const SellStocksModal = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        dispatch(selling([activePlayer, stocksValue]));
+        dispatch(sellingStocks([activePlayer, stocksValue]));
         dispatch(closeSellStocksModal());
     };
 

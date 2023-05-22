@@ -29,11 +29,10 @@ p {
 
 .control-buttons--group {
     display: flex;
-    flex-direction: column;
-    width: 10rem;
+    flex-direction: row;
+    width: 15rem;
     margin-left: 25%;
 }
 
 .control-buttons--group button {
-    margin-top: 1rem;
 }
