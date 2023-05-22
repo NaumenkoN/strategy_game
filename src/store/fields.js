@@ -6,6 +6,7 @@ const fieldsSlice = createSlice({
         player1: {
             money: 4000,
             stocks: 50,
+            expectedTaxes: 0,
             fields: [],
             isOpenBuyModal: false,
             isOpenSellStocksModal: false,
@@ -14,6 +15,7 @@ const fieldsSlice = createSlice({
         player2: {
             money: 4000,
             stocks: 50,
+            expectedTaxes: 0,
             fields: [],
             isOpenBuyModal: false,
             isOpenSellStocksModal: false,
@@ -35,9 +37,9 @@ const fieldsSlice = createSlice({
             3: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             4: {
                 status: "emptyC",
-                employees: 1,
-                engineer: false,
-                manager: false,
+                employees: 10,
+                engineer: 1,
+                manager: 1,
                 price: 400,
                 rentalAmount: 0,
                 inArrest: false,
@@ -55,9 +57,9 @@ const fieldsSlice = createSlice({
             15: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             16: {
                 status: "emptyC",
-                employees: 1,
-                engineer: false,
-                manager: false,
+                employees: 10,
+                engineer: 1,
+                manager: 1,
                 price: 400,
                 rentalAmount: 0,
                 inArrest: false,
@@ -75,9 +77,9 @@ const fieldsSlice = createSlice({
             27: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             28: {
                 status: "emptyC",
-                employees: 1,
-                engineer: false,
-                manager: false,
+                employees: 10,
+                engineer: 1,
+                manager: 1,
                 price: 400,
                 rentalAmount: 0,
                 inArrest: false,
@@ -95,7 +97,7 @@ const fieldsSlice = createSlice({
             39: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             40: {
                 status: "emptyC",
-                employees: 1,
+                employees: 10,
                 engineer: 1,
                 manager: 1,
                 price: 400,
@@ -113,21 +115,51 @@ const fieldsSlice = createSlice({
         },
     },
     reducers: {
+        expectedTaxes(state, action) {
+            const expectedTaxesLiving = state[`${action.payload}`].fields
+                .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
+                .map((field) => state.fields[field].price)
+                .reduce((acc, item) => acc + item * 0.03, 0);
+
+            const expectedTaxesCommercial = state[`${action.payload}`].fields
+                .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
+                .map((field) => state.fields[field].price)
+                .reduce((acc, item) => acc + item * 0.03, 0);
+
+            state[`${action.payload}`].expectedTaxes = expectedTaxesLiving + expectedTaxesCommercial;
+        },
         buyBuildings(state, action) {
             if (
                 state[`${action.payload[0]}`].money >=
-                state.fields[`${action.payload[1]}`].price * action.payload[2]
+                    state.fields[`${action.payload[1]}`].price * action.payload[2] &&
+                action.payload[3] === "living"
             ) {
                 // withdrawal money from player
                 state[`${action.payload[0]}`].money -=
                     state.fields[`${action.payload[1]}`].price * action.payload[2];
                 // setting new value of floors to the field
                 state.fields[`${action.payload[1]}`].floor += +action.payload[2];
-                // setting new field price
-                state.fields[`${action.payload[1]}`].price *= state.fields[`${action.payload[1]}`].floor;
+
                 // setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
-                    state.fields[`${action.payload[1]}`].price * 0.25;
+                    state.fields[`${action.payload[1]}`].price * 0.25 * state.fields[`${action.payload[1]}`].floor;
+            }
+            if (
+                state[`${action.payload[0]}`].money >=
+                    state.fields[`${action.payload[1]}`].price * (action.payload[2] / 10) &&
+                action.payload[3] === "commercial"
+            ) {
+                // withdrawal money from player
+                state[`${action.payload[0]}`].money -=
+                    state.fields[`${action.payload[1]}`].price * (action.payload[2] / 10);
+                // setting new value of floors to the field
+                state.fields[`${action.payload[1]}`].employees += +action.payload[2];
+
+                // setting new rental amount
+                state.fields[`${action.payload[1]}`].rentalAmount =
+                    state.fields[`${action.payload[1]}`].price *
+                    0.3 *
+                    (state.fields[`${action.payload[1]}`].employees / 10);
             }
         },
         openBuyBuildingModal(state, action) {
@@ -147,7 +179,7 @@ const fieldsSlice = createSlice({
             state.player1.isOpenSellStocksModal = false;
             state.player2.isOpenSellStocksModal = false;
         },
-        selling(state, action) {
+        sellingStocks(state, action) {
             if (state[`${action.payload[0]}`].stocks >= action.payload[1]) {
                 state[`${action.payload[0]}`].money += action.payload[1] * 20;
                 state[`${action.payload[0]}`].stocks -= action.payload[1];
@@ -212,14 +244,17 @@ const fieldsSlice = createSlice({
                 // setting rental amount
                 if (action.payload[2] === "living") {
                     state.fields[`${action.payload[0]}`].rentalAmount =
-                        0.25 * state.fields[`${action.payload[0]}`].price;
+                        0.25 *
+                        state.fields[`${action.payload[0]}`].price *
+                        state.fields[`${action.payload[0]}`].floor;
                 }
                 if (action.payload[2] === "commercial") {
                     state.fields[`${action.payload[0]}`].rentalAmount =
                         state.fields[`${action.payload[0]}`].price *
                         0.3 *
                         state.fields[`${action.payload[0]}`].engineer *
-                        state.fields[`${action.payload[0]}`].manager;
+                        state.fields[`${action.payload[0]}`].manager *
+                        (state.fields[`${action.payload[0]}`].employees / 10);
                 }
                 fieldsSlice.caseReducers.closeBuyModal(state);
                 return;
@@ -238,10 +273,11 @@ const fieldsSlice = createSlice({
 
 export default fieldsSlice.reducer;
 export const {
+    expectedTaxes,
     openBuyBuildingModal,
     buyBuildings,
     closeBuildingModal,
-    selling,
+    sellingStocks,
     openSellStocksModal,
     closeSellStocksModal,
     circlePassMoney,
