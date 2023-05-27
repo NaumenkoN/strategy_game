@@ -10,6 +10,8 @@ const SellStocksModal = () => {
     const activePlayer = (isOpenSellStocksModalp1 && "player1") || (isOpenSellStocksModalp2 && "player2");
     const activePlayerStocks = useSelector((state) => state.fields[`${activePlayer}`].stocks);
     const [stocksValue, setStocksValue] = useState(0);
+    const emergencySellActives = useSelector((state) => state.fields.emergencySellActives);
+
     const closeSellStocksModalHandler = () => {
         dispatch(closeSellStocksModal());
     };
@@ -18,7 +20,7 @@ const SellStocksModal = () => {
         e.preventDefault();
 
         dispatch(sellingStocks([activePlayer, stocksValue]));
-        dispatch(closeSellStocksModal());
+        // dispatch(closeSellStocksModal());
     };
 
     const onChangeHandler = (e) => {
@@ -28,6 +30,11 @@ const SellStocksModal = () => {
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.modal}>
+                {emergencySellActives && (
+                    <button onClick={closeSellStocksModalHandler} className={styles["close-button"]}>
+                        x
+                    </button>
+                )}
                 <button onClick={closeSellStocksModalHandler} className={styles["close-button"]}>
                     x
                 </button>

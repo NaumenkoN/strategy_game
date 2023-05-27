@@ -6,21 +6,19 @@
     opacity: 80%;
     position: fixed;
     background-color: black;
-    z-index: 10;
+    z-index: 14;
 }
 
 .modal {
     margin: 35vh 35vw;
     width: 25rem;
     height: 16rem;
-    background-color: red;
+    background-color: brown;
     position: fixed;
-    z-index: 11;
+    z-index: 15;
 }
 
 .close-button {
-    position: absolute;
-    right: 0.1rem;
-    top: 0.1rem;
+    margin: 0rem 44%;
     font-size: 1.3rem;
 }

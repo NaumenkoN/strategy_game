@@ -2,7 +2,7 @@ import styles from "./GameInfo.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { dropTwoDices, addStep, nextTurn } from "../store/diceAndPlayerPositions";
-import { openSellStocksModal, openBuyBuildingModal, expectedTaxes } from "../store/fields";
+import { openSellStocksModal, openBuyBuildingModal, expectedTaxes, takeCredit } from "../store/fields";
 
 const GameInfo = () => {
     const dispatch = useDispatch();
@@ -17,6 +17,10 @@ const GameInfo = () => {
     const activePlayer = useSelector((state) => state.dice.activePlayer);
     const expectedTaxesP1 = useSelector((state) => state.fields.player1.expectedTaxes);
     const expectedTaxesP2 = useSelector((state) => state.fields.player2.expectedTaxes);
+    const player1Debt = useSelector((state) => state.fields.player1.debt);
+    const player2Debt = useSelector((state) => state.fields.player2.debt);
+    const player1CreditCount = useSelector((state) => state.fields.player1.creditCount);
+    const player2CreditCount = useSelector((state) => state.fields.player2.creditCount);
     const fields = useSelector((state) => state.fields.fields);
 
     // Getting empty fields on the screen
@@ -34,6 +38,16 @@ const GameInfo = () => {
         dispatch(expectedTaxes(playerIsActive));
     }, [player1Steps, player2Steps, player1OnwnedFields, player2OnwnedFields]);
 
+    // Handlers
+
+    const takeCreditHandler = (player) => {
+        const confirm = window.confirm("You shure you whan`a take a credit?");
+        if (confirm === true) {
+            dispatch(takeCredit(player));
+        } else {
+            return;
+        }
+    };
     const diceDroppingHandler = () => {
         dispatch(dropTwoDices());
         dispatch(addStep());
@@ -43,7 +57,7 @@ const GameInfo = () => {
         dispatch(openSellStocksModal(player));
     };
     const buyBuildingHandler = (player) => {
-        dispatch(openBuyBuildingModal(player));
+        dispatch(openBuyBuildingModal([player]));
         const playerIsActive = activePlayer === 1 ? "player1" : "player2";
         dispatch(expectedTaxes(playerIsActive));
     };
@@ -60,18 +74,21 @@ const GameInfo = () => {
                 {activePlayer === 1 && "+"}Player1 position: {player1Steps}
             </h1>
             <h1 className={styles.dice}>Player1 money: {player1money}</h1>
+            <h1 className={styles.dice}>Player1 debt: {player1Debt}</h1>
             <h1 className={styles.dice}>Player1 expected taxes: {expectedTaxesP1}</h1>
             <h1 className={styles.dice}>
                 Player1 owned fields:
                 {player1OnwnedFields
                     .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
-                    .map((item) => ` ${item},`)}
+                    .sort((a, b) => a - b)
+                    .map((item) => item + ",")}
             </h1>
             <h1 className={styles.dice}>
                 Player1 owned commercial fields:
                 {player1OnwnedFields
                     .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
-                    .map((item) => ` ${item},`)}
+                    .sort((a, b) => a - b)
+                    .map((item) => item + ",")}
             </h1>
             <div className={styles["control-buttons--group"]}>
                 <button onClick={() => sellStocksHandler("player1")} className={styles["sell-stocks"]}>
@@ -80,24 +97,34 @@ const GameInfo = () => {
                 <button onClick={() => buyBuildingHandler("player1")} className={styles["sell-stocks"]}>
                     buy building player1
                 </button>
+                <button
+                    disabled={player1CreditCount === 0}
+                    onClick={() => takeCreditHandler("player1")}
+                    className={styles["sell-stocks"]}
+                >
+                    Take a credit
+                </button>
             </div>
             <p>-----------------------</p>
             <h1 className={styles.dice}>
                 {activePlayer === 2 && "+"}Player2 position: {player2Steps}
             </h1>
             <h1 className={styles.dice}>Player2 money: {player2money}</h1>
+            <h1 className={styles.dice}>Player2 debt: {player2Debt}</h1>
             <h1 className={styles.dice}>Player2 expected taxes: {expectedTaxesP2}</h1>
             <h1 className={styles.dice}>
                 Player2 owned fields:
                 {player2OnwnedFields
                     .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
-                    .map((item) => ` ${item},`)}
+                    .sort((a, b) => a - b)
+                    .map((item) => item + ",")}
             </h1>
             <h1 className={styles.dice}>
                 Player2 owned commercial fields:
                 {player2OnwnedFields
                     .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
-                    .map((item) => ` ${item},`)}
+                    .sort((a, b) => a - b)
+                    .map((item) => item + ",")}
             </h1>
             <div className={styles["control-buttons--group"]}>
                 <button onClick={() => sellStocksHandler("player2")} className={styles["sell-stocks"]}>
@@ -105,6 +132,13 @@ const GameInfo = () => {
                 </button>
                 <button onClick={() => buyBuildingHandler("player2")} className={styles["sell-stocks"]}>
                     buy building player2
+                </button>
+                <button
+                    disabled={player2CreditCount === 0}
+                    onClick={() => takeCreditHandler("player2")}
+                    className={styles["sell-stocks"]}
+                >
+                    Take a credit
                 </button>
             </div>
         </li>

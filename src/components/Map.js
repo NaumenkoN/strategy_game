@@ -9,6 +9,8 @@ import SellStocksModal from "./UI/ModalWindows/SellStocksModal";
 import BuildingModal from "./UI/ModalWindows/BuildingModal";
 import RouletteModal from "./UI/ModalWindows/RouletteModal";
 import EnoughtlessMoneyModal from "./UI/ModalWindows/EnoughtlessMoneyModal";
+import SellConfirmModal from "./UI/ModalWindows/SellConfirmModal";
+import WarningModal from "./UI/ModalWindows/WarningModal";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,9 +23,13 @@ const Map = () => {
     const openFightModal = useSelector((state) => state.fields.isOpenFightModal);
     const isOpenSellStocksModal = useSelector((state) => state.fields.isOpenSellStocksModal);
     const isOpenBuildingModal = useSelector((state) => state.fields.isOpenBuildingModal);
+    const isOpenSellConfirmModal = useSelector((state) => state.fields.isOpenSellConfirmModal);
+    const isOpenWarningModal = useSelector((state) => state.fields.warningModal);
 
     return (
         <ul className={styles.map}>
+            {isOpenWarningModal && <WarningModal />}
+            {isOpenSellConfirmModal && <SellConfirmModal />}
             {isOpenBuildingModal && <BuildingModal />}
             {buyCommercialModalIsOpen && <BuyCommercialModal />}
             {buyModalIsOpen && <BuyModal />}

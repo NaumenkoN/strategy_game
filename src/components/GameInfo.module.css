@@ -12,11 +12,11 @@ li {
 }
 
 .moove-button {
-    margin: 1rem 47%;
+    margin: 1rem 47% 0rem;
 }
 
 .dice {
-    margin: 1rem 30%;
+    margin: 0.7rem 30%;
 }
 
 p {
@@ -25,6 +25,7 @@ p {
 
 .sell-stocks {
     margin-left: 30%;
+    height: 3rem;
 }
 
 .control-buttons--group {

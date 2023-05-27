@@ -10,6 +10,8 @@ import {
     openRouletteModal,
     openFightModal,
     circlePassMoney,
+    rentalAndSalesIndex,
+    creditReturning,
 } from "../store/fields";
 import { inJail } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
@@ -32,6 +34,7 @@ const WalkingRoad = () => {
 
     // ----- Player1 cheking position
     useEffect(() => {
+        dispatch(rentalAndSalesIndex(["free", "player1"]));
         // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
         if (player1Steps && fields[`${player1Steps}`].status === "empty") {
             dispatch(openBuyModal(["player1", player1Steps, "living"]));
@@ -43,6 +46,7 @@ const WalkingRoad = () => {
         // if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
         //     dispatch(openJailModal());
         //     dispatch(inJail("p1InJail"));
+        //     dispatch(rentalAndSalesIndex(["arrest", "player1"]));
         // }
         // ----- CHECKING FIELD IS ROULETTE
         // if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
@@ -56,6 +60,7 @@ const WalkingRoad = () => {
 
     // ----- Player2 cheking position
     useEffect(() => {
+        dispatch(rentalAndSalesIndex(["free", "player2"]));
         // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
         if (player2Steps && fields[`${player2Steps}`].status === "empty") {
             dispatch(openBuyModal(["player2", player2Steps, "living"]));
@@ -67,6 +72,7 @@ const WalkingRoad = () => {
         // if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
         //     dispatch(openJailModal());
         //     dispatch(inJail("p2InJail"));
+        //     dispatch(rentalAndSalesIndex(["arrest", "player2"]));
         // }
         // ----- CHECKING FIELD IS ROULETTE
         // if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
@@ -87,8 +93,8 @@ const WalkingRoad = () => {
 
     // ----- check did a player is pass the circle
     useEffect(() => {
-        p1circlesPassed && dispatch(circlePassMoney("player1"));
-        p2circlesPassed && dispatch(circlePassMoney("player2"));
+        p1circlesPassed && dispatch(circlePassMoney("player1")) && dispatch(creditReturning(["player1"]));
+        p2circlesPassed && dispatch(circlePassMoney("player2")) && dispatch(creditReturning(["player2"]));
     }, [p1circlesPassed, p2circlesPassed]);
 
     return (
