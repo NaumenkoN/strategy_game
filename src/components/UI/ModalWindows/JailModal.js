@@ -3,7 +3,7 @@ import { closeJailModal } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
 
-const BuyModal = () => {
+const JailModal = () => {
     const dispatch = useDispatch();
 
     const closeJailModalHandler = (e) => {
@@ -23,4 +23,4 @@ const BuyModal = () => {
         </>
     );
 };
-export default BuyModal;
+export default JailModal;

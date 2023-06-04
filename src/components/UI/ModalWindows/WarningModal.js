@@ -23,7 +23,7 @@ const WarningModal = () => {
             <div className={styles.backdrop}></div>
             <div className={styles.modal}>
                 <h1>{`${activePlayer}, you need to sell some of your goods to continue!`}</h1>
-                <h1>{`Your debt is ${finalDebt}!`}</h1>
+                <h1>{`Your debt is ${(finalDebt < 0 && finalDebt) || money}!`}</h1>
                 <button onClick={closeWarningModalHandler} className={styles["close-button"]}>
                     OK
                 </button>

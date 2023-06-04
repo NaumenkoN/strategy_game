@@ -1,56 +1,49 @@
 import styles from "./FightModal.module.css";
 import { useEffect } from "react";
 import { closeFightModal, fightWithdrawal } from "../../../store/fields";
-import { dropTwoDices, showFightDices, hideFightDices, winner } from "../../../store/diceAndPlayerPositions";
+import { dropFightDices, hideFightDices, winner } from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
 
 const FightModal = () => {
     const dispatch = useDispatch();
-    const firstDice = useSelector((state) => state.dice.firstDice);
-    const secondDice = useSelector((state) => state.dice.secondDice);
+    const firstDice = useSelector((state) => state.dice.firstFightDice);
+    const secondDice = useSelector((state) => state.dice.secondFightDice);
     const fightDices = useSelector((state) => state.dice.showFightDices);
-    const fightDicesIsDropted = useSelector((state) => state.dice.fightDicesIsDropted);
+    const fightDiceIsDropted = useSelector((state) => state.dice.fightDiceIsDropted);
     const whoWinner = useSelector((state) => state.dice.winner);
-    const closeFightModalHandler = () => {
-        dispatch(closeFightModal());
-    };
-    const fightDiceHandler = () => {
-        dispatch(dropTwoDices());
-        dispatch(showFightDices());
-    };
 
-    console.log("fightmodal");
-    // cheking who`s winn in the fight
+    const fightDiceHandler = () => {
+        dispatch(dropFightDices());
+    };
 
     useEffect(() => {
-        if (fightDicesIsDropted && firstDice > secondDice) {
+        console.log(firstDice, secondDice);
+        if (firstDice > secondDice) {
             dispatch(fightWithdrawal(["player1", "player2"]));
             dispatch(winner(1));
             setTimeout(() => {
-                dispatch(closeFightModal());
                 dispatch(hideFightDices());
-            }, 1000);
+                dispatch(closeFightModal());
+            }, 2000);
         }
-        if (fightDicesIsDropted && firstDice < secondDice) {
+        if (firstDice < secondDice) {
             dispatch(fightWithdrawal(["player2", "player1"]));
             dispatch(winner(2));
             setTimeout(() => {
-                dispatch(closeFightModal());
                 dispatch(hideFightDices());
-            }, 1000);
+                dispatch(closeFightModal());
+            }, 2000);
         }
-        if (fightDicesIsDropted && firstDice === secondDice) {
-            fightDiceHandler();
+        if (firstDice === secondDice && firstDice !== null) {
+            dispatch(hideFightDices());
+            dispatch(dropFightDices());
         }
-    }, [firstDice, secondDice]);
+    }, [fightDiceIsDropted, firstDice]);
 
     return (
         <>
             <div className={styles.backdrop}></div>
             <div className={styles.modal}>
-                <button onClick={closeFightModalHandler} className={styles["close-button"]}>
-                    x
-                </button>
                 <h1>Fight!</h1>
                 <div className={styles.info}>
                     <div>

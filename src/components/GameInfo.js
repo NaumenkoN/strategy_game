@@ -1,8 +1,14 @@
 import styles from "./GameInfo.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { dropTwoDices, addStep, nextTurn } from "../store/diceAndPlayerPositions";
-import { openSellStocksModal, openBuyBuildingModal, expectedTaxes, takeCredit } from "../store/fields";
+import { dropTwoDices, addStep, nextTurn, setInJail } from "../store/diceAndPlayerPositions";
+import {
+    openSellStocksModal,
+    openBuyBuildingModal,
+    expectedTaxes,
+    takeCredit,
+    activateJailRealeaseCard,
+} from "../store/fields";
 
 const GameInfo = () => {
     const dispatch = useDispatch();
@@ -21,6 +27,10 @@ const GameInfo = () => {
     const player2Debt = useSelector((state) => state.fields.player2.debt);
     const player1CreditCount = useSelector((state) => state.fields.player1.creditCount);
     const player2CreditCount = useSelector((state) => state.fields.player2.creditCount);
+    const p1JailCard = useSelector((state) => state.fields.player1.jailFreeCard);
+    const p2JailCard = useSelector((state) => state.fields.player2.jailFreeCard);
+    const p1JailDaysLeft = useSelector((state) => state.dice.playersPosition.p1InJail);
+    const p2JailDaysLeft = useSelector((state) => state.dice.playersPosition.p2InJail);
     const fields = useSelector((state) => state.fields.fields);
 
     // Getting empty fields on the screen
@@ -31,10 +41,12 @@ const GameInfo = () => {
             return `${item}, `;
         }
     });
+    const playerIsActive = activePlayer === 1 ? "player1" : "player2";
+    const playerJailStatus =
+        (playerIsActive === "player1" && "p2InJail") || (playerIsActive === "player2" && "p1InJail");
 
     // expected taxes
     useEffect(() => {
-        const playerIsActive = activePlayer === 1 ? "player2" : "player1";
         dispatch(expectedTaxes(playerIsActive));
     }, [player1Steps, player2Steps, player1OnwnedFields, player2OnwnedFields]);
 
@@ -58,8 +70,13 @@ const GameInfo = () => {
     };
     const buyBuildingHandler = (player) => {
         dispatch(openBuyBuildingModal([player]));
-        const playerIsActive = activePlayer === 1 ? "player1" : "player2";
+
         dispatch(expectedTaxes(playerIsActive));
+    };
+
+    const jailreleaseHandler = (player) => {
+        dispatch(activateJailRealeaseCard(player));
+        dispatch(setInJail(player));
     };
 
     return (
@@ -104,6 +121,13 @@ const GameInfo = () => {
                 >
                     Take a credit
                 </button>
+                <button
+                    disabled={p1JailCard === 0 || p1JailDaysLeft === 0}
+                    onClick={() => jailreleaseHandler("player1")}
+                    className={styles["sell-stocks"]}
+                >
+                    Jail release card:{`${p1JailCard}`}
+                </button>
             </div>
             <p>-----------------------</p>
             <h1 className={styles.dice}>
@@ -139,6 +163,13 @@ const GameInfo = () => {
                     className={styles["sell-stocks"]}
                 >
                     Take a credit
+                </button>
+                <button
+                    disabled={p2JailCard === 0 || p2JailDaysLeft === 0}
+                    onClick={() => jailreleaseHandler("player2")}
+                    className={styles["sell-stocks"]}
+                >
+                    Jail release card:{`${p2JailCard}`}
                 </button>
             </div>
         </li>

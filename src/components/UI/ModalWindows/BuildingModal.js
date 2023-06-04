@@ -5,6 +5,8 @@ import {
     getRidOfAssets,
     hireEngineer,
     fireEngineer,
+    hireManager,
+    fireManager,
 } from "../../../store/fields";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
@@ -27,6 +29,9 @@ const BuildingModal = () => {
     const activePlayerEngineer = activePlayerFields
         .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
         .map((field) => fields[field].engineer);
+    const activePlayerManager = activePlayerFields
+        .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
+        .map((field) => fields[field].manager);
 
     // Inputs changes handlers
 
@@ -92,7 +97,20 @@ const BuildingModal = () => {
     };
 
     const fireEngineerHandler = (field) => {
-        dispatch(fireEngineer([activePlayer, field]));
+        const confirm = window.confirm("You shure you whan`a fire engineer?");
+        if (confirm === true) {
+            dispatch(fireEngineer([activePlayer, field]));
+        }
+    };
+
+    const hireManagerHandler = (field) => {
+        dispatch(hireManager([activePlayer, field]));
+    };
+    const fireManagerHandler = (field) => {
+        const confirm = window.confirm("You shure you whan`a fire manager?");
+        if (confirm === true) {
+            dispatch(fireManager([activePlayer, field]));
+        }
     };
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -180,6 +198,8 @@ const BuildingModal = () => {
                                 return (
                                     <li key={index} className={styles["building-fields"]}>
                                         <button className={styles["button-fields"]}>{field}</button>
+
+                                        {/* ----- employees ----- */}
                                         <h3>Here you have employees:{activePlayerEmployees[index]}</h3>
                                         <form
                                             className={styles["buy-commercial--form"]}
@@ -251,6 +271,32 @@ const BuildingModal = () => {
                                             type="submit"
                                             className={styles["button-buy"]}
                                             onClick={() => fireEngineerHandler(field)}
+                                        >
+                                            Fire
+                                        </button>
+                                        {/* ----- manager ----- */}
+                                        <h3>{`Here you ${
+                                            activePlayerManager[index] === 1 ? "dont" : ""
+                                        } have manager`}</h3>
+
+                                        <button
+                                            disabled={
+                                                activePlayerEngineer[index] === 1 ||
+                                                activePlayerEmployees[index] !== 40 ||
+                                                activePlayerManager > 1
+                                            }
+                                            type="submit"
+                                            className={styles["button-buy"]}
+                                            onClick={() => hireManagerHandler(field)}
+                                        >
+                                            Hire
+                                        </button>
+
+                                        <button
+                                            disabled={activePlayerManager[index] === 1}
+                                            type="submit"
+                                            className={styles["button-buy"]}
+                                            onClick={() => fireManagerHandler(field)}
                                         >
                                             Fire
                                         </button>

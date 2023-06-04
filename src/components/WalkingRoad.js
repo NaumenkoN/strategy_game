@@ -11,91 +11,143 @@ import {
     openFightModal,
     circlePassMoney,
     rentalAndSalesIndex,
-    creditReturning,
+    debtReturning,
+    gameOver,
+    settingPlayerRouletteisOpen,
+    moneyLessThenZero,
 } from "../store/fields";
-import { inJail } from "../store/diceAndPlayerPositions";
+import { inJail, rouletteMoving } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
 
 const WalkingRoad = () => {
     const dispatch = useDispatch();
     const player1Steps = useSelector((state) => state.dice.playersPosition.player1);
     const player2Steps = useSelector((state) => state.dice.playersPosition.player2);
-    // const player1money = useSelector((state)=> state.fields.player1.money)
-    // const player2money = useSelector((state)=> state.fields.player2.money)
-    const p1InJail = useSelector((state) => state.dice.playersPosition.p1InJail);
-    const p2InJail = useSelector((state) => state.dice.playersPosition.p2InJail);
+    const player1money = useSelector((state) => state.fields.player1.money);
+    const player2money = useSelector((state) => state.fields.player2.money);
+    const player1stocks = useSelector((state) => state.fields.player1.stocks);
+    const player2stocks = useSelector((state) => state.fields.player2.stocks);
+    const player1fields = useSelector((state) => state.fields.player1.fields);
+    const player2fields = useSelector((state) => state.fields.player2.fields);
     const fields = useSelector((state) => state.fields.fields);
     const p1circlesPassed = useSelector((state) => state.dice.playersPosition.p1circle);
     const p2circlesPassed = useSelector((state) => state.dice.playersPosition.p2circle);
+    const p1IsOpenRouletModal = useSelector((state) => state.fields.player1.isOpenRouletteModal);
+    const p2IsOpenRouletModal = useSelector((state) => state.fields.player2.isOpenRouletteModal);
+    const playerIsOnRoulette = (p1IsOpenRouletModal && "player1") || (p2IsOpenRouletModal && "player2");
+    const rouletteState = useSelector((state) => state.fields.rouletteState);
+    const moveToFieldAfterRouletteSpin = useSelector((state) => state.dice.moveToFieldAfterRouletteSpin);
 
     // playground
+    const fightDiceIsDropted = useSelector((state) => state.dice.fightDiceIsDropted);
+    console.log(fightDiceIsDropted);
+    // console.log(fields);
 
-    console.log(fields);
-
-    // ----- Player1 cheking position
-    useEffect(() => {
-        dispatch(rentalAndSalesIndex(["free", "player1"]));
-        // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
-        if (player1Steps && fields[`${player1Steps}`].status === "empty") {
-            dispatch(openBuyModal(["player1", player1Steps, "living"]));
-        }
-        if (player1Steps && fields[`${player1Steps}`].status === "player2") {
-            dispatch(rentalCounting(["player1", player1Steps, "player2"]));
-        }
-        // ----- CHECKING FIELD IS JAIL
-        // if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
-        //     dispatch(openJailModal());
-        //     dispatch(inJail("p1InJail"));
-        //     dispatch(rentalAndSalesIndex(["arrest", "player1"]));
-        // }
-        // ----- CHECKING FIELD IS ROULETTE
-        // if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
-        //     dispatch(openRouletteModal());
-        // }
-        // ----- CHEKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL
-        if (player1Steps && fields[`${player1Steps}`].status === "emptyC") {
-            dispatch(openBuyModal(["player1", player1Steps, "commercial"]));
-        }
-    }, [player1Steps]);
-
-    // ----- Player2 cheking position
-    useEffect(() => {
-        dispatch(rentalAndSalesIndex(["free", "player2"]));
-        // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL
-        if (player2Steps && fields[`${player2Steps}`].status === "empty") {
-            dispatch(openBuyModal(["player2", player2Steps, "living"]));
-        }
-        if (player2Steps && fields[`${player2Steps}`].status === "player1") {
-            dispatch(rentalCounting(["player2", player2Steps, "player1"]));
-        }
-        // ----- CHECKING FIELD IS JAIL
-        // if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
-        //     dispatch(openJailModal());
-        //     dispatch(inJail("p2InJail"));
-        //     dispatch(rentalAndSalesIndex(["arrest", "player2"]));
-        // }
-        // ----- CHECKING FIELD IS ROULETTE
-        // if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
-        //     dispatch(openRouletteModal());
-        // }
-        // ----- CHEKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL
-        if (player2Steps && fields[`${player2Steps}`].status === "emptyC") {
-            dispatch(openBuyModal(["player2", player2Steps, "commercial"]));
-        }
-    }, [player2Steps]);
-
-    // ----- (FIGHT) checking is players on one position
+    // // ----- Player1 cheking position -----
     // useEffect(() => {
-    //     if (player1Steps === player2Steps && player1Steps !== 1) {
-    //         dispatch(openFightModal());
-    //     }
-    // }, [player1Steps, player2Steps]);
+    //     dispatch(rentalAndSalesIndex(["free", "player1"]));
 
-    // ----- check did a player is pass the circle
+    //     // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL -----
+    //     if (player1Steps && fields[`${player1Steps}`].status === "empty") {
+    //         dispatch(openBuyModal(["player1", player1Steps, "living"]));
+    //     }
+    //     if (player1Steps && fields[`${player1Steps}`].status === "player2") {
+    //         dispatch(rentalCounting(["player1", player1Steps, "player2"]));
+    //     }
+    //     // // ----- CHECKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL -----
+    //     if (player1Steps && fields[`${player1Steps}`].status === "emptyC") {
+    //         dispatch(openBuyModal(["player1", player1Steps, "commercial"]));
+    //     }
+    //     // ----- CHECKING FIELD IS JAIL -----
+    //     if (player1Steps === 12 || player1Steps === 24 || player1Steps === 36 || player1Steps === 48) {
+    //         dispatch(inJail("p1InJail"));
+    //         dispatch(rentalAndSalesIndex(["arrest", "player1"]));
+    //         if (p1IsOpenRouletModal !== true) {
+    //             dispatch(openJailModal());
+    //         }
+    //     }
+    //     // ----- CHECKING FIELD IS ROULETTE -----
+    //     if (player1Steps === 7 || player1Steps === 19 || player1Steps === 31 || player1Steps === 43) {
+    //         dispatch(openRouletteModal("player1"));
+    //     }
+    // }, [player1Steps]);
+
+    // // ----- Player2 cheking position -----
+    // useEffect(() => {
+    //     dispatch(rentalAndSalesIndex(["free", "player2"]));
+    //     // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT - PAYING RENTAL -----
+    //     if (player2Steps && fields[`${player2Steps}`].status === "empty") {
+    //         dispatch(openBuyModal(["player2", player2Steps, "living"]));
+    //     }
+    //     if (player2Steps && fields[`${player2Steps}`].status === "player1") {
+    //         dispatch(rentalCounting(["player2", player2Steps, "player1"]));
+    //     }
+    //     // ----- CHECKING COMMERCIAL FIELD IS EMPTY, IF NOT - PAYING RENTAL -----
+    //     if (player2Steps && fields[`${player2Steps}`].status === "emptyC") {
+    //         dispatch(openBuyModal(["player2", player2Steps, "commercial"]));
+    //     }
+    //     // ----- CHECKING FIELD IS JAIL -----
+    //     if (player2Steps === 12 || player2Steps === 24 || player2Steps === 36 || player2Steps === 48) {
+    //         dispatch(inJail("p2InJail"));
+    //         dispatch(rentalAndSalesIndex(["arrest", "player2"]));
+    //         if (p2IsOpenRouletModal !== true) {
+    //             dispatch(openJailModal());
+    //         }
+    //     }
+    //     // ----- CHECKING FIELD IS ROULETTE -----
+    //     if (player2Steps === 7 || player2Steps === 19 || player2Steps === 31 || player2Steps === 43) {
+    //         dispatch(openRouletteModal("player2"));
+    //     }
+    // }, [player2Steps]);
+
+    // // ----- Checking game is over -----
+
     useEffect(() => {
-        p1circlesPassed && dispatch(circlePassMoney("player1")) && dispatch(creditReturning(["player1"]));
-        p2circlesPassed && dispatch(circlePassMoney("player2")) && dispatch(creditReturning(["player2"]));
+        //  ----- check is money < 0 -----
+        if (player1money < 0 && (player1stocks > 0 || player1fields.length !== 0)) {
+            console.log('dispatch(moneyLessThenZero(["player1"]))');
+            dispatch(moneyLessThenZero(["player1"]));
+        }
+        if (player2money < 0 && (player2stocks > 0 || player2fields.length !== 0)) {
+            console.log('dispatch(moneyLessThenZero(["player2"]))');
+            dispatch(moneyLessThenZero(["player2"]));
+        }
+        if (player1money < 0 && player1stocks === 0 && player1fields.length === 0) {
+            dispatch(gameOver());
+        }
+        if (player2money < 0 && player2stocks === 0 && player2fields.length === 0) {
+            dispatch(gameOver());
+        }
+    }, [player1money, player2money]);
+
+    // ----- (FIGHT) checking is players on the same position -----
+    useEffect(() => {
+        if (player1Steps === player2Steps && player1Steps !== 1) {
+            dispatch(openFightModal());
+        }
+    }, [player1Steps, player2Steps]);
+    // ----- check did a player is pass the circle -----
+    useEffect(() => {
+        p1circlesPassed && dispatch(circlePassMoney("player1")) && dispatch(debtReturning(["player1"]));
+        p2circlesPassed && dispatch(circlePassMoney("player2")) && dispatch(debtReturning(["player2"]));
     }, [p1circlesPassed, p2circlesPassed]);
+
+    // cheking is roulette result === some field -----
+    console.log(rouletteState);
+    useEffect(() => {
+        if (
+            rouletteState === "start" ||
+            rouletteState === "field4" ||
+            rouletteState === "field12" ||
+            rouletteState === "field23" ||
+            rouletteState === "field28" ||
+            rouletteState === "field36" ||
+            rouletteState === "field47"
+        ) {
+            console.log("should dispatch roulettemoving...");
+            dispatch(rouletteMoving([rouletteState, playerIsOnRoulette]));
+        }
+    }, [rouletteState]);
 
     return (
         <>
