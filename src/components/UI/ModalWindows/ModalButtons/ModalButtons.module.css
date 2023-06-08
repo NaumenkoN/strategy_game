@@ -1,0 +1,9 @@
+.close {
+    position: absolute;
+    right: 0.1rem;
+    top: 0.1rem;
+    font-size: 1.3rem;
+}
+
+.simple {
+}

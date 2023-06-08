@@ -4,8 +4,8 @@ const fieldsSlice = createSlice({
     name: "fields",
     initialState: {
         player1: {
-            money: 600,
-            stocks: 10,
+            money: 200,
+            stocks: 50,
             expectedTaxes: 0,
             fields: [],
             inJailRentalIndex: 1,
@@ -19,8 +19,8 @@ const fieldsSlice = createSlice({
             isOpenRouletteModal: false,
         },
         player2: {
-            money: 600,
-            stocks: 10,
+            money: 200,
+            stocks: 50,
             expectedTaxes: 0,
             fields: [],
             inJailRentalIndex: 1,
@@ -159,7 +159,7 @@ const fieldsSlice = createSlice({
         },
     },
     reducers: {
-        settingPlayerRouletteisOpen(state) {
+        settingPlayerRouletteisClose(state) {
             state.rouletteState = null;
             state.player1.isOpenRouletteModal = false;
             state.player2.isOpenRouletteModal = false;
@@ -185,7 +185,7 @@ const fieldsSlice = createSlice({
         closeRouletteStocksModal(state) {
             state.rouletteSkocksModal.isOpen = false;
             state.rouletteSkocksModal.value = 0;
-            fieldsSlice.caseReducers.settingPlayerRouletteisOpen(state);
+            fieldsSlice.caseReducers.settingPlayerRouletteisClose(state);
         },
         rouletteBuyStocks(state, action) {
             const player = action.payload;
@@ -245,7 +245,6 @@ const fieldsSlice = createSlice({
             if (result === "jailFree") {
                 state.isOpenRouletteResultModal = true;
                 state[player].jailFreeCard += 1;
-                // state[player].isOpenRouletteModal = false;
                 state.isOpenRouletteModal = false;
             }
 
@@ -264,7 +263,6 @@ const fieldsSlice = createSlice({
             if (result === "fieldsRepairing") {
                 state.isOpenRouletteResultModal = true;
                 state.isOpenRouletteModal = false;
-                // state[player].isOpenRouletteModal = false;
                 if (state[player].fields.length > 0) {
                     state[player].money -= state[player].fields.length * 100;
                 }
@@ -274,7 +272,6 @@ const fieldsSlice = createSlice({
                 state.isOpenRouletteResultModal = true;
                 state[player].debt = 0;
                 state.isOpenRouletteModal = false;
-                // state[player].isOpenRouletteModal = false;
             }
             if (result === "field23" || result === "field28" || result === "field47") {
                 state.isOpenRouletteResultModal = true;
@@ -382,6 +379,7 @@ const fieldsSlice = createSlice({
                     state.warningModal = true;
                     state.isOpenBuyModal = false;
                     state.isOpenBuyCommercialModal = false;
+                    state.isOpenRouletteModal = false;
                 }
                 if (
                     state[player].money < state[player].debt &&
@@ -389,10 +387,10 @@ const fieldsSlice = createSlice({
                     state[player].stocks !== 0
                 ) {
                     state[player].isOpenSellStocksModal = true;
+                    state.warningModal = true;
                     state.isOpenBuildingModal = false;
                     state.isOpenSellStocksModal = true;
                     state.emergencySellActives = false;
-                    state.warningModal = true;
                 }
                 if (state[player].money >= state[player].debt) {
                     state.emergencySellActives = true;
@@ -422,7 +420,6 @@ const fieldsSlice = createSlice({
                     state.warningModal = true;
                     // state.isOpenBuyModal = false;
                     // state.isOpenBuyCommercialModal = false;
-                    console.log("fields !== 0");
                 }
                 if (state[player].fields.length === 0 && state[player].stocks !== 0) {
                     state[player].isOpenSellStocksModal = true;
@@ -431,18 +428,14 @@ const fieldsSlice = createSlice({
                     state.isOpenSellStocksModal = true;
                     state.emergencySellActives = true;
                     state.warningModal = true;
-                    console.log("fields === 0 and stocks !== 0");
                 }
                 if (state[player].fields.length === 0 && state[player].stocks === 0) {
                     fieldsSlice.caseReducers.gameOver(state);
                     state.isOpenBuyModal = false;
                     state.isOpenSellStocksModal = false;
-                    console.log("fields and stocks === 0");
                 }
             }
-            if (state[player].money >= 0) {
-                console.log("money >= 0");
-
+            if (state[player].money >= state[player].debt) {
                 state.emergencySellActives = true;
                 state[player].isOpenBuildingModal = false;
                 state[player].isOpenSellStocksModal = false;
@@ -547,6 +540,7 @@ const fieldsSlice = createSlice({
                     state[`${action.payload[0]}`].inJailRentalIndex;
             }
         },
+
         getRidOfAssets(state, action) {
             if (action.payload[3] === "employees") {
                 // checking is value of chosen employees not more then exist
@@ -616,16 +610,17 @@ const fieldsSlice = createSlice({
             if (state.emergencySellActives === false && state[`${action.payload[0]}`].debt > 0) {
                 fieldsSlice.caseReducers.debtReturning(state, action);
             }
-            //his block for money less then zero
-            console.log(state.emergencySellActives);
-            if (state.emergencySellActives === false) {
-                state.isOpenBuildingModal = false;
-                fieldsSlice.caseReducers.moneyLessThenZero(state, action);
-            }
-        },
+            // //his block for money less then zero
 
+            // if (state.emergencySellActives === false) {
+            //     console.log("?");
+
+            //     fieldsSlice.caseReducers.moneyLessThenZero(state, action);
+            // }
+        },
         openBuyBuildingModal(state, action) {
             state.isOpenBuildingModal = true;
+
             state[`${action.payload[0]}`].isOpenBuildingModal = true;
         },
         closeBuildingModal(state, action) {
@@ -646,8 +641,8 @@ const fieldsSlice = createSlice({
                 state[`${action.payload[0]}`].money += action.payload[1] * 20;
                 state[`${action.payload[0]}`].stocks -= action.payload[1];
                 state.isOpenSellStocksModal = false;
-                state.emergencySellActives = true;
             }
+
             if (state.emergencySellActives === false && state[`${action.payload[0]}`].debt > 0) {
                 fieldsSlice.caseReducers.debtReturning(state, action);
             }
@@ -684,6 +679,7 @@ const fieldsSlice = createSlice({
             }
             if (action.payload[2] === "commercial" && state[`${action.payload[0]}`].money >= 400) {
                 state.isOpenBuyCommercialModal = true;
+                state.isOpenBuyModal = true;
                 state[`${action.payload[0]}`].isOpenBuyModal = true;
             }
         },
@@ -743,7 +739,6 @@ const fieldsSlice = createSlice({
         },
 
         openFightModal(state) {
-            console.log();
             state.isOpenFightModal = true;
         },
     },
@@ -752,7 +747,7 @@ const fieldsSlice = createSlice({
 export default fieldsSlice.reducer;
 export const {
     moneyLessThenZero,
-    settingPlayerRouletteisOpen,
+    settingPlayerRouletteisClose,
     gameOver,
     closeRouletteResultModal,
     activateJailRealeaseCard,

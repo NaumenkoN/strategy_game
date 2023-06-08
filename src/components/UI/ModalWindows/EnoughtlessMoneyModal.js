@@ -2,6 +2,9 @@ import styles from "./EnoughtlessMoney.module.css";
 import { closeEnoughtlessMoneyModal } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "./ModalTemplate/Backdrop";
+import ModalWindow from "./ModalTemplate/ModalWindow";
+import CloseButton from "./ModalButtons/CloseButton";
 
 const EnoughtlessMoneyModal = () => {
     const dispatch = useDispatch();
@@ -11,16 +14,11 @@ const EnoughtlessMoneyModal = () => {
     };
     return (
         <>
-            <div className={styles.backdrop}></div>
-            <div className={styles.modal}>
-                <button
-                    onClick={closeEnoughtlessMoneyModalHandler}
-                    className={styles["close-button"]}
-                >
-                    x
-                </button>
+            <Backdrop />
+            <ModalWindow>
+                <CloseButton handler={closeEnoughtlessMoneyModalHandler} />
                 <h1>Enoughtless Money</h1>
-            </div>
+            </ModalWindow>
         </>
     );
 };

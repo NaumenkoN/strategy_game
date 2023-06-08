@@ -1,7 +1,10 @@
 import styles from "./RouletteResultModal.module.css";
-import { closeRouletteResultModal, settingPlayerRouletteisOpen } from "../../../store/fields";
+import { closeRouletteResultModal, settingPlayerRouletteisClose } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "./ModalTemplate/Backdrop";
+import ModalWindow from "./ModalTemplate/ModalWindow";
+import CloseButton from "../ModalWindows/ModalButtons/CloseButton";
 
 const RouletteResultModal = () => {
     const dispatch = useDispatch();
@@ -34,19 +37,17 @@ const RouletteResultModal = () => {
 
     const closeResultRouletteModalHandler = (e) => {
         dispatch(closeRouletteResultModal());
-        dispatch(settingPlayerRouletteisOpen());
+        dispatch(settingPlayerRouletteisClose());
     };
 
     return (
         <>
-            <div className={styles.backdrop}></div>
-            <div className={styles.modal}>
-                <button onClick={closeResultRouletteModalHandler} className={styles["close-button"]}>
-                    x
-                </button>
+            <Backdrop />
+            <ModalWindow>
+                <CloseButton handler={closeResultRouletteModalHandler} />
                 <h1>Roulette Result</h1>
                 <p>{message}</p>
-            </div>
+            </ModalWindow>
         </>
     );
 };

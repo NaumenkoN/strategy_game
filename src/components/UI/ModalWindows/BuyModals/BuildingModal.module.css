@@ -10,9 +10,9 @@
 }
 
 .modal {
-    margin: 35vh 35vw;
-    width: 25rem;
-    height: 16rem;
+    margin: 10vh 10vw;
+    width: 80vw;
+    height: 80vh;
     background-color: green;
     position: fixed;
     z-index: 11;
@@ -25,9 +25,23 @@
     font-size: 1.3rem;
 }
 
-.control-buttons {
+.buttons-list {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: 1rem;
+    flex-direction: row;
+}
+.building-fields {
+    margin-left: 1rem;
+}
+.button-fields {
+    font-size: 2rem;
+    width: 100%;
+    height: 100%;
+}
+
+h2 {
+    margin-top: 2rem;
+}
+
+.commercial-building {
+    margin-top: 12rem;
 }

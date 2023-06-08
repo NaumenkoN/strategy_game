@@ -2,6 +2,9 @@ import styles from "./RouletteModal.module.css";
 import { rouletteSpin } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "./ModalTemplate/Backdrop";
+import ModalWindow from "./ModalTemplate/ModalWindow";
+import ArgButton from "../ModalWindows/ModalButtons/ArgButton";
 
 const RouletteModal = () => {
     const dispatch = useDispatch();
@@ -14,12 +17,12 @@ const RouletteModal = () => {
     };
     return (
         <>
-            <div className={styles.backdrop}></div>
-            <div className={styles.modal}>
+            <Backdrop />
+            <ModalWindow>
                 <h1>Roulette</h1>
                 <h2>{`${activePlayer}, you are on the roulette field. Spin the wheel, let\`s see what you got!`}</h2>
-                <button onClick={() => rouletteSpinHandler(activePlayer)}>Spin the wheel</button>
-            </div>
+                <ArgButton message={"Spin the wheel"} handler={rouletteSpinHandler} arguments={activePlayer} />
+            </ModalWindow>
         </>
     );
 };

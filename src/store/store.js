@@ -1,9 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
 import diceReducer from "./diceAndPlayerPositions";
-import fields from "./fields";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
+import fieldsReducer from "./fields";
+import { combineReducers } from "@reduxjs/toolkit";
 
-const store = configureStore({
-    reducer: { dice: diceReducer, fields: fields },
+const persistConfig = {
+    key: "root",
+    storage,
+};
+
+const reducer = combineReducers({ dice: diceReducer, fields: fieldsReducer });
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk],
 });
 
-export default store;
+// export const persistor = persistStore(store);

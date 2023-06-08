@@ -26,8 +26,7 @@ const diceAndPositionsSlice = createSlice({
         rouletteMoving(state, action) {
             const field = action.payload[0];
             const player = action.payload[1];
-            console.log(field);
-            console.log(player);
+
             if (field === "start") {
                 state.playersPosition[player] = 1;
             }
@@ -62,10 +61,8 @@ const diceAndPositionsSlice = createSlice({
             state.activePlayer += 1;
         },
         dropTwoDices(state) {
-            // state.firstDice = Math.trunc(Math.random() * 6) + 1;
-            // state.secondDice = Math.trunc(Math.random() * 6) + 1;
-            state.firstDice = 2;
-            state.secondDice = 1;
+            state.firstDice = Math.trunc(Math.random() * 6) + 1;
+            state.secondDice = Math.trunc(Math.random() * 6) + 1;
         },
         dropFightDices(state) {
             state.firstFightDice = Math.trunc(Math.random() * 6) + 1;
@@ -75,7 +72,6 @@ const diceAndPositionsSlice = createSlice({
         },
 
         hideFightDices(state) {
-            console.log("reset");
             state.fightDiceIsDropted = false;
             state.showFightDices = false;
             state.firstFightDice = null;
@@ -85,64 +81,96 @@ const diceAndPositionsSlice = createSlice({
         winner(state, action) {
             state.winner = action.payload;
         },
-        addStep(state) {
+        addStep(state, action) {
             const addSteps = state.firstDice + state.secondDice;
+            const player = action.payload;
+            const player1Circle = player === "player1" ? "p1circle" : "p2circle";
+            const player2Circle = player === "player1" ? "p2circle" : "p1circle";
+            const playerInJail = player === "player1" ? "p1InJail" : "p2InJail";
+            const player1IsActive = player === "player1" ? "player1IsActive" : "player2IsActive";
+            const player2IsActive = player === "player1" ? "player2IsActive" : "player1IsActive";
 
-            if (state.activePlayer === 1) {
-                state.playersPosition.p2circle = false;
-                const totalSteps = state.playersPosition.player1 + addSteps;
+            state.playersPosition[player2Circle] = false;
+            const totalSteps = state.playersPosition[player] + addSteps;
 
-                if (state.playersPosition.p1InJail === 0) {
-                    if (state.firstDice !== state.secondDice) {
-                        state.playersPosition.player1IsActive = false;
-                        state.playersPosition.player2IsActive = true;
-                    }
-                    if (totalSteps > 48) {
-                        state.playersPosition.p1circle = true;
-
-                        state.playersPosition.player1 = totalSteps - 48;
-                    }
-                    if (totalSteps <= 48) {
-                        state.playersPosition.player1 += addSteps;
-                    }
+            if (state.playersPosition[playerInJail] === 0) {
+                if (state.firstDice !== state.secondDice) {
+                    state.playersPosition[player1IsActive] = false;
+                    state.playersPosition[player2IsActive] = true;
                 }
-                if (state.playersPosition.p1InJail > 0 && state.firstDice === state.secondDice) {
-                    state.playersPosition.p1InJail = 0;
-                    state.activePlayer = 1;
-                    return;
+                if (totalSteps > 48) {
+                    state.playersPosition[player1Circle] = true;
+
+                    state.playersPosition[player] = totalSteps - 48;
                 }
-                if (state.playersPosition.p1InJail > 0) {
-                    state.playersPosition.p1InJail = state.playersPosition.p1InJail - 1;
+                if (totalSteps <= 48) {
+                    state.playersPosition[player] += addSteps;
                 }
             }
-
-            if (state.activePlayer === 2) {
-                state.playersPosition.p1circle = false;
-                const totalSteps = state.playersPosition.player2 + addSteps;
-                if (state.playersPosition.p2InJail === 0) {
-                    if (state.firstDice !== state.secondDice) {
-                        state.playersPosition.player2IsActive = false;
-                        state.playersPosition.player1IsActive = true;
-                    }
-
-                    if (totalSteps > 48) {
-                        state.playersPosition.p2circle = true;
-
-                        state.playersPosition.player2 = totalSteps - 48;
-                    }
-                    if (totalSteps <= 48) {
-                        state.playersPosition.player2 += addSteps;
-                    }
-                }
-                if (state.playersPosition.p2InJail > 0 && state.firstDice === state.secondDice) {
-                    state.playersPosition.p2InJail = 0;
-                    state.activePlayer = 2;
-                    return;
-                }
-                if (state.playersPosition.p2InJail > 0) {
-                    state.playersPosition.p2InJail = state.playersPosition.p2InJail - 1;
-                }
+            if (state.playersPosition[playerInJail] > 0 && state.firstDice === state.secondDice) {
+                state.playersPosition[playerInJail] = 0;
+                state.activePlayer = 1;
+                return;
             }
+            if (state.playersPosition[playerInJail] > 0) {
+                state.playersPosition[playerInJail] = state.playersPosition[playerInJail] - 1;
+            }
+
+            // if (state.activePlayer === 1) {
+            //     state.playersPosition.p2circle = false;
+            //     const totalSteps = state.playersPosition.player1 + addSteps;
+
+            //     if (state.playersPosition.p1InJail === 0) {
+            //         if (state.firstDice !== state.secondDice) {
+            //             state.playersPosition.player1IsActive = false;
+            //             state.playersPosition.player2IsActive = true;
+            //         }
+            //         if (totalSteps > 48) {
+            //             state.playersPosition.p1circle = true;
+
+            //             state.playersPosition.player1 = totalSteps - 48;
+            //         }
+            //         if (totalSteps <= 48) {
+            //             state.playersPosition.player1 += addSteps;
+            //         }
+            //     }
+            //     if (state.playersPosition.p1InJail > 0 && state.firstDice === state.secondDice) {
+            //         state.playersPosition.p1InJail = 0;
+            //         state.activePlayer = 1;
+            //         return;
+            //     }
+            //     if (state.playersPosition.p1InJail > 0) {
+            //         state.playersPosition.p1InJail = state.playersPosition.p1InJail - 1;
+            //     }
+            // }
+
+            // if (state.activePlayer === 2) {
+            //     state.playersPosition.p1circle = false;
+            //     const totalSteps = state.playersPosition.player2 + addSteps;
+            //     if (state.playersPosition.p2InJail === 0) {
+            //         if (state.firstDice !== state.secondDice) {
+            //             state.playersPosition.player2IsActive = false;
+            //             state.playersPosition.player1IsActive = true;
+            //         }
+
+            //         if (totalSteps > 48) {
+            //             state.playersPosition.p2circle = true;
+
+            //             state.playersPosition.player2 = totalSteps - 48;
+            //         }
+            //         if (totalSteps <= 48) {
+            //             state.playersPosition.player2 += addSteps;
+            //         }
+            //     }
+            //     if (state.playersPosition.p2InJail > 0 && state.firstDice === state.secondDice) {
+            //         state.playersPosition.p2InJail = 0;
+            //         state.activePlayer = 2;
+            //         return;
+            //     }
+            //     if (state.playersPosition.p2InJail > 0) {
+            //         state.playersPosition.p2InJail = state.playersPosition.p2InJail - 1;
+            //     }
+            // }
         },
 
         inJail(state, action) {

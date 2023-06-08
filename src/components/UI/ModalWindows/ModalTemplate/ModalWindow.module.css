@@ -1,0 +1,8 @@
+.modal {
+    margin: 35vh 35vw;
+    width: 25rem;
+    height: 16rem;
+    background-color: green;
+    position: fixed;
+    z-index: 10;
+}

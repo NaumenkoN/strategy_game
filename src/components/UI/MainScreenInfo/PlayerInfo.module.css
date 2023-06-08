@@ -1,9 +1,6 @@
 .field {
-    grid-area: f;
     background-color: #ffffff;
-    width: 99.5%;
-    height: 99.15%;
-
+    font-size: 0.6rem;
     margin-bottom: 0.2rem;
 }
 
@@ -17,7 +14,6 @@ li {
 
 .dice {
     margin: 0.7rem 30%;
-    font-size: 0.7rem;
 }
 
 p {
@@ -34,4 +30,7 @@ p {
     flex-direction: row;
     width: 15rem;
     margin-left: 25%;
+}
+
+.control-buttons--group button {
 }

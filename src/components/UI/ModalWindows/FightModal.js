@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { closeFightModal, fightWithdrawal } from "../../../store/fields";
 import { dropFightDices, hideFightDices, winner } from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "./ModalTemplate/Backdrop";
+import ModalWindow from "./ModalTemplate/ModalWindow";
+import SimpleButton from "./ModalButtons/SimpleButton";
 
 const FightModal = () => {
     const dispatch = useDispatch();
@@ -17,7 +20,6 @@ const FightModal = () => {
     };
 
     useEffect(() => {
-        console.log(firstDice, secondDice);
         if (firstDice > secondDice) {
             dispatch(fightWithdrawal(["player1", "player2"]));
             dispatch(winner(1));
@@ -42,21 +44,21 @@ const FightModal = () => {
 
     return (
         <>
-            <div className={styles.backdrop}></div>
-            <div className={styles.modal}>
+            <Backdrop />
+            <ModalWindow>
                 <h1>Fight!</h1>
                 <div className={styles.info}>
                     <div>
-                        <p>
+                        <div>
                             Player1: {fightDices && firstDice} {whoWinner === 1 && "win"}
-                        </p>
-                        <p>
+                        </div>
+                        <div>
                             Player2: {fightDices && secondDice} {whoWinner === 2 && "win"}
-                        </p>
-                        <button onClick={fightDiceHandler}>Run!</button>
+                        </div>
+                        <SimpleButton message={"Run!"} handler={fightDiceHandler} />
                     </div>
                 </div>
-            </div>
+            </ModalWindow>
         </>
     );
 };
