@@ -1,0 +1,32 @@
+.main {
+    background-image: url("../../../media/main-menu-image.webp");
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    background-size: cover;
+}
+.control-buttons {
+    width: 14vw;
+    height: 45vh;
+    margin: 14vw auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button {
+    width: auto;
+    border: none;
+    color: white;
+    font-size: 2vw;
+    background-color: rgba(0, 0, 0, 0);
+    margin: 1vw 0;
+}
+
+.button:hover {
+    color: rgb(167, 167, 167);
+}
+
+.button:active {
+    color: rgb(231, 231, 231);
+}

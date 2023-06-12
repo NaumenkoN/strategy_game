@@ -13,8 +13,8 @@ import WarningModal from "./UI/ModalWindows/WarningModal";
 import RouletteStocksModal from "./UI/ModalWindows/RouletteStocksModal";
 import RouletteResultModal from "./UI/ModalWindows/RouletteResultModal";
 import GameOverModal from "./UI/ModalWindows/GameOverModal";
-
-import { useSelector, useDispatch } from "react-redux";
+import MainMenu from "./UI/MainMenu/MainMenu";
+import { useSelector } from "react-redux";
 
 const Map = () => {
     const isOpenBuyModalIsOpen = useSelector((state) => state.fields.isOpenBuyModal);
@@ -29,23 +29,30 @@ const Map = () => {
     const isOpenRouletteSkocksModal = useSelector((state) => state.fields.rouletteSkocksModal.isOpen);
     const isOpenRouletteResultModal = useSelector((state) => state.fields.isOpenRouletteResultModal);
     const isGameIsOver = useSelector((state) => state.fields.gameIsOver);
+    const isOpenMainMenu = useSelector((state) => state.menu.isOpenMainMenu);
 
     return (
         <ul className={styles.map}>
-            {isGameIsOver && <GameOverModal />}
-            {isOpenRouletteResultModal && <RouletteResultModal />}
-            {isOpenRouletteSkocksModal && <RouletteStocksModal />}
-            {isOpenWarningModal && <WarningModal />}
-            {isOpenSellConfirmModal && <SellConfirmModal />}
-            {isOpenBuildingModal && <BuildingModal />}
-            {isOpenBuyModalIsOpen && <BuyModal />}
-            {isOpenFightModal && <FightModal />}
-            {isOpenSellStocksModal && <SellStocksModal />}
-            {jailModalIsOpen && <JailModal />}
-            {isOpenRouletteModal && <RouletteModal />}
-            {isOpenEnoughtlessMoneyModal && <EnoughtlessMoneyModal />}
-            <WalkingRoad />
-            <GameInfo />
+            {!isOpenMainMenu && (
+                <>
+                    {isGameIsOver && <GameOverModal />}
+                    {isOpenRouletteResultModal && <RouletteResultModal />}
+                    {isOpenRouletteSkocksModal && <RouletteStocksModal />}
+                    {isOpenWarningModal && <WarningModal />}
+                    {isOpenSellConfirmModal && <SellConfirmModal />}
+                    {isOpenBuildingModal && <BuildingModal />}
+                    {isOpenBuyModalIsOpen && <BuyModal />}
+                    {isOpenFightModal && <FightModal />}
+                    {isOpenSellStocksModal && <SellStocksModal />}
+                    {jailModalIsOpen && <JailModal />}
+                    {isOpenRouletteModal && <RouletteModal />}
+                    {isOpenEnoughtlessMoneyModal && <EnoughtlessMoneyModal />}
+                    <WalkingRoad />
+                    <GameInfo />
+                </>
+            )}
+
+            {isOpenMainMenu && <MainMenu />}
         </ul>
     );
 };

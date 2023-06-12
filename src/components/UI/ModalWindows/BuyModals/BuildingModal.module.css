@@ -6,14 +6,13 @@
     opacity: 80%;
     position: fixed;
     background-color: black;
-    z-index: 10;
+    z-index: 9;
 }
 
 .modal {
-    margin: 10vh 10vw;
-    width: 80vw;
-    height: 80vh;
-    background-color: green;
+    margin: 8vh 8vw;
+    width: 83vw;
+    height: 83vh;
     position: fixed;
     z-index: 11;
 }

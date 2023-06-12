@@ -1,4 +1,4 @@
-import styles from "./SectionEmployees.module.css";
+import styles from "./Sections.module.css";
 import Input from "../ModalTemplate/Input";
 import ArgButton from "../ModalButtons/ArgButton";
 
@@ -79,100 +79,107 @@ const SectionEmployees = (props) => {
         .map((field) => props.fields[field].manager);
 
     return (
-        <section className={styles["commercial-building"]}>
-            <h1>{`Or you whan\`a expand your manufacture?`}</h1>
-            <ul className={styles["buttons-list"]}>
+        <section>
+            <h1 className={styles.header}>{`Manage your commercial fields`}</h1>
+            <ul className={styles["fields-list"]}>
                 {props.activePlayerFields
                     .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
                     .map((field, index) => {
                         return (
-                            <li key={index} className={styles["building-fields"]}>
-                                <button className={styles["button-fields"]}>{field}</button>
+                            <li key={index} className={styles["field-c"]}>
+                                <div className={styles["field-number"]}>{field}</div>
 
                                 {/* ----- employees ----- */}
-                                <h3>Here you have employees:{activePlayerEmployees[index]}</h3>
+                                <h2 className={styles.quantity}>Employees:{activePlayerEmployees[index]}</h2>
                                 <form onSubmit={props.onSubmitHandler}>
-                                    <Input
-                                        labelMessage={"ADD +:"}
-                                        onChange={onChangeComBuildHandler}
-                                        value={addEmployeesValue}
-                                        id={"build-c"}
-                                        type={"number"}
-                                        min={10}
-                                        max={40 - activePlayerEmployees[index]}
-                                        step={10}
-                                    />
+                                    <div className={styles["controls-c"]}>
+                                        <Input
+                                            labelMessage={""}
+                                            onChange={onChangeComBuildHandler}
+                                            value={addEmployeesValue}
+                                            id={"build-c"}
+                                            type={"number"}
+                                            min={10}
+                                            max={40 - activePlayerEmployees[index]}
+                                            step={10}
+                                        />
+                                        <ArgButton
+                                            disabled={activePlayerEmployees[index] >= 40}
+                                            type={"submit"}
+                                            handler={buildCommercialHandler}
+                                            arguments={field}
+                                            message={"Hire"}
+                                        />
+                                    </div>
+                                </form>
+                                <form onSubmit={props.onSubmitHandler}>
+                                    <div className={styles["controls-c"]}>
+                                        <Input
+                                            labelMessage={""}
+                                            onChange={onChangeComSellHandler}
+                                            value={sellEmployeesValue}
+                                            id={"sell-build-c"}
+                                            type={"number"}
+                                            min={10}
+                                            max={activePlayerEmployees[index]}
+                                            step={10}
+                                        />
+                                        <ArgButton
+                                            disabled={activePlayerEngineer[index] > 1}
+                                            type={"submit"}
+                                            handler={sellCommercialHandler}
+                                            arguments={field}
+                                            message={"Fire"}
+                                        />
+                                    </div>
+                                </form>
+                                {/* ----- engineer ----- */}
+                                <h2 className={styles.quantity}>{`You ${
+                                    activePlayerEngineer[index] === 1 ? "dont" : ""
+                                } have engineer`}</h2>
+                                <div className={styles["controls-c"]}>
                                     <ArgButton
-                                        disabled={activePlayerEmployees[index] >= 40}
+                                        disabled={
+                                            activePlayerEngineer[index] > 1 || activePlayerEmployees[index] !== 40
+                                        }
                                         type={"submit"}
-                                        handler={buildCommercialHandler}
+                                        handler={hireEngineerHandler}
                                         arguments={field}
                                         message={"Hire"}
                                     />
-                                </form>
-                                <form className={styles["buy-commercial--form"]} onSubmit={props.onSubmitHandler}>
-                                    <Input
-                                        labelMessage={"ADD +:"}
-                                        onChange={onChangeComSellHandler}
-                                        value={sellEmployeesValue}
-                                        id={"sell-build-c"}
-                                        type={"number"}
-                                        min={10}
-                                        max={activePlayerEmployees[index]}
-                                        step={10}
-                                    />
                                     <ArgButton
-                                        disabled={activePlayerEngineer[index] > 1}
+                                        disabled={activePlayerEngineer[index] === 1}
                                         type={"submit"}
-                                        handler={sellCommercialHandler}
+                                        handler={fireEngineerHandler}
                                         arguments={field}
                                         message={"Fire"}
                                     />
-                                </form>
-                                {/* ----- engineer ----- */}
-                                <h3>{`Here you ${
-                                    activePlayerEngineer[index] === 1 ? "dont" : ""
-                                } have engineer`}</h3>
-                                <ArgButton
-                                    disabled={
-                                        activePlayerEngineer[index] > 1 || activePlayerEmployees[index] !== 40
-                                    }
-                                    type={"submit"}
-                                    handler={hireEngineerHandler}
-                                    arguments={field}
-                                    message={"Hire"}
-                                />
-                                <ArgButton
-                                    disabled={activePlayerEngineer[index] === 1}
-                                    type={"submit"}
-                                    handler={fireEngineerHandler}
-                                    arguments={field}
-                                    message={"Fire"}
-                                />
+                                </div>
 
                                 {/* ----- manager ----- */}
-                                <h3>{`Here you ${
+                                <h2 className={styles.quantity}>{`You ${
                                     activePlayerManager[index] === 1 ? "dont" : ""
-                                } have manager`}</h3>
-
-                                <ArgButton
-                                    disabled={
-                                        activePlayerEngineer[index] === 1 ||
-                                        activePlayerEmployees[index] !== 40 ||
-                                        activePlayerManager > 1
-                                    }
-                                    type={"submit"}
-                                    handler={hireManagerHandler}
-                                    arguments={field}
-                                    message={"Hire"}
-                                />
-                                <ArgButton
-                                    disabled={activePlayerManager[index] === 1}
-                                    type={"submit"}
-                                    handler={fireManagerHandler}
-                                    arguments={field}
-                                    message={"Fire"}
-                                />
+                                } have manager`}</h2>
+                                <div className={styles["controls-c"]}>
+                                    <ArgButton
+                                        disabled={
+                                            activePlayerEngineer[index] === 1 ||
+                                            activePlayerEmployees[index] !== 40 ||
+                                            activePlayerManager > 1
+                                        }
+                                        type={"submit"}
+                                        handler={hireManagerHandler}
+                                        arguments={field}
+                                        message={"Hire"}
+                                    />
+                                    <ArgButton
+                                        disabled={activePlayerManager[index] === 1}
+                                        type={"submit"}
+                                        handler={fireManagerHandler}
+                                        arguments={field}
+                                        message={"Fire"}
+                                    />
+                                </div>
                             </li>
                         );
                     })}

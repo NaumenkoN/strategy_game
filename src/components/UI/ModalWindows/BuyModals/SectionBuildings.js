@@ -1,4 +1,4 @@
-import styles from "./SectionBuildings.module.css";
+import styles from "./Sections.module.css";
 import Input from "../ModalTemplate/Input";
 import ArgButton from "../ModalButtons/ArgButton";
 
@@ -44,54 +44,61 @@ const SectionBuildings = (props) => {
 
     return (
         <section>
-            <h1>{`On wich living field You\`l build ${props.activePlayer} ?`}</h1>
-            <ul className={styles["buttons-list"]}>
+            <h1 className={styles["active-player"]}>{props.activePlayer}</h1>
+            <h1 className={styles.header}>{`Manage your living fields `}</h1>
+            <ul className={styles["fields-list"]}>
                 {props.activePlayerFields
                     .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
                     .map((field, index) => {
                         return (
-                            <li key={index} className={styles["building-fields"]}>
+                            <li key={index} className={styles.field}>
+                                <div className={styles["field-number"]}>{field}</div>
+                                <h2 className={styles.quantity}>Buildings:{floorHeight[index]}</h2>
                                 <form onSubmit={props.onSubmitHandler}>
-                                    <button className={styles["button-fields"]}>{field}</button>
-                                    <h2>Here you have floors:{floorHeight[index]}</h2>
-                                    <Input
-                                        labelMessage={"ADD +:"}
-                                        onChange={onChangeLivBuildHandler}
-                                        value={floorValue}
-                                        id={"build"}
-                                        type={"number"}
-                                        min={1}
-                                        max={4 - floorHeight[index]}
-                                        step={1}
-                                    />
+                                    <div className={styles.controls}>
+                                        <Input
+                                            className={styles.input}
+                                            labelMessage={""}
+                                            onChange={onChangeLivBuildHandler}
+                                            value={floorValue}
+                                            id={"build"}
+                                            type={"number"}
+                                            min={1}
+                                            max={4 - floorHeight[index]}
+                                            step={1}
+                                        />
 
-                                    <ArgButton
-                                        disabled={floorHeight[index] >= 4}
-                                        type={"submit"}
-                                        handler={buildLivingHandler}
-                                        arguments={field}
-                                        message={"Buy"}
-                                    />
+                                        <ArgButton
+                                            disabled={floorHeight[index] >= 4}
+                                            type={"submit"}
+                                            handler={buildLivingHandler}
+                                            arguments={field}
+                                            message={"buy"}
+                                        />
+                                    </div>
                                 </form>
                                 <form onSubmit={props.onSubmitHandler}>
-                                    <Input
-                                        labelMessage={"ADD +:"}
-                                        onChange={onChangeSellHandler}
-                                        value={sellFloorValue}
-                                        id={"sell-build"}
-                                        type={"number"}
-                                        min={1}
-                                        max={floorHeight[index]}
-                                        step={1}
-                                    />
+                                    <div className={styles.controls}>
+                                        <Input
+                                            className={styles.input}
+                                            labelMessage={""}
+                                            onChange={onChangeSellHandler}
+                                            value={sellFloorValue}
+                                            id={"sell-build"}
+                                            type={"number"}
+                                            min={1}
+                                            max={floorHeight[index]}
+                                            step={1}
+                                        />
 
-                                    <ArgButton
-                                        // disabled={floorHeight[index] >= 4}
-                                        type={"submit"}
-                                        handler={sellLivingHandler}
-                                        arguments={field}
-                                        message={"Sell"}
-                                    />
+                                        <ArgButton
+                                            // disabled={floorHeight[index] >= 4}
+                                            type={"submit"}
+                                            handler={sellLivingHandler}
+                                            arguments={field}
+                                            message={"sell"}
+                                        />
+                                    </div>
                                 </form>
                             </li>
                         );

@@ -23,7 +23,7 @@ const FormSellStocks = (props) => {
 
     return (
         <form>
-            <h1>{`you have ${activePlayerStocks} stocks.`}</h1>
+            <h1 className={styles.header}>{`you have ${activePlayerStocks} stocks.`}</h1>
             <Input
                 labelMessage={"Choise value multiple of 10"}
                 onChange={onChangeHandler}

@@ -1,0 +1,23 @@
+.field {
+    display: flex;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.green {
+    background-color: greenyellow;
+    box-shadow: 0 0 10px rgb(200, 255, 0);
+}
+
+.red {
+    background-color: rgb(255, 47, 47);
+    box-shadow: 0 0 10px rgb(255, 0, 0);
+}
+
+.dark-green {
+    background-color: rgb(22, 160, 41);
+    box-shadow: 0 0 10px rgb(22, 160, 41);
+}
+.dark-red {
+    background-color: rgb(208, 21, 21);
+    box-shadow: 0 0 10px rgb(208, 21, 21);
+}

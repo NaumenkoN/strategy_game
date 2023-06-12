@@ -22,7 +22,7 @@ const SellStocksModal = () => {
             <Backdrop />
             <ModalWindow>
                 <CloseButton disabled={!emergencySellActives} handler={closeSellStocksModalHandler} />
-                <h1>{`How many stocks You want to sell ${activePlayer}?`}</h1>
+                <h1 className={styles.header}>{`How many stocks you want to sell ${activePlayer}?`}</h1>
                 <FormSellStocks
                     closeSellStocksModalHandler={closeSellStocksModalHandler}
                     activePlayer={activePlayer}

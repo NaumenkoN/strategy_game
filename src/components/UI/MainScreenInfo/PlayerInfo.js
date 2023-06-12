@@ -3,61 +3,63 @@ import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 
 const PlayerInfo = (props) => {
+    const classes = styles.info + " " + props.className;
+    const isActiveInfo = props.activePlayer !== props.index ? styles.active : "";
+    const isActiveButtons = props.activePlayer !== props.index ? styles["active-buttons"] : "";
     return (
-        <div className={styles.field}>
-            <h1 className={styles.dice}>
-                {props.activePlayer === props.index && "+"}
-                {props.playerName} position: {props.playerSteps}
-            </h1>
-            <h1 className={styles.dice}>
-                {props.playerName} money: {props.playerMoney}
-            </h1>
-            <h1 className={styles.dice}>
-                {props.playerName} debt: {props.playerDebt}
-            </h1>
-            <h1 className={styles.dice}>
-                {props.playerName} expected taxes: {props.expectedTaxes}
-            </h1>
-            <h1 className={styles.dice}>
-                {props.playerName} owned fields:
+        <div className={`${classes} ${isActiveInfo}`}>
+            <h1 className={styles["player-name"]}>{props.playerName}</h1>
+            <h1 className={styles["player-info"]}>Position: {props.playerSteps}</h1>
+            <h1 className={styles["player-info"]}>Money: {props.playerMoney}</h1>
+            <h1 className={styles["player-info"]}>Debt: {props.playerDebt}</h1>
+            <h1 className={styles["player-info"]}>Expected taxes: {props.expectedTaxes}</h1>
+            <h1 className={styles["player-info"]}>
+                Fields:
                 {props.playerOnwnedFields
                     .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
                     .sort((a, b) => a - b)
-                    .map((item) => item + ",")}
+                    .map((item, index) => (index === 0 && " ") + item + ", ")}
             </h1>
-            <h1 className={styles.dice}>
-                {props.playerName} owned commercial fields:
+            <h1 className={styles["player-info"]}>
+                Commercial fields:
                 {props.playerOnwnedFields
                     .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
                     .sort((a, b) => a - b)
-                    .map((item) => item + ",")}
+                    .map((item, index) => (index === 0 && " ") + item + ", ")}
             </h1>
             <div className={styles["control-buttons--group"]}>
                 <Button
+                    className={isActiveButtons}
                     handler={props.sellStocksHandler}
                     playerName={props.playerName}
                     message={"Sell Stocks"}
-                    disabled={props.playerStocks === 0}
+                    disabled={props.playerStocks === 0 || props.activePlayer !== props.index}
                 ></Button>
                 <Button
+                    className={isActiveButtons}
                     handler={props.buyBuildingHandler}
                     playerName={props.playerName}
-                    message={"Building Manage"}
+                    message={"Assest Management"}
+                    disabled={props.activePlayer !== props.index}
                 ></Button>
                 <Button
+                    className={isActiveButtons}
                     handler={props.takeCreditHandler}
                     playerName={props.playerName}
-                    message={"Take a credit"}
-                    disabled={props.playerCreditCount === 0}
+                    message={"Take a Credit"}
+                    disabled={props.playerCreditCount === 0 || props.activePlayer !== props.index}
                 ></Button>
                 <Button
+                    className={isActiveButtons}
                     handler={props.jailreleaseHandler}
                     playerName={props.playerName}
-                    message={"Jail Release card"}
+                    message={"Jail card"}
                     jailCard={props.jailCard}
                     JailDaysLeft={props.jailDaysLeft}
                     card={true}
-                    disabled={props.jailCard === 0 || props.jailDaysLeft === 0}
+                    disabled={
+                        props.jailCard === 0 || props.jailDaysLeft === 0 || props.activePlayer !== props.index
+                    }
                 ></Button>
             </div>
         </div>

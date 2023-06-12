@@ -9,16 +9,27 @@ import {
     takeCredit,
     activateJailRealeaseCard,
 } from "../store/fields";
+import { openMainMenu, closeMainMenu } from "../store/mainMenu";
 import PlayerInfo from "./UI/MainScreenInfo/PlayerInfo";
-import Button from "./UI/MainScreenInfo/Button";
+import SimpleButton from "./UI/ModalWindows/ModalButtons/SimpleButton";
+import audio from "../media/rolling-dice.mp3";
+import clickSound1 from "../media/click-sound.mp3";
+import dice1 from "../media/dices/dice1.png";
+import dice2 from "../media/dices/dice2.png";
+import dice3 from "../media/dices/dice3.png";
+import dice4 from "../media/dices/dice4.png";
+import dice5 from "../media/dices/dice5.png";
+import dice6 from "../media/dices/dice6.png";
+import MenuMoveButton from "../components/UI/ModalWindows/ModalButtons/MenuMoveButtons";
 
 const GameInfo = () => {
     const dispatch = useDispatch();
     // General
-    const dice1 = useSelector((state) => state.dice.firstDice);
-    const dice2 = useSelector((state) => state.dice.secondDice);
+    const diceLeft = useSelector((state) => state.dice.firstDice);
+    const diceRight = useSelector((state) => state.dice.secondDice);
     const activePlayer = useSelector((state) => state.dice.activePlayer);
     const fields = useSelector((state) => state.fields.fields);
+
     // Player2
     const player2Money = useSelector((state) => state.fields.player2.money);
     const player2OnwnedFields = useSelector((state) => state.fields.player2.fields);
@@ -40,15 +51,18 @@ const GameInfo = () => {
     const expectedTaxesP1 = useSelector((state) => state.fields.player1.expectedTaxes);
     const player1CreditCount = useSelector((state) => state.fields.player1.creditCount);
 
+    const playerIsActive = activePlayer === 1 ? "player1" : "player2";
+    const audioPlay = new Audio(audio);
+    const clickSound = new Audio(clickSound1);
+    const dices = ["", dice1, dice2, dice3, dice4, dice5, dice6];
     // Getting empty fields on the screen
 
-    const emptyFields = Object.keys(fields).map((item) => {
-        const index = Number(item);
-        if (fields[`${index}`].status === "empty" || fields[`${index}`].status === "emptyC") {
-            return `${item}, `;
-        }
-    });
-    const playerIsActive = activePlayer === 1 ? "player1" : "player2";
+    // const emptyFields = Object.keys(fields).map((item) => {
+    //     const index = Number(item);
+    //     if (fields[`${index}`].status === "empty" || fields[`${index}`].status === "emptyC") {
+    //         return `${item}, `;
+    //     }
+    // });
 
     // expected taxes
     useEffect(() => {
@@ -66,9 +80,12 @@ const GameInfo = () => {
         }
     };
     const diceDroppingHandler = () => {
-        dispatch(dropTwoDices());
-        dispatch(addStep(playerIsActive));
-        dispatch(nextTurn());
+        audioPlay.play();
+        setTimeout(() => {
+            dispatch(dropTwoDices());
+            dispatch(addStep(playerIsActive));
+            dispatch(nextTurn());
+        }, 1600);
     };
     const sellStocksHandler = (player) => {
         dispatch(openSellStocksModal(player));
@@ -84,53 +101,89 @@ const GameInfo = () => {
         dispatch(setInJail(player));
     };
 
+    const mainMenuHandler = () => {
+        clickSound.play();
+        dispatch(openMainMenu());
+    };
+
+    // setting 'spase' button to roll dices
+    useEffect(() => {
+        const onKeyPress = (e) => {
+            if (e.key === " ") {
+                diceDroppingHandler();
+            }
+        };
+        document.addEventListener("keypress", onKeyPress);
+        return () => {
+            document.removeEventListener("keypress", onKeyPress);
+        };
+    }, []);
+
     return (
-        <div className={styles.field}>
-            <button onClick={diceDroppingHandler} className={styles["moove-button"]}>
-                Next move!
-            </button>
-            <h1 className={styles.dice}>
-                {dice1}:{dice2} Empty fields:{emptyFields}
-            </h1>
-
-            <PlayerInfo
-                index={1}
-                playerName={"player1"}
-                activePlayer={activePlayer}
-                playerSteps={player1Steps}
-                playerOnwnedFields={player1OnwnedFields}
-                playerMoney={player1Money}
-                playerDebt={player1Debt}
-                expectedTaxes={expectedTaxesP1}
-                jailCard={p1JailCard}
-                jailDaysLeft={p1JailDaysLeft}
-                playerCreditCount={player1CreditCount}
-                playerStocks={p1stocks}
-                sellStocksHandler={sellStocksHandler}
-                buyBuildingHandler={buyBuildingHandler}
-                takeCreditHandler={takeCreditHandler}
-                jailreleaseHandler={jailreleaseHandler}
+        <>
+            <MenuMoveButton
+                message={"Next move"}
+                type={"button"}
+                handler={diceDroppingHandler}
+                className={styles["moove-button"]}
+            />
+            <MenuMoveButton
+                message={"MENU"}
+                type={"button"}
+                handler={mainMenuHandler}
+                className={styles["main-menu"]}
             />
 
-            <PlayerInfo
-                index={2}
-                playerName={"player2"}
-                activePlayer={activePlayer}
-                playerSteps={player2Steps}
-                playerOnwnedFields={player2OnwnedFields}
-                playerMoney={player2Money}
-                playerDebt={player2Debt}
-                expectedTaxes={expectedTaxesP2}
-                jailCard={p2JailCard}
-                jailDaysLeft={p2JailDaysLeft}
-                playerCreditCount={player2CreditCount}
-                playerStocks={p2stocks}
-                sellStocksHandler={sellStocksHandler}
-                buyBuildingHandler={buyBuildingHandler}
-                takeCreditHandler={takeCreditHandler}
-                jailreleaseHandler={jailreleaseHandler}
-            />
-        </div>
+            <div className={styles["game-info"]}>
+                <div className={styles.dices}>
+                    <div className={styles["dice-holder"]}>
+                        <img className={styles.dice} src={dices[diceLeft]}></img>
+                    </div>
+                    <div className={styles["dice-holder"]}>
+                        <img className={styles.dice} src={dices[diceRight]}></img>
+                    </div>
+                </div>
+                <PlayerInfo
+                    className={styles["player1"]}
+                    index={1}
+                    playerName={"player1"}
+                    activePlayer={activePlayer}
+                    playerSteps={player1Steps}
+                    playerOnwnedFields={player1OnwnedFields}
+                    playerMoney={player1Money}
+                    playerDebt={player1Debt}
+                    expectedTaxes={expectedTaxesP1}
+                    jailCard={p1JailCard}
+                    jailDaysLeft={p1JailDaysLeft}
+                    playerCreditCount={player1CreditCount}
+                    playerStocks={p1stocks}
+                    sellStocksHandler={sellStocksHandler}
+                    buyBuildingHandler={buyBuildingHandler}
+                    takeCreditHandler={takeCreditHandler}
+                    jailreleaseHandler={jailreleaseHandler}
+                />
+
+                <PlayerInfo
+                    className={styles["player2"]}
+                    index={2}
+                    playerName={"player2"}
+                    activePlayer={activePlayer}
+                    playerSteps={player2Steps}
+                    playerOnwnedFields={player2OnwnedFields}
+                    playerMoney={player2Money}
+                    playerDebt={player2Debt}
+                    expectedTaxes={expectedTaxesP2}
+                    jailCard={p2JailCard}
+                    jailDaysLeft={p2JailDaysLeft}
+                    playerCreditCount={player2CreditCount}
+                    playerStocks={p2stocks}
+                    sellStocksHandler={sellStocksHandler}
+                    buyBuildingHandler={buyBuildingHandler}
+                    takeCreditHandler={takeCreditHandler}
+                    jailreleaseHandler={jailreleaseHandler}
+                />
+            </div>
+        </>
     );
 };
 

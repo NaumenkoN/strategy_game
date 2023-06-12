@@ -4,7 +4,7 @@ const fieldsSlice = createSlice({
     name: "fields",
     initialState: {
         player1: {
-            money: 200,
+            money: 800,
             stocks: 50,
             expectedTaxes: 0,
             fields: [],
@@ -19,7 +19,7 @@ const fieldsSlice = createSlice({
             isOpenRouletteModal: false,
         },
         player2: {
-            money: 200,
+            money: 800,
             stocks: 50,
             expectedTaxes: 0,
             fields: [],
@@ -96,7 +96,7 @@ const fieldsSlice = createSlice({
             10: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             11: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             12: { status: "jail" },
-            13: { status: "nothing" },
+            13: { status: " " },
             14: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             15: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             16: {
@@ -159,6 +159,89 @@ const fieldsSlice = createSlice({
         },
     },
     reducers: {
+        restartGame(state) {
+            // player1 state
+            state.player1.money = 800;
+            state.player1.stocks = 50;
+            state.player1.expectedTaxes = 0;
+            state.player1.fields = [];
+            state.player1.inJailRentalIndex = 1;
+            state.player1.jailFreeCard = 0;
+            state.player1.creditCount = 3;
+            state.player1.debt = 0;
+            state.player1.isOpenBuyModal = false;
+            state.player1.isOpenSellStocksModal = false;
+            state.player1.isOpenBuildingModal = false;
+            state.player1.isOpenBuyStocks = false;
+            state.player1.isOpenRouletteModal = false;
+            //player2 state
+            state.player2.stocks = 50;
+            state.player2.money = 800;
+            state.player2.expectedTaxes = 0;
+            state.player2.fields = [];
+            state.player2.inJailRentalIndex = 1;
+            state.player2.jailFreeCard = 0;
+            state.player2.creditCount = 3;
+            state.player2.debt = 0;
+            state.player2.isOpenBuyModal = false;
+            state.player2.isOpenSellStocksModal = false;
+            state.player2.isOpenBuildingModal = false;
+            state.player2.isOpenBuyStocks = false;
+            state.player2.isOpenRouletteModal = false;
+
+            // fields
+            for (let i = 1; i <= 48; i++) {
+                if (
+                    state.fields[i].status === "start" ||
+                    state.fields[i].status === "jail" ||
+                    state.fields[i].status === "nothing" ||
+                    state.fields[i].status === "roulette"
+                ) {
+                    continue;
+                }
+                if (state.fields[i].status === "empty" || state.fields[i].status === "emptyC") {
+                    continue;
+                }
+                if (
+                    (state.fields[i].status === "player1" || state.fields[i].status === "player2") &&
+                    (i === 4 || i === 16 || i === 28 || i === 40)
+                ) {
+                    state.fields[i].status = "emptyC";
+                    state.fields[i].employees = 10;
+                    state.fields[i].engineer = 1;
+                    state.fields[i].manager = 1;
+                    state.fields[i].rentalAmount = 0;
+                    state.fields[i].inArrest = false;
+                }
+                if (
+                    (state.fields[i].status === "player1" || state.fields[i].status === "player2") &&
+                    (i !== 4 || i !== 16 || i !== 28 || i !== 40)
+                ) {
+                    state.fields[i].status = "empty";
+                    state.fields[i].floor = 1;
+                    state.fields[i].rentalAmount = 0;
+                    state.fields[i].inArrest = false;
+                }
+            }
+
+            // modals and else
+            state.isOpenBuyModal = false;
+            state.isOpenBuildingModal = false;
+            state.isOpenSellStocksModal = false;
+            state.isOpenJailModal = false;
+            state.isOpenRouletteModal = false;
+            state.rouletteSkocksModal.isOpen = false;
+            state.rouletteSkocksModal.value = 0;
+            state.isOpenEnoughtlessMoneyModal = false;
+            state.isOpenFightModal = false;
+            state.isOpenBuyCommercialModal = false;
+            state.isOpenSellConfirmModal = false;
+            state.isOpenRouletteResultModal = false;
+            state.emergencySellActives = true;
+            state.warningModal = false;
+            state.gameIsOver = false;
+            state.rouletteState = null;
+        },
         settingPlayerRouletteisClose(state) {
             state.rouletteState = null;
             state.player1.isOpenRouletteModal = false;
@@ -746,6 +829,8 @@ const fieldsSlice = createSlice({
 
 export default fieldsSlice.reducer;
 export const {
+    restartGame,
+    openMainMenu,
     moneyLessThenZero,
     settingPlayerRouletteisClose,
     gameOver,

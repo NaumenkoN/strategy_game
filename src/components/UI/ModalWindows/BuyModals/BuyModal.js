@@ -32,14 +32,14 @@ const BuyModal = () => {
             <ModalWindow>
                 <CloseButton handler={closeBuyModalHandler} />
                 <div className={styles.info}>
-                    <h1>
+                    <h1 className={styles.header}>
                         Empty {isfieldIsCommercial && "Commercial"} Field #{activeField}
                     </h1>
-                    <h2>Price: {fields[`${activeField}`].price}</h2>
-                    <h1>{activePlayer}, You whant to buy?</h1>
-                    <div>
-                        <SimpleButton message={"yeas"} handler={buyFieldHandler} />
-                        <SimpleButton message={"no"} handler={closeBuyModalHandler} />
+                    <h2 className={styles.price}>Price: {fields[`${activeField}`].price}</h2>
+                    <h1 className={styles.action}>{activePlayer}, you whant to buy?</h1>
+                    <div className={styles["buttons-group"]}>
+                        <SimpleButton message={"YEAS"} handler={buyFieldHandler} />
+                        <SimpleButton message={"NO"} handler={closeBuyModalHandler} />
                     </div>
                 </div>
             </ModalWindow>

@@ -6,7 +6,7 @@ const ArgButton = (props) => {
             type={props.type}
             disabled={props.disabled}
             onClick={() => props.handler(props.arguments)}
-            className={styles["sell-stocks"]}
+            className={styles["arg-button"]}
         >
             {props.message}
         </button>

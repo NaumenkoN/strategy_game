@@ -12,17 +12,37 @@ const playersIsActive = {
 const diceAndPositionsSlice = createSlice({
     name: "dice",
     initialState: {
-        firstDice: 0,
-        secondDice: 0,
+        firstDice: 6,
+        secondDice: 6,
         firstFightDice: null,
         secondFightDice: null,
         fightDiceIsDropted: false,
         showFightDices: false,
         winner: 0,
+        gameIsStarted: false,
         playersPosition: { ...playersPosition, ...playersIsActive, ...playersInJail, ...circlesPassed },
         activePlayer: activePlayer,
     },
     reducers: {
+        restartPositions(state) {
+            state.playersPosition.player1 = 1;
+            state.playersPosition.player2 = 1;
+            state.playersPosition.p1InJail = 0;
+            state.playersPosition.p2InJail = 0;
+            state.playersPosition.p1circle = false;
+            state.playersPosition.p2circle = false;
+            state.player1IsActive = true;
+            state.player2IsActive = false;
+            state.activePlayer = 1;
+            state.firstDice = 6;
+            state.secondDice = 6;
+            state.firstFightDice = null;
+            state.secondFightDice = null;
+            state.fightDiceIsDropted = false;
+            state.showFightDices = false;
+            state.winner = 0;
+            state.gameIsStarted = false;
+        },
         rouletteMoving(state, action) {
             const field = action.payload[0];
             const player = action.payload[1];
@@ -50,6 +70,9 @@ const diceAndPositionsSlice = createSlice({
             }
         },
         nextTurn(state, action) {
+            if (state.gameIsStarted === false) {
+                state.gameIsStarted = true;
+            }
             if (state.firstDice === state.secondDice) {
                 return;
             }
@@ -186,6 +209,7 @@ const diceAndPositionsSlice = createSlice({
 
 export default diceAndPositionsSlice.reducer;
 export const {
+    restartPositions,
     dropFightDices,
     dropTwoDices,
     addStep,

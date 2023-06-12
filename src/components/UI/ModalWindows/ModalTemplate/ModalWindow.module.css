@@ -1,8 +1,12 @@
 .modal {
-    margin: 35vh 35vw;
-    width: 25rem;
-    height: 16rem;
-    background-color: green;
+    margin: 16vw 30vw;
+    width: 40vw;
+    height: 25vw;
+    background-color: black;
+    border: 2px solid white;
+    box-shadow: 0 0 10px white;
+    border-radius: 6px;
     position: fixed;
     z-index: 10;
+    color: white;
 }

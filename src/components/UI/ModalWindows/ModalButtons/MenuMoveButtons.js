@@ -1,7 +1,5 @@
-import styles from "./ModalButtons.module.css";
-
-const SimpleButton = (props) => {
-    const classes = styles.simple + " " + props.className;
+const MenuMoveButton = (props) => {
+    const classes = props.className;
     return (
         <button
             onMouseEnter={props.onMouseEnter}
@@ -15,4 +13,4 @@ const SimpleButton = (props) => {
     );
 };
 
-export default SimpleButton;
+export default MenuMoveButton;

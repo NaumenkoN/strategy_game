@@ -1,3 +1,16 @@
+:root {
+    --mainField-color: white;
+    --comField-color: rgb(232, 122, 31);
+    --roulette-color: radial-gradient(
+        circle,
+        rgba(251, 167, 63, 1) 0%,
+        rgba(107, 225, 66, 1) 20%,
+        rgba(66, 251, 174, 1) 38%,
+        rgba(66, 182, 247, 1) 59%,
+        rgba(67, 105, 215, 1) 78%,
+        rgba(219, 70, 252, 1) 100%
+    );
+}
 li {
     list-style-type: none;
     border: 1px solid black;
@@ -6,7 +19,7 @@ li {
     height: 7vh;
     width: 7.3vw;
 
-    background-color: greenyellow;
+    background-color: var(--mainField-color);
 }
 
 /* ------- UP LINE --------*/
@@ -18,20 +31,28 @@ li {
 .f1 p {
     font-size: 1.3rem;
     margin: 0;
+    color: white;
 }
 .f2 {
 }
 .f3 {
 }
 .f4 {
-    background-color: burlywood;
+    background-color: var(--comField-color);
 }
 .f5 {
 }
 .f6 {
 }
-.f7 {
-    background-color: red;
+.roulette {
+    /* background: var(--roulette-color); */
+    background-image: url("../media/roulette.png");
+    background-size: cover;
+}
+.roulette p {
+    margin: 0.1vw auto;
+    font-size: 1.3vw;
+    color: rgb(67, 67, 67);
 }
 .f8 {
 }
@@ -42,9 +63,13 @@ li {
 .f11 {
 }
 .f12 {
-    background-color: black;
-    color: white;
+    background-image: url(../media/jailImage.png);
+    background-size: cover;
+    background-position: 50% 1%;
+
+    color: black;
 }
+
 .f13 {
     background-color: grey;
 }
@@ -58,7 +83,7 @@ li {
 .f15 {
 }
 .f16 {
-    background-color: burlywood;
+    background-color: var(--comField-color);
 }
 .f17 {
 }
@@ -66,9 +91,7 @@ li {
 }
 .f18 {
 }
-.f19 {
-    background-color: red;
-}
+
 .f20 {
 }
 .f21 {
@@ -78,8 +101,11 @@ li {
 .f23 {
 }
 .f24 {
-    background-color: black;
-    color: white;
+    background-image: url(../media/jailImage.png);
+    background-size: cover;
+    background-position: 50% 1%;
+
+    color: black;
 }
 
 /*  ------ DOWN LINE ------ */
@@ -92,15 +118,13 @@ li {
 .f27 {
 }
 .f28 {
-    background-color: burlywood;
+    background-color: var(--comField-color);
 }
 .f29 {
 }
 .f30 {
 }
-.f31 {
-    background-color: red;
-}
+
 .f32 {
 }
 .f33 {
@@ -110,8 +134,11 @@ li {
 .f35 {
 }
 .f36 {
-    background-color: black;
-    color: white;
+    background-image: url(../media/jailImage.png);
+    background-size: cover;
+    background-position: 50% 1%;
+
+    color: black;
 }
 .f37 {
     background-color: grey;
@@ -124,15 +151,13 @@ li {
 .f39 {
 }
 .f40 {
-    background-color: burlywood;
+    background-color: var(--comField-color);
 }
 .f41 {
 }
 .f42 {
 }
-.f43 {
-    background-color: red;
-}
+
 .f44 {
 }
 .f45 {
@@ -142,6 +167,9 @@ li {
 .f47 {
 }
 .f48 {
-    background-color: black;
-    color: white;
+    background-image: url(../media/jailImage.png);
+    background-size: cover;
+    background-position: 50% 1%;
+
+    color: black;
 }

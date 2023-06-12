@@ -1,9 +1,51 @@
 .close {
     position: absolute;
-    right: 0.1rem;
-    top: 0.1rem;
-    font-size: 1.3rem;
+    right: 0.4rem;
+    top: 0.5rem;
+    font-size: 1rem;
+    padding: 0.2vw 0.5vw;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    border: none;
 }
 
 .simple {
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+
+    width: 5vw;
+    height: 2vw;
+    margin: 0.7vw 0.7vw;
+    border: none;
+}
+
+.arg-button {
+    background-color: rgb(227, 226, 226);
+    border-radius: 4px;
+    padding: 0.2vw 1vw;
+    border: none;
+}
+
+.arg-button:hover {
+    background-color: rgb(207, 207, 207);
+}
+.simple:hover {
+    background-color: rgb(207, 207, 207);
+}
+.close:hover {
+    background-color: rgb(207, 207, 207);
+}
+
+.arg-button:active {
+    background-color: rgb(227, 226, 226);
+}
+.simple:active {
+    background-color: rgb(227, 226, 226);
+}
+.close:active {
+    background-color: rgb(227, 226, 226);
 }

@@ -10,11 +10,6 @@
 }
 
 .modal {
-    margin: 15vh 35vw;
-    width: 25rem;
-    height: 16rem;
-    background-color: green;
-    position: fixed;
     z-index: 11;
 }
 
@@ -29,4 +24,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: white;
+}
+
+.header {
+    margin-top: 4vw;
+    font-size: 2vw;
+}
+
+.price {
+    margin-top: 1vw;
+    font-size: 1.3vw;
+}
+
+.action {
+    font-size: 2vw;
+}
+
+.buttons-group {
 }

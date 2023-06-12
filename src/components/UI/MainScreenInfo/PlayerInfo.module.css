@@ -1,36 +1,33 @@
-.field {
-    background-color: #ffffff;
+.info {
     font-size: 0.6rem;
-    margin-bottom: 0.2rem;
-}
-
-li {
-    list-style-type: none;
-}
-
-.moove-button {
-    margin: 1rem 47% 0rem;
-}
-
-.dice {
-    margin: 0.7rem 30%;
-}
-
-p {
-    margin: 0 30%;
-}
-
-.sell-stocks {
-    margin-left: 30%;
-    height: 3rem;
+    height: 50vh;
+    width: 11vw;
+    margin: 1.1vw 0.9vw 1.1vw 0.2vw;
+    color: white;
 }
 
 .control-buttons--group {
     display: flex;
-    flex-direction: row;
-    width: 15rem;
-    margin-left: 25%;
+    flex-direction: column;
 }
 
-.control-buttons--group button {
+.active {
+    color: grey;
+
+    border-color: grey;
+}
+.active-buttons {
+    background-color: grey;
+}
+
+.player-name {
+    margin-left: 1vw;
+    font-size: 2vw;
+    text-align: center;
+}
+
+.player-info {
+    margin-left: 1vw;
+    font-size: 1vw;
+    text-align: center;
 }
