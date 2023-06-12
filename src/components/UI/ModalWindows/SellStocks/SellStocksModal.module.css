@@ -1,14 +1,3 @@
-.backdrop {
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    opacity: 80%;
-    position: fixed;
-    background-color: black;
-    z-index: 11;
-}
-
 .header {
     text-align: center;
     margin-top: 4vw;

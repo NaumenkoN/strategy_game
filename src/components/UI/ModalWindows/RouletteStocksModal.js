@@ -1,4 +1,4 @@
-import styles from "./RouletteModal.module.css";
+import styles from "./RouletteStocksModal.module.css";
 import { closeRouletteStocksModal, rouletteBuyStocks } from "../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -27,12 +27,25 @@ const RouletteStocksModal = () => {
             <Backdrop />
             <ModalWindow>
                 <CloseButton handler={closeRouletteStocksModalHandler} />
-                <h1>Congratilations!</h1>
-                <h2>{`${activePlayer}, you are able to buy a ${rouletteSkocksValue} extra stocks for ${
+                <h1 className={styles.header}>Congratilations!</h1>
+                <h2
+                    className={styles.description}
+                >{`${activePlayer}, you are able to buy a ${rouletteSkocksValue} extra stocks for ${
                     rouletteSkocksValue * 20
                 }$! Will you buy it?`}</h2>
-                <ArgButton message={"Buy"} handler={rouletteBuyStocksHandler} arguments={activePlayer} />
-                <SimpleButton message={"Cancel"} handler={closeRouletteStocksModalHandler} />
+                <div className={styles.buttons}>
+                    <ArgButton
+                        className={styles.button}
+                        message={"Buy"}
+                        handler={rouletteBuyStocksHandler}
+                        arguments={activePlayer}
+                    />
+                    <SimpleButton
+                        className={styles.button}
+                        message={"Cancel"}
+                        handler={closeRouletteStocksModalHandler}
+                    />
+                </div>
             </ModalWindow>
         </>
     );

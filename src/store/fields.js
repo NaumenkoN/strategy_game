@@ -34,7 +34,7 @@ const fieldsSlice = createSlice({
             isOpenBuyStocks: false,
             isOpenRouletteModal: false,
         },
-
+        fieldsReparingAmount: 50,
         isOpenBuyModal: false,
         isOpenBuildingModal: false,
         isOpenSellStocksModal: false,
@@ -44,7 +44,6 @@ const fieldsSlice = createSlice({
         isOpenEnoughtlessMoneyModal: false,
         isOpenFightModal: false,
         isOpenBuyCommercialModal: false,
-        isOpenSellConfirmModal: false,
         isOpenRouletteResultModal: false,
         emergencySellActives: true,
         warningModal: false,
@@ -235,7 +234,6 @@ const fieldsSlice = createSlice({
             state.isOpenEnoughtlessMoneyModal = false;
             state.isOpenFightModal = false;
             state.isOpenBuyCommercialModal = false;
-            state.isOpenSellConfirmModal = false;
             state.isOpenRouletteResultModal = false;
             state.emergencySellActives = true;
             state.warningModal = false;

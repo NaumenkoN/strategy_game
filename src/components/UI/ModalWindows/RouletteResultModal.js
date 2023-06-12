@@ -9,21 +9,22 @@ import CloseButton from "../ModalWindows/ModalButtons/CloseButton";
 const RouletteResultModal = () => {
     const dispatch = useDispatch();
     const result = useSelector((state) => state.fields.rouletteState);
+    const fieldsReparinAmount = useSelector((state) => state.fields.fieldsReparinAmount);
     let message;
     if (result === "-100" || result === "-300" || result === "-500") {
         message = `You got a withdrawal ${result}$`;
     }
     if (result === "+100" || result === "+300" || result === "+500") {
-        message = `You got a deposite ${result}$`;
+        message = `You got a deposit ${result}$`;
     }
     if (result === "jailFree") {
         message = `You got a "${result}" card`;
     }
     if (result === "fieldsRepairing") {
-        message = `You should pay a 100$ for each your field to repair them`;
+        message = `You should pay a ${fieldsReparinAmount}$ for each your field to repair them`;
     }
     if (result === "creditFree") {
-        message = `Congratulations, all your debts have been canceled!`;
+        message = `Congratulations, all your debts was forgiven!`;
     }
     if (result === "start") {
         message = `You moving to a start field`;
@@ -43,10 +44,9 @@ const RouletteResultModal = () => {
     return (
         <>
             <Backdrop />
-            <ModalWindow>
+            <ModalWindow className={styles.modal}>
                 <CloseButton handler={closeResultRouletteModalHandler} />
-                <h1>Roulette Result</h1>
-                <p>{message}</p>
+                <h1 className={styles.header}>{message}</h1>
             </ModalWindow>
         </>
     );

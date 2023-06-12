@@ -10,3 +10,18 @@
     z-index: 10;
     color: white;
 }
+
+.animation-in {
+    animation: appear 300ms ease-out;
+}
+@keyframes appear {
+    0% {
+        scale: 0.1;
+    }
+    85% {
+        scale: 1.05;
+    }
+    100% {
+        scale: 1;
+    }
+}

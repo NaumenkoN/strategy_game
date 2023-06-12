@@ -10,9 +10,9 @@
 }
 
 .modal {
-    margin: 8vh 8vw;
-    width: 83vw;
-    height: 83vh;
+    margin: 8vh 8vw !important;
+    width: 83vw !important;
+    height: 83vh !important;
     position: fixed;
     z-index: 11;
 }

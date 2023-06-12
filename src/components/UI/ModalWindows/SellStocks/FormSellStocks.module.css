@@ -8,3 +8,17 @@
 .header {
     text-align: center;
 }
+
+.input {
+    text-align: center;
+    margin-top: 2vw;
+}
+
+.control-buttons {
+    margin-top: 3vw;
+    display: flex;
+}
+
+.button {
+    font-size: 1vw;
+}

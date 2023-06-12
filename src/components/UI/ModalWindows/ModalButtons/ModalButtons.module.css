@@ -32,12 +32,15 @@
 
 .arg-button:hover {
     background-color: rgb(207, 207, 207);
+    cursor: pointer;
 }
 .simple:hover {
     background-color: rgb(207, 207, 207);
+    cursor: pointer;
 }
 .close:hover {
     background-color: rgb(207, 207, 207);
+    cursor: pointer;
 }
 
 .arg-button:active {

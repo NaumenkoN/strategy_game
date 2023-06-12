@@ -8,7 +8,6 @@ import SellStocksModal from "./UI/ModalWindows/SellStocks/SellStocksModal";
 import BuildingModal from "./UI/ModalWindows/BuyModals/BuildingModal";
 import RouletteModal from "./UI/ModalWindows/RouletteModal";
 import EnoughtlessMoneyModal from "./UI/ModalWindows/EnoughtlessMoneyModal";
-import SellConfirmModal from "./UI/ModalWindows/SellConfirmModal";
 import WarningModal from "./UI/ModalWindows/WarningModal";
 import RouletteStocksModal from "./UI/ModalWindows/RouletteStocksModal";
 import RouletteResultModal from "./UI/ModalWindows/RouletteResultModal";
@@ -17,14 +16,13 @@ import MainMenu from "./UI/MainMenu/MainMenu";
 import { useSelector } from "react-redux";
 
 const Map = () => {
-    const isOpenBuyModalIsOpen = useSelector((state) => state.fields.isOpenBuyModal);
+    const isOpenBuyModal = useSelector((state) => state.fields.isOpenBuyModal);
     const jailModalIsOpen = useSelector((state) => state.fields.isOpenJailModal);
     const isOpenRouletteModal = useSelector((state) => state.fields.isOpenRouletteModal);
     const isOpenEnoughtlessMoneyModal = useSelector((state) => state.fields.isOpenEnoughtlessMoneyModal);
     const isOpenFightModal = useSelector((state) => state.fields.isOpenFightModal);
     const isOpenSellStocksModal = useSelector((state) => state.fields.isOpenSellStocksModal);
     const isOpenBuildingModal = useSelector((state) => state.fields.isOpenBuildingModal);
-    const isOpenSellConfirmModal = useSelector((state) => state.fields.isOpenSellConfirmModal);
     const isOpenWarningModal = useSelector((state) => state.fields.warningModal);
     const isOpenRouletteSkocksModal = useSelector((state) => state.fields.rouletteSkocksModal.isOpen);
     const isOpenRouletteResultModal = useSelector((state) => state.fields.isOpenRouletteResultModal);
@@ -39,9 +37,8 @@ const Map = () => {
                     {isOpenRouletteResultModal && <RouletteResultModal />}
                     {isOpenRouletteSkocksModal && <RouletteStocksModal />}
                     {isOpenWarningModal && <WarningModal />}
-                    {isOpenSellConfirmModal && <SellConfirmModal />}
                     {isOpenBuildingModal && <BuildingModal />}
-                    {isOpenBuyModalIsOpen && <BuyModal />}
+                    {isOpenBuyModal && <BuyModal />}
                     {isOpenFightModal && <FightModal />}
                     {isOpenSellStocksModal && <SellStocksModal />}
                     {jailModalIsOpen && <JailModal />}

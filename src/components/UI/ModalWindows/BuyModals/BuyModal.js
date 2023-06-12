@@ -19,7 +19,9 @@ const BuyModal = () => {
 
     const fieldType = isfieldIsCommercial === false ? "living" : "commercial";
     const closeBuyModalHandler = () => {
-        dispatch(closeBuyModal());
+        setTimeout(() => {
+            dispatch(closeBuyModal());
+        }, 200);
     };
 
     const buyFieldHandler = () => {
@@ -38,8 +40,8 @@ const BuyModal = () => {
                     <h2 className={styles.price}>Price: {fields[`${activeField}`].price}</h2>
                     <h1 className={styles.action}>{activePlayer}, you whant to buy?</h1>
                     <div className={styles["buttons-group"]}>
-                        <SimpleButton message={"YEAS"} handler={buyFieldHandler} />
-                        <SimpleButton message={"NO"} handler={closeBuyModalHandler} />
+                        <SimpleButton className={styles.button} message={"YEAS"} handler={buyFieldHandler} />
+                        <SimpleButton className={styles.button} message={"NO"} handler={closeBuyModalHandler} />
                     </div>
                 </div>
             </ModalWindow>

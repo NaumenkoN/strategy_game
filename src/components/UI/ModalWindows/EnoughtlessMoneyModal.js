@@ -17,7 +17,7 @@ const EnoughtlessMoneyModal = () => {
             <Backdrop />
             <ModalWindow>
                 <CloseButton handler={closeEnoughtlessMoneyModalHandler} />
-                <h1>Enoughtless Money</h1>
+                <h1 className={styles.header}>Money is not enought!</h1>
             </ModalWindow>
         </>
     );

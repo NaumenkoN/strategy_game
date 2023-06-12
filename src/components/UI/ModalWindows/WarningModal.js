@@ -24,9 +24,19 @@ const WarningModal = () => {
         <>
             <Backdrop />
             <ModalWindow className={styles.modale}>
-                <h1>{`${activePlayer}, you need to sell some of your goods to continue!`}</h1>
-                <h1>{`Your debt is ${(finalDebt < 0 && finalDebt) || money}!`}</h1>
-                <SimpleButton message={"OK"} handler={closeWarningModalHandler}></SimpleButton>
+                <div className={styles.info}>
+                    <h1
+                        className={styles.header}
+                    >{`${activePlayer}, you need to sell some of your goods to continue!`}</h1>
+                    <h2 className={styles.description}>{`Your debt is ${
+                        (finalDebt < 0 && finalDebt) || money
+                    }!`}</h2>
+                    <SimpleButton
+                        className={styles.button}
+                        message={"OK"}
+                        handler={closeWarningModalHandler}
+                    ></SimpleButton>
+                </div>
             </ModalWindow>
         </>
     );

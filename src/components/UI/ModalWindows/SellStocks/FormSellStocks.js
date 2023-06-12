@@ -23,9 +23,10 @@ const FormSellStocks = (props) => {
 
     return (
         <form>
-            <h1 className={styles.header}>{`you have ${activePlayerStocks} stocks.`}</h1>
+            <h1 className={styles.header}>{`You have ${activePlayerStocks} stocks.`}</h1>
             <Input
-                labelMessage={"Choise value multiple of 10"}
+                className={styles.input}
+                labelMessage={"Choise value multiple of 10:  "}
                 onChange={onChangeHandler}
                 value={stocksValue}
                 id={"stocks"}
@@ -36,12 +37,13 @@ const FormSellStocks = (props) => {
             />
             <div className={styles["control-buttons"]}>
                 <SimpleButton
+                    className={styles.button}
                     message={"Sell"}
                     disabled={stocksValue === 0}
                     handler={onSubmitHandler}
                     type={"submit"}
                 />
-                <SimpleButton message={"Cancel"} handler={props.handler} />
+                <SimpleButton className={styles.button} message={"Cancel"} handler={props.handler} />
             </div>
         </form>
     );
