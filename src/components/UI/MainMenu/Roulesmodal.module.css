@@ -1,0 +1,30 @@
+.modal-props {
+    background-image: url("../../../media/roulesImage.webp");
+    background-size: contain;
+    width: 60vw;
+    height: 40vw;
+    top: -8vw;
+    left: -10vw;
+}
+
+.close-button {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: 1px solid gray;
+}
+
+.info {
+    text-align: center;
+    width: 35vw;
+    height: 33vw;
+    margin: 2vw auto;
+    overflow-y: scroll;
+}
+
+.module {
+    text-align: left;
+}
+
+.text {
+    text-align: left;
+}

@@ -11,41 +11,33 @@
         rgba(219, 70, 252, 1) 100%
     );
 }
-li {
-    list-style-type: none;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-size: 0.7rem;
-    height: 7vh;
-    width: 7.3vw;
-
-    background-color: var(--mainField-color);
-}
 
 /* ------- UP LINE --------*/
 
-.f1 {
-    background-color: grey;
+.start,
+.f13,
+.f25,
+.f37 {
+    background-color: grey !important;
 }
 
-.f1 p {
-    font-size: 1.3rem;
+.start p {
+    display: block;
+    position: absolute;
+    right: 0.5vw;
+    font-size: 1.3vw;
     margin: 0;
     color: white;
 }
-.f2 {
-}
-.f3 {
-}
-.f4 {
+
+.f40,
+.f4,
+.f16,
+.f28 {
     background-color: var(--comField-color);
 }
-.f5 {
-}
-.f6 {
-}
+
 .roulette {
-    /* background: var(--roulette-color); */
     background-image: url("../media/roulette.png");
     background-size: cover;
 }
@@ -54,118 +46,10 @@ li {
     font-size: 1.3vw;
     color: rgb(67, 67, 67);
 }
-.f8 {
-}
-.f9 {
-}
-.f10 {
-}
-.f11 {
-}
-.f12 {
-    background-image: url(../media/jailImage.png);
-    background-size: cover;
-    background-position: 50% 1%;
 
-    color: black;
-}
-
-.f13 {
-    background-color: grey;
-}
-
-/*  ------ RIGTH LINE ------ */
-
-.f14 {
-}
-.f15 {
-}
-.f15 {
-}
-.f16 {
-    background-color: var(--comField-color);
-}
-.f17 {
-}
-.f17 {
-}
-.f18 {
-}
-
-.f20 {
-}
-.f21 {
-}
-.f22 {
-}
-.f23 {
-}
-.f24 {
-    background-image: url(../media/jailImage.png);
-    background-size: cover;
-    background-position: 50% 1%;
-
-    color: black;
-}
-
-/*  ------ DOWN LINE ------ */
-
-.f25 {
-    background-color: grey;
-}
-.f26 {
-}
-.f27 {
-}
-.f28 {
-    background-color: var(--comField-color);
-}
-.f29 {
-}
-.f30 {
-}
-
-.f32 {
-}
-.f33 {
-}
-.f34 {
-}
-.f35 {
-}
-.f36 {
-    background-image: url(../media/jailImage.png);
-    background-size: cover;
-    background-position: 50% 1%;
-
-    color: black;
-}
-.f37 {
-    background-color: grey;
-}
-
-/*  ------ LEFT LINE ------ */
-
-.f38 {
-}
-.f39 {
-}
-.f40 {
-    background-color: var(--comField-color);
-}
-.f41 {
-}
-.f42 {
-}
-
-.f44 {
-}
-.f45 {
-}
-.f46 {
-}
-.f47 {
-}
+.f12,
+.f24,
+.f36,
 .f48 {
     background-image: url(../media/jailImage.png);
     background-size: cover;

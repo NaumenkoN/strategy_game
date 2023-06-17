@@ -1,10 +1,10 @@
 import styles from "./RouletteModal.module.css";
-import { rouletteSpin } from "../../../store/fields";
+import { rouletteSpin } from "../../../../store/fields";
 import { useSelector, useDispatch } from "react-redux";
-import Backdrop from "./ModalTemplate/Backdrop";
-import ModalWindow from "./ModalTemplate/ModalWindow";
-import ArgButton from "../ModalWindows/ModalButtons/ArgButton";
-import sound from "../../../media/roulette-sound.MP3";
+import Backdrop from "../ModalTemplate/Backdrop";
+import ModalWindow from "../ModalTemplate/ModalWindow";
+import ArgButton from "../ModalButtons/ArgButton";
+import sound from "../../../../media/roulette-sound.mp3";
 
 const RouletteModal = () => {
     const dispatch = useDispatch();

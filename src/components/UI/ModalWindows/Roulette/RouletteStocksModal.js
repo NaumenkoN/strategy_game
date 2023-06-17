@@ -1,12 +1,13 @@
 import styles from "./RouletteStocksModal.module.css";
-import { closeRouletteStocksModal, rouletteBuyStocks } from "../../../store/fields";
+import { closeRouletteStocksModal, rouletteBuyStocks } from "../../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
-import Backdrop from "./ModalTemplate/Backdrop";
-import ModalWindow from "./ModalTemplate/ModalWindow";
-import CloseButton from "../ModalWindows/ModalButtons/CloseButton";
-import ArgButton from "../ModalWindows/ModalButtons/ArgButton";
-import SimpleButton from "../ModalWindows/ModalButtons/SimpleButton";
+import Backdrop from "../ModalTemplate/Backdrop";
+import ModalWindow from "../ModalTemplate/ModalWindow";
+import CloseButton from "../../ModalWindows/ModalButtons/CloseButton";
+import ArgButton from "../../ModalWindows/ModalButtons/ArgButton";
+import SimpleButton from "../../ModalWindows/ModalButtons/SimpleButton";
+import buyStocksSound from "../../../../media/rentalWithdrawal.mp3";
 
 const RouletteStocksModal = () => {
     const dispatch = useDispatch();
@@ -15,11 +16,13 @@ const RouletteStocksModal = () => {
     const isOpenRouletteModalp2 = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const activePlayer = (isOpenRouletteModalp1 && "player1") || (isOpenRouletteModalp2 && "player2");
 
+    const buyStocks = new Audio(buyStocksSound);
     const closeRouletteStocksModalHandler = () => {
         dispatch(closeRouletteStocksModal());
     };
 
     const rouletteBuyStocksHandler = (player) => {
+        buyStocks.play();
         dispatch(rouletteBuyStocks(player));
     };
     return (

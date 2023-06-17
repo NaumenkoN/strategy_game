@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "./ModalTemplate/Backdrop";
 import ModalWindow from "./ModalTemplate/ModalWindow";
 import SimpleButton from "./ModalButtons/SimpleButton";
-import sound from "../../../media/fight-sound.MP3";
+import sound from "../../../media/fight-sound.mp3";
 
 const FightModal = () => {
     const dispatch = useDispatch();
@@ -57,15 +57,17 @@ const FightModal = () => {
                     <br />
                     And you got into fight!
                 </h1>
-                <h2 className={styles.header}>Throw the dices and we'll see who wins😏...</h2>
+                <h2 className={styles.header}>Throw the dices and we'll see who wins 😏...</h2>
                 <div className={styles.info}>
                     <div className={styles.players}>
                         {whoWinner === 1 && <div>Player1 Win! Player2 -50$</div>}
                         {whoWinner === 2 && <div>Player2 Win! Player1 -50$</div>}
+
                         <SimpleButton
                             className={styles["run-button"]}
                             message={"Fight!"}
                             handler={fightDiceHandler}
+                            disabled={fightDiceIsDropted}
                         />
                     </div>
                 </div>

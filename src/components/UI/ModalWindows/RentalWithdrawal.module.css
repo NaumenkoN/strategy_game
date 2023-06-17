@@ -1,0 +1,29 @@
+.modal {
+    width: 14vw;
+    height: 6vw;
+    position: fixed;
+    right: 32vw;
+    top: -10.5vw;
+    padding: 1vw;
+}
+
+.header {
+    text-align: center;
+    margin-top: 0.7vw;
+    font-size: 1.7vw;
+}
+
+.animation-downslide {
+    animation: downslide 1000ms ease-out;
+}
+
+@keyframes downslide {
+    0% {
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 100%;
+    }
+}

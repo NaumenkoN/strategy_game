@@ -1,10 +1,10 @@
 import styles from "./RouletteResultModal.module.css";
-import { closeRouletteResultModal, settingPlayerRouletteisClose } from "../../../store/fields";
+import { closeRouletteResultModal, settingPlayerRouletteisClose } from "../../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
-import Backdrop from "./ModalTemplate/Backdrop";
-import ModalWindow from "./ModalTemplate/ModalWindow";
-import CloseButton from "../ModalWindows/ModalButtons/CloseButton";
+import Backdrop from "../ModalTemplate/Backdrop";
+import ModalWindow from "../ModalTemplate/ModalWindow";
+import CloseButton from "../ModalButtons/CloseButton";
 
 const RouletteResultModal = () => {
     const dispatch = useDispatch();

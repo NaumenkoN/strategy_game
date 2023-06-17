@@ -6,6 +6,7 @@ import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
 import SimpleButton from "../ModalButtons/SimpleButton";
 import CloseButton from "../ModalButtons/CloseButton";
+import buyFieldSound from "../../../../media/rentalWithdrawal.mp3";
 const BuyModal = () => {
     const dispatch = useDispatch();
     const isOpenBuyModalPlayer1 = useSelector((state) => state.fields.player1.isOpenBuyModal);
@@ -18,13 +19,13 @@ const BuyModal = () => {
     const isfieldIsCommercial = useSelector((state) => state.fields.isOpenBuyCommercialModal);
 
     const fieldType = isfieldIsCommercial === false ? "living" : "commercial";
+    const buyfield = new Audio(buyFieldSound);
     const closeBuyModalHandler = () => {
-        setTimeout(() => {
-            dispatch(closeBuyModal());
-        }, 200);
+        dispatch(closeBuyModal());
     };
 
     const buyFieldHandler = () => {
+        buyfield.play();
         dispatch(buyField([activeField, activePlayer, fieldType]));
     };
 

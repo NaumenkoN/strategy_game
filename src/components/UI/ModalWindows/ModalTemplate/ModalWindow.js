@@ -13,6 +13,8 @@ const ModalWindow = (props) => {
     const isOpenRouletteSkocksModal = useSelector((state) => state.fields.rouletteSkocksModal.isOpen);
     const isOpenRouletteResultModal = useSelector((state) => state.fields.isOpenRouletteResultModal);
     const isGameIsOver = useSelector((state) => state.fields.gameIsOver);
+    const isOpenRestartModal = useSelector((state) => state.fields.isOpenRestartGameModal);
+    const isOpenRoulesModal = useSelector((state) => state.menu.isOpenRoulesModal);
 
     const isOpenMainMenu = useSelector((state) => state.menu.isOpenMainMenu);
 
@@ -27,9 +29,12 @@ const ModalWindow = (props) => {
         isOpenEnoughtlessMoneyModal ||
         BuyModal ||
         jailModalIsOpen ||
-        isOpenRouletteModal;
+        isOpenRouletteModal ||
+        isOpenRestartModal ||
+        isOpenRoulesModal;
 
-    const classes = styles.modal + " " + (isAnymodalIsOpen && styles["animation-in"]) + " " + props.className;
+    const classes = styles.modal + " " + (isAnymodalIsOpen && styles["animation-bums"]) + " " + props.className;
+
     return <div className={classes}>{props.children}</div>;
 };
 

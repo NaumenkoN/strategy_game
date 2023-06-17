@@ -8,12 +8,17 @@ import {
     expectedTaxes,
     takeCredit,
     activateJailRealeaseCard,
+    openCreditModal,
 } from "../store/fields";
 import { openMainMenu, closeMainMenu } from "../store/mainMenu";
 import PlayerInfo from "./UI/MainScreenInfo/PlayerInfo";
 import SimpleButton from "./UI/ModalWindows/ModalButtons/SimpleButton";
 import audio from "../media/rolling-dice.mp3";
 import clickSound1 from "../media/click-sound.mp3";
+import playerMoveSound from "../media/playerMove.mp3";
+import gameSound from "../media/gameSound.mp3";
+
+// import gameSound2 from "../media/gameSound2.mp3";
 import dice1 from "../media/dices/dice1.png";
 import dice2 from "../media/dices/dice2.png";
 import dice3 from "../media/dices/dice3.png";
@@ -54,15 +59,20 @@ const GameInfo = () => {
     const playerIsActive = activePlayer === 1 ? "player1" : "player2";
     const audioPlay = new Audio(audio);
     const clickSound = new Audio(clickSound1);
+    const playerMove = new Audio(playerMoveSound);
+    // const gameMusic2 = new Audio(gameSound2);
+    const gameMusic = new Audio(gameSound);
     const dices = ["", dice1, dice2, dice3, dice4, dice5, dice6];
-    // Getting empty fields on the screen
 
-    // const emptyFields = Object.keys(fields).map((item) => {
-    //     const index = Number(item);
-    //     if (fields[`${index}`].status === "empty" || fields[`${index}`].status === "emptyC") {
-    //         return `${item}, `;
-    //     }
-    // });
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // gameMusic.play();
+        }, 500);
+        return () => {
+            gameMusic.pause();
+            clearInterval(interval);
+        };
+    }, []);
 
     // expected taxes
     useEffect(() => {
@@ -72,20 +82,18 @@ const GameInfo = () => {
     // Handlers
 
     const takeCreditHandler = (player) => {
-        const confirm = window.confirm("You shure you whan`a take a credit 1000? You should return 1500!");
-        if (confirm === true) {
-            dispatch(takeCredit(player));
-        } else {
-            return;
-        }
+        dispatch(openCreditModal());
     };
     const diceDroppingHandler = () => {
         audioPlay.play();
         setTimeout(() => {
             dispatch(dropTwoDices());
+        }, 1600);
+        setTimeout(() => {
             dispatch(addStep(playerIsActive));
             dispatch(nextTurn());
-        }, 1600);
+            playerMove.play();
+        }, 2600);
     };
     const sellStocksHandler = (player) => {
         dispatch(openSellStocksModal(player));

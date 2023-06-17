@@ -107,11 +107,12 @@ const diceAndPositionsSlice = createSlice({
         addStep(state, action) {
             const addSteps = state.firstDice + state.secondDice;
             const player = action.payload;
+
             const player1Circle = player === "player1" ? "p1circle" : "p2circle";
-            const player2Circle = player === "player1" ? "p2circle" : "p1circle";
+            const player2Circle = player === "player2" ? "p2circle" : "p1circle";
             const playerInJail = player === "player1" ? "p1InJail" : "p2InJail";
             const player1IsActive = player === "player1" ? "player1IsActive" : "player2IsActive";
-            const player2IsActive = player === "player1" ? "player2IsActive" : "player1IsActive";
+            const player2IsActive = player === "player2" ? "player2IsActive" : "player1IsActive";
 
             state.playersPosition[player2Circle] = false;
             const totalSteps = state.playersPosition[player] + addSteps;

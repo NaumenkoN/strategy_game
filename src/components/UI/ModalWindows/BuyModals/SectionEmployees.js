@@ -1,7 +1,7 @@
 import styles from "./Sections.module.css";
 import Input from "../ModalTemplate/Input";
 import ArgButton from "../ModalButtons/ArgButton";
-
+import buyFieldSound from "../../../../media/rentalWithdrawal.mp3";
 import {
     buyBuildings,
     getRidOfAssets,
@@ -21,6 +21,8 @@ const SectionEmployees = (props) => {
     const [addEmployeesValue, setAddEmployeesValue] = useState(0);
     const [sellEmployeesValue, setSellEmployeesValue] = useState(0);
 
+    const buyField = new Audio(buyFieldSound);
+
     const onChangeComSellHandler = (e) => {
         setSellEmployeesValue(e.target.value);
     };
@@ -32,6 +34,7 @@ const SectionEmployees = (props) => {
     // Buttons handlers
 
     const buildCommercialHandler = (field) => {
+        buyField.play();
         dispatch(buyBuildings([props.activePlayer, field, addEmployeesValue, "commercial"]));
     };
     const sellCommercialHandler = (field) => {
@@ -48,6 +51,7 @@ const SectionEmployees = (props) => {
         }
     };
     const hireEngineerHandler = (field) => {
+        buyField.play();
         dispatch(hireEngineer([props.activePlayer, field]));
     };
 
@@ -59,6 +63,7 @@ const SectionEmployees = (props) => {
     };
 
     const hireManagerHandler = (field) => {
+        buyField.play();
         dispatch(hireManager([props.activePlayer, field]));
     };
     const fireManagerHandler = (field) => {

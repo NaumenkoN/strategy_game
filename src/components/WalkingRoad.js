@@ -2,6 +2,8 @@ import styles from "./WalkingRoad.module.css";
 import Player1 from "./UI/Players/Player1";
 import Player2 from "./UI/Players/Player2";
 import Field from "./UI/Fields/Field";
+import rentalSound from "../media/rentalWithdrawal.mp3";
+import rentalSound2 from "../media/rentalWithdrawal2.mp3";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -16,6 +18,7 @@ import {
     gameOver,
     settingPlayerRouletteisClose,
     moneyLessThenZero,
+    openRentalWithdrawalModal,
 } from "../store/fields";
 import { inJail, rouletteMoving } from "../store/diceAndPlayerPositions";
 import { useEffect } from "react";
@@ -39,6 +42,9 @@ const WalkingRoad = () => {
     const rouletteState = useSelector((state) => state.fields.rouletteState);
     const moveToFieldAfterRouletteSpin = useSelector((state) => state.dice.moveToFieldAfterRouletteSpin);
 
+    const RentalWithdrawal = new Audio(rentalSound);
+    const RentalWithdrawal2 = new Audio(rentalSound2);
+
     // playground
 
     console.log(fields);
@@ -54,6 +60,8 @@ const WalkingRoad = () => {
         }
         if (steps && fields[`${steps}`].status === player2) {
             dispatch(rentalCounting([player1, steps, player2]));
+            RentalWithdrawal2.play();
+            dispatch(openRentalWithdrawalModal([player1, steps, player2]));
         }
         // // ----- CHECKING COMMERCIAL FIELD IS EMPTY, IF NOT PAYING RENTAL -----
         if (steps && fields[`${steps}`].status === "emptyC") {
@@ -100,11 +108,9 @@ const WalkingRoad = () => {
     useEffect(() => {
         //  ----- check is money < 0 -----
         if (player1money < 0 && (player1stocks > 0 || player1fields.length !== 0)) {
-            console.log('dispatch(moneyLessThenZero(["player1"]))');
             dispatch(moneyLessThenZero(["player1"]));
         }
         if (player2money < 0 && (player2stocks > 0 || player2fields.length !== 0)) {
-            console.log('dispatch(moneyLessThenZero(["player2"]))');
             dispatch(moneyLessThenZero(["player2"]));
         }
         if (player1money < 0 && player1stocks === 0 && player1fields.length === 0) {
@@ -145,198 +151,198 @@ const WalkingRoad = () => {
 
     return (
         <>
-            <Field className={styles.f1}>
+            <Field className={styles.start} index={1}>
                 <p>Start</p>
                 {player1Steps === 1 && <Player1 />}
                 {player2Steps === 1 && <Player2 />}
             </Field>
-            <Field className={styles.f2}>
+            <Field className={styles.f2} index={2}>
                 2{player1Steps === 2 && <Player1 />}
                 {player2Steps === 2 && <Player2 />}
             </Field>
-            <Field className={styles.f3}>
+            <Field className={styles.f3} index={3}>
                 3{player1Steps === 3 && <Player1 />}
                 {player2Steps === 3 && <Player2 />}
             </Field>
-            <Field className={styles.f4}>
+            <Field className={styles.f4} index={4}>
                 4{player1Steps === 4 && <Player1 />}
                 {player2Steps === 4 && <Player2 />}
             </Field>
-            <Field className={styles.f5}>
+            <Field className={styles.f5} index={5}>
                 5{player1Steps === 5 && <Player1 />}
                 {player2Steps === 5 && <Player2 />}
             </Field>
-            <Field className={styles.f6}>
+            <Field className={styles.f6} index={6}>
                 6{player1Steps === 6 && <Player1 />}
                 {player2Steps === 6 && <Player2 />}
             </Field>
-            <Field className={styles.roulette}>
+            <Field className={styles.roulette} index={7}>
                 7{player1Steps === 7 && <Player1 />}
                 {player2Steps === 7 && <Player2 />}
             </Field>
-            <Field className={styles.f8}>
+            <Field className={styles.f8} index={8}>
                 8{player1Steps === 8 && <Player1 />}
                 {player2Steps === 8 && <Player2 />}
             </Field>
-            <Field className={styles.f9} index={"9"}>
+            <Field className={styles.f9} index={9}>
                 9{player1Steps === 9 && <Player1 />}
                 {player2Steps === 9 && <Player2 />}
             </Field>
-            <Field className={styles.f10}>
+            <Field className={styles.f10} index={10}>
                 10{player1Steps === 10 && <Player1 />}
                 {player2Steps === 10 && <Player2 />}
             </Field>
-            <Field className={styles.f11} index={"11"}>
+            <Field className={styles.f11} index={11}>
                 11{player1Steps === 11 && <Player1 />}
                 {player2Steps === 11 && <Player2 />}
             </Field>
-            <Field className={styles.f12}>
-                12{player1Steps === 12 && <Player1 />}
+            <Field className={styles.f12} index={12}>
+                {player1Steps === 12 && <Player1 />}
                 {player2Steps === 12 && <Player2 />}
             </Field>
-            <Field className={styles.f13}>
+            <Field className={styles.f13} index={13}>
                 13{player1Steps === 13 && <Player1 />}
                 {player2Steps === 13 && <Player2 />}
             </Field>
-            <Field className={styles.f48}>
-                14{player1Steps === 48 && <Player1 />}
+            <Field className={styles.f48} index={48}>
+                {player1Steps === 48 && <Player1 />}
                 {player2Steps === 48 && <Player2 />}
             </Field>
-            <Field className={styles.f14}>
+            <Field className={styles.f14} index={14}>
                 14{player1Steps === 14 && <Player1 />}
                 {player2Steps === 14 && <Player2 />}
             </Field>
-            <Field className={styles.f47}>
+            <Field className={styles.f47} index={47}>
                 47{player1Steps === 47 && <Player1 />}
                 {player2Steps === 47 && <Player2 />}
             </Field>
-            <Field className={styles.f15}>
+            <Field className={styles.f15} index={15}>
                 15{player1Steps === 15 && <Player1 />}
                 {player2Steps === 15 && <Player2 />}
             </Field>
-            <Field className={styles.f46}>
+            <Field className={styles.f46} index={46}>
                 46{player1Steps === 46 && <Player1 />}
                 {player2Steps === 46 && <Player2 />}
             </Field>
-            <Field className={styles.f16}>
+            <Field className={styles.f16} index={16}>
                 16{player1Steps === 16 && <Player1 />}
                 {player2Steps === 16 && <Player2 />}
             </Field>
-            <Field className={styles.f45}>
+            <Field className={styles.f45} index={45}>
                 45{player1Steps === 45 && <Player1 />}
                 {player2Steps === 45 && <Player2 />}
             </Field>
-            <Field className={styles.f17}>
+            <Field className={styles.f17} index={17}>
                 17{player1Steps === 17 && <Player1 />}
                 {player2Steps === 17 && <Player2 />}
             </Field>
-            <Field className={styles.f44}>
+            <Field className={styles.f44} index={44}>
                 44{player1Steps === 44 && <Player1 />}
                 {player2Steps === 44 && <Player2 />}
             </Field>
-            <Field className={styles.f18}>
+            <Field className={styles.f18} index={18}>
                 18
                 {player1Steps === 18 && <Player1 />}
                 {player2Steps === 18 && <Player2 />}
             </Field>
-            <Field className={styles.roulette}>
+            <Field className={styles.roulette} index={43}>
                 43{player1Steps === 43 && <Player1 />}
                 {player2Steps === 43 && <Player2 />}
             </Field>
-            <Field className={styles.roulette}>
+            <Field className={styles.roulette} index={19}>
                 19{player1Steps === 19 && <Player1 />}
                 {player2Steps === 19 && <Player2 />}
             </Field>
-            <Field className={styles.f42}>
+            <Field className={styles.f42} index={42}>
                 42{player1Steps === 42 && <Player1 />}
                 {player2Steps === 42 && <Player2 />}
             </Field>
-            <Field className={styles.f20}>
+            <Field className={styles.f20} index={20}>
                 20{player1Steps === 20 && <Player1 />}
                 {player2Steps === 20 && <Player2 />}
             </Field>
-            <Field className={styles.f41}>
+            <Field className={styles.f41} index={41}>
                 41
                 {player1Steps === 41 && <Player1 />}
                 {player2Steps === 41 && <Player2 />}
             </Field>
-            <Field className={styles.f21}>
+            <Field className={styles.f21} index={21}>
                 21{player1Steps === 21 && <Player1 />}
                 {player2Steps === 21 && <Player2 />}
             </Field>
-            <Field className={styles.f40}>
+            <Field className={styles.f40} index={40}>
                 40{player1Steps === 40 && <Player1 />}
                 {player2Steps === 40 && <Player2 />}
             </Field>
-            <Field className={styles.f22}>
+            <Field className={styles.f22} index={22}>
                 22{player1Steps === 22 && <Player1 />}
                 {player2Steps === 22 && <Player2 />}
             </Field>
-            <Field className={styles.f39}>
+            <Field className={styles.f39} index={39}>
                 39{player1Steps === 39 && <Player1 />}
                 {player2Steps === 39 && <Player2 />}
             </Field>
-            <Field className={styles.f23}>
+            <Field className={styles.f23} index={23}>
                 23{player1Steps === 23 && <Player1 />}
                 {player2Steps === 23 && <Player2 />}
             </Field>
-            <Field className={styles.f38}>
+            <Field className={styles.f38} index={38}>
                 38{player1Steps === 38 && <Player1 />}
                 {player2Steps === 38 && <Player2 />}
             </Field>
-            <Field className={styles.f24}>
-                24{player1Steps === 24 && <Player1 />}
+            <Field className={styles.f24} index={24}>
+                {player1Steps === 24 && <Player1 />}
                 {player2Steps === 24 && <Player2 />}
             </Field>
-            <Field className={styles.f37}>
+            <Field className={styles.f37} index={37}>
                 37{player1Steps === 37 && <Player1 />}
                 {player2Steps === 37 && <Player2 />}
             </Field>
-            <Field className={styles.f36}>
-                36{player1Steps === 36 && <Player1 />}
+            <Field className={styles.f36} index={36}>
+                {player1Steps === 36 && <Player1 />}
                 {player2Steps === 36 && <Player2 />}
             </Field>
-            <Field className={styles.f35}>
+            <Field className={styles.f35} index={35}>
                 35{player1Steps === 35 && <Player1 />}
                 {player2Steps === 35 && <Player2 />}
             </Field>
-            <Field className={styles.f34}>
+            <Field className={styles.f34} index={34}>
                 34{player1Steps === 34 && <Player1 />}
                 {player2Steps === 34 && <Player2 />}
             </Field>
-            <Field className={styles.f33}>
+            <Field className={styles.f33} index={33}>
                 33{player1Steps === 33 && <Player1 />}
                 {player2Steps === 33 && <Player2 />}
             </Field>
-            <Field className={styles.f32}>
+            <Field className={styles.f32} index={32}>
                 32{player1Steps === 32 && <Player1 />}
                 {player2Steps === 32 && <Player2 />}
             </Field>
-            <Field className={styles.roulette}>
+            <Field className={styles.roulette} index={31}>
                 31{player1Steps === 31 && <Player1 />}
                 {player2Steps === 31 && <Player2 />}
             </Field>
-            <Field className={styles.f30}>
+            <Field className={styles.f30} index={30}>
                 30{player1Steps === 30 && <Player1 />}
                 {player2Steps === 30 && <Player2 />}
             </Field>
-            <Field className={styles.f29}>
+            <Field className={styles.f29} index={29}>
                 29{player1Steps === 29 && <Player1 />}
                 {player2Steps === 29 && <Player2 />}
             </Field>
-            <Field className={styles.f28}>
+            <Field className={styles.f28} index={28}>
                 28{player1Steps === 28 && <Player1 />}
                 {player2Steps === 28 && <Player2 />}
             </Field>
-            <Field className={styles.f27}>
+            <Field className={styles.f27} index={27}>
                 27{player1Steps === 27 && <Player1 />}
                 {player2Steps === 27 && <Player2 />}
             </Field>
-            <Field className={styles.f26}>
+            <Field className={styles.f26} index={26}>
                 26{player1Steps === 26 && <Player1 />}
                 {player2Steps === 26 && <Player2 />}
             </Field>
-            <Field className={styles.f25}>
+            <Field className={styles.f25} index={25}>
                 25{player1Steps === 25 && <Player1 />}
                 {player2Steps === 25 && <Player2 />}
             </Field>

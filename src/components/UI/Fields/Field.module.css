@@ -1,23 +1,112 @@
 .field {
     display: flex;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    position: relative;
+
+    list-style-type: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    height: 7vh;
+    width: 7.3vw;
+
+    background-color: white;
+}
+
+/* houses */
+.list {
+    display: grid;
+    grid-template-areas:
+        "1 2"
+        "3 4";
+    gap: 0;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 0.5vw;
+}
+
+.house {
+    background-image: url("../../../media/thehouse.png");
+    background-size: cover;
+    height: 1.5vw;
+    width: 1.5vw;
+    z-index: 3;
+    margin-left: 0.1vw;
+}
+
+/* commercial */
+
+.commercial {
+    display: grid;
+    grid-template-areas:
+        "1 1"
+        "2 3";
+    gap: 0;
+    padding-left: 0;
+    position: relative;
+}
+
+.employees {
+    grid-area: 1;
+    background-image: url("../../../media/employees.png");
+    background-size: cover;
+    height: 1.5vw;
+    width: 3vw;
+    z-index: 3;
+    position: absolute;
+    left: 3.3vw;
+    top: 0.1vw;
+    color: white;
+    font-size: 0.8vw;
+}
+
+.quantity {
+    position: absolute;
+    left: -0.9vw;
+    top: -0.1vw;
+}
+
+.engineer {
+    grid-area: 2;
+    background-image: url("../../../media/engineer.png");
+    background-size: cover;
+    height: 1.8vw;
+    width: 1.8vw;
+    z-index: 3;
+    position: absolute;
+    left: 3vw;
+    top: -0.1;
+}
+
+.manager {
+    grid-area: 3;
+    background-image: url("../../../media/manager.png");
+    background-size: cover;
+    height: 2.1vw;
+    width: 2.1vw;
+    z-index: 3;
+    position: absolute;
+    left: 4.7vw;
+    top: -2.2vw;
+}
+
+/* owned fiels styles */
+
+.blue {
+    background-color: rgb(143, 191, 245);
+    box-shadow: 0 0 5px rgb(143, 191, 245);
 }
 
 .green {
-    background-color: greenyellow;
-    box-shadow: 0 0 10px rgb(200, 255, 0);
+    background-color: rgb(122, 251, 46);
+    box-shadow: 0 0 5px rgb(122, 251, 46);
 }
 
-.red {
-    background-color: rgb(255, 47, 47);
-    box-shadow: 0 0 10px rgb(255, 0, 0);
+.dark-blue {
+    background-color: rgb(8, 83, 169) !important;
+    box-shadow: 0 0 5px rgb(8, 83, 169) !important;
 }
-
 .dark-green {
-    background-color: rgb(22, 160, 41);
-    box-shadow: 0 0 10px rgb(22, 160, 41);
-}
-.dark-red {
-    background-color: rgb(208, 21, 21);
-    box-shadow: 0 0 10px rgb(208, 21, 21);
+    background-color: rgb(47, 124, 3) !important;
+    box-shadow: 0 0 5px rgb(47, 124, 3) !important;
 }

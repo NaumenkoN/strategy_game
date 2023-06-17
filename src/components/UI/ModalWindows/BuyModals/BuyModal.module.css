@@ -14,6 +14,8 @@
     flex-direction: column;
     align-items: center;
     color: white;
+    margin-left: 2vw;
+    margin-right: 2vw;
 }
 
 .header {
@@ -28,9 +30,16 @@
 
 .action {
     font-size: 2vw;
+    text-align: center;
 }
 
 .button {
     background-color: gold;
     box-shadow: -2px 0 15px rgb(250, 102, 10);
+}
+
+/* FOR RESTART MODAL */
+
+.restart h1 {
+    margin-top: 8vw;
 }

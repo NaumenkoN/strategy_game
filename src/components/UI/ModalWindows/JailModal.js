@@ -14,7 +14,6 @@ const JailModal = () => {
         dispatch(closeJailModal());
     };
 
-    console.log("jailmodal");
     return (
         <>
             <Backdrop />

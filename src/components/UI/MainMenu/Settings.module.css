@@ -1,0 +1,12 @@
+.close-button {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: 1px solid gray;
+}
+
+.modal {
+    width: 60vw;
+    height: 40vw;
+    top: -8vw;
+    left: -10vw;
+}
