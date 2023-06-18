@@ -6,12 +6,14 @@ import ModalWindow from "../ModalTemplate/ModalWindow";
 import Backdrop from "../ModalTemplate/Backdrop";
 import SectionBuildings from "./SectionBuildings";
 import SectionEmployees from "./SectionEmployees";
+import { act } from "react-dom/test-utils";
 
 const BuildingModal = () => {
     const dispatch = useDispatch();
     const isOpenBuildingModalp1 = useSelector((state) => state.fields.player1.isOpenBuildingModal);
     const isOpenBuildingModalp2 = useSelector((state) => state.fields.player2.isOpenBuildingModal);
     const activePlayer = (isOpenBuildingModalp1 && "player1") || (isOpenBuildingModalp2 && "player2");
+
     const activePlayerFields = useSelector((state) => state.fields[`${activePlayer}`].fields);
     const fields = useSelector((state) => state.fields.fields);
     const emergencySellActives = useSelector((state) => state.fields.emergencySellActives);

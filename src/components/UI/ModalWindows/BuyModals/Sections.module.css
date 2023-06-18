@@ -19,6 +19,23 @@
 .scroll {
     text-align: center;
     margin-bottom: 1vw;
+    animation: fade 800ms ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 50%;
+        scale: 100%;
+    }
+    50% {
+        opacity: 100%;
+        scale: 1.1;
+    }
+    100% {
+        opacity: 50%;
+        scale: 100%;
+    }
 }
 .fields-list {
     display: flex;

@@ -1,12 +1,57 @@
-.close-button {
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    border: 1px solid gray;
+.modal {
+    width: 70vw;
+    height: 50vw;
+    top: -13vw;
+    left: -15vw;
 }
 
-.modal {
-    width: 60vw;
-    height: 40vw;
-    top: -8vw;
-    left: -10vw;
+.form {
+    margin: 3vw auto;
+    width: 40vw;
+}
+
+.input {
+    display: grid;
+    grid-template-columns: 20vw 20vw;
+    margin-bottom: 0.3vw;
+}
+
+.input > label {
+    font-size: 1.4vw;
+}
+
+.input > input {
+    justify-self: end;
+    text-align: center;
+    width: 5vw;
+    height: 1.2vw;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+}
+.setup-button {
+    justify-self: end;
+    text-align: center;
+    width: 5.2vw;
+    height: 1.4vw;
+    margin: 0;
+    border-radius: 6px;
+    background-color: gold;
+}
+
+.p {
+    margin: 0;
+    font-size: 1.4vw;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4vw;
+}
+
+.button {
+    width: 7vw;
+    height: 2vw;
+    margin: 0;
 }

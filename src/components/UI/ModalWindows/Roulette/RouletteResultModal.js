@@ -9,7 +9,7 @@ import CloseButton from "../ModalButtons/CloseButton";
 const RouletteResultModal = () => {
     const dispatch = useDispatch();
     const result = useSelector((state) => state.fields.rouletteState);
-    const fieldsReparinAmount = useSelector((state) => state.fields.fieldsReparinAmount);
+    const fieldsReparinAmount = useSelector((state) => state.fields.fieldsRepairingAmount);
     let message;
     if (result === "-100" || result === "-300" || result === "-500") {
         message = `You got a withdrawal ${result}$`;

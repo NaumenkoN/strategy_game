@@ -15,8 +15,7 @@ const ModalWindow = (props) => {
     const isGameIsOver = useSelector((state) => state.fields.gameIsOver);
     const isOpenRestartModal = useSelector((state) => state.fields.isOpenRestartGameModal);
     const isOpenRoulesModal = useSelector((state) => state.menu.isOpenRoulesModal);
-
-    const isOpenMainMenu = useSelector((state) => state.menu.isOpenMainMenu);
+    const isOpenCreditModal = useSelector((state) => state.fields.isOpenTakeCreditModal);
 
     const isAnymodalIsOpen =
         isGameIsOver ||
@@ -31,7 +30,8 @@ const ModalWindow = (props) => {
         jailModalIsOpen ||
         isOpenRouletteModal ||
         isOpenRestartModal ||
-        isOpenRoulesModal;
+        isOpenRoulesModal ||
+        isOpenCreditModal;
 
     const classes = styles.modal + " " + (isAnymodalIsOpen && styles["animation-bums"]) + " " + props.className;
 

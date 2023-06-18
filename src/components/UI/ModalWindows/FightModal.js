@@ -10,9 +10,11 @@ import sound from "../../../media/fight-sound.mp3";
 
 const FightModal = () => {
     const dispatch = useDispatch();
+    const player1Name = useSelector((state) => state.fields.player1.name);
+    const player2Name = useSelector((state) => state.fields.player2.name);
     const firstDice = useSelector((state) => state.dice.firstFightDice);
     const secondDice = useSelector((state) => state.dice.secondFightDice);
-    const fightDices = useSelector((state) => state.dice.showFightDices);
+
     const fightDiceIsDropted = useSelector((state) => state.dice.fightDiceIsDropted);
     const whoWinner = useSelector((state) => state.dice.winner);
 
@@ -60,8 +62,16 @@ const FightModal = () => {
                 <h2 className={styles.header}>Throw the dices and we'll see who wins 😏...</h2>
                 <div className={styles.info}>
                     <div className={styles.players}>
-                        {whoWinner === 1 && <div>Player1 Win! Player2 -50$</div>}
-                        {whoWinner === 2 && <div>Player2 Win! Player1 -50$</div>}
+                        {whoWinner === 1 && (
+                            <div>
+                                {player1Name} Win! {player2Name} -50$
+                            </div>
+                        )}
+                        {whoWinner === 2 && (
+                            <div>
+                                {player2Name} Win! {player1Name} -50$
+                            </div>
+                        )}
 
                         <SimpleButton
                             className={styles["run-button"]}

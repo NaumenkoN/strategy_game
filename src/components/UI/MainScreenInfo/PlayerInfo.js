@@ -31,28 +31,28 @@ const PlayerInfo = (props) => {
                 <Button
                     className={isActiveButtons}
                     handler={props.sellStocksHandler}
-                    playerName={props.playerName}
+                    playerName={props.activePlayerName}
                     message={"Sell Stocks"}
                     disabled={props.playerStocks === 0 || props.activePlayer !== props.index}
                 ></Button>
                 <Button
                     className={isActiveButtons}
                     handler={props.buyBuildingHandler}
-                    playerName={props.playerName}
+                    playerName={props.activePlayerName}
                     message={"Assest Management"}
                     disabled={props.activePlayer !== props.index}
                 ></Button>
                 <Button
                     className={isActiveButtons}
                     handler={props.takeCreditHandler}
-                    playerName={props.playerName}
+                    playerName={props.activePlayerName}
                     message={"Take a Credit"}
                     disabled={props.playerCreditCount === 0 || props.activePlayer !== props.index}
                 ></Button>
                 <Button
                     className={isActiveButtons}
                     handler={props.jailreleaseHandler}
-                    playerName={props.playerName}
+                    playerName={props.activePlayerName}
                     message={"Jail card"}
                     jailCard={props.jailCard}
                     JailDaysLeft={props.jailDaysLeft}

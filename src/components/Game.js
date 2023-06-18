@@ -39,7 +39,7 @@ const Game = () => {
     const isOpenRoulesModal = useSelector((state) => state.menu.isOpenRoulesModal);
     const isOpenSettingsModal = useSelector((state) => state.menu.isOpenSettingsModal);
     const isOpenTakeCreditModal = useSelector((state) => state.fields.isOpenTakeCreditModal);
-    console.log(isOpenSettingsModal);
+
     // const [play, { stop }] = useSound(mainSound, { volume: 0.5 });
 
     return (

@@ -4,17 +4,17 @@
     top: 0.5rem;
     font-size: 1rem;
     padding: 0.2vw 0.5vw;
-    border: 1px solid white;
     border-radius: 5px;
-    color: black;
-    background-color: white;
     border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: 1px solid gray;
 }
 
 .simple {
     border: 1px solid white;
     border-radius: 5px;
-    background-color: white;
+    background-color: rgb(227, 226, 226);
     color: black;
 
     width: 5vw;
@@ -31,15 +31,15 @@
 }
 
 .arg-button:hover {
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(175, 175, 175);
     cursor: pointer;
 }
 .simple:hover {
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(175, 175, 175);
     cursor: pointer;
 }
 .close:hover {
-    background-color: rgb(207, 207, 207);
+    background-color: rgb(175, 175, 175);
     cursor: pointer;
 }
 

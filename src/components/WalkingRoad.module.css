@@ -34,7 +34,7 @@
 .f4,
 .f16,
 .f28 {
-    background-color: var(--comField-color);
+    background-color: var(--comField-color) !important;
 }
 
 .roulette {

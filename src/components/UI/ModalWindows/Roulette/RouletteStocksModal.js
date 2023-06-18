@@ -11,10 +11,13 @@ import buyStocksSound from "../../../../media/rentalWithdrawal.mp3";
 
 const RouletteStocksModal = () => {
     const dispatch = useDispatch();
+    const player1Name = useSelector((state) => state.fields.player1.name);
+    const player2Name = useSelector((state) => state.fields.player2.name);
     const rouletteSkocksValue = useSelector((state) => state.fields.rouletteSkocksModal.value);
     const isOpenRouletteModalp1 = useSelector((state) => state.fields.player1.isOpenRouletteModal);
     const isOpenRouletteModalp2 = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const activePlayer = (isOpenRouletteModalp1 && "player1") || (isOpenRouletteModalp2 && "player2");
+    const activePlayerName = (isOpenRouletteModalp1 && player1Name) || (isOpenRouletteModalp2 && player2Name);
 
     const buyStocks = new Audio(buyStocksSound);
     const closeRouletteStocksModalHandler = () => {
@@ -22,7 +25,6 @@ const RouletteStocksModal = () => {
     };
 
     const rouletteBuyStocksHandler = (player) => {
-        buyStocks.play();
         dispatch(rouletteBuyStocks(player));
     };
     return (
@@ -33,7 +35,7 @@ const RouletteStocksModal = () => {
                 <h1 className={styles.header}>Congratilations!</h1>
                 <h2
                     className={styles.description}
-                >{`${activePlayer}, you are able to buy a ${rouletteSkocksValue} extra stocks for ${
+                >{`${activePlayerName}, you are able to buy a ${rouletteSkocksValue} extra stocks for ${
                     rouletteSkocksValue * 20
                 }$! Will you buy it?`}</h2>
                 <div className={styles.buttons}>

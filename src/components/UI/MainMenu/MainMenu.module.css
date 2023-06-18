@@ -18,7 +18,7 @@
     width: auto;
     border: none;
     color: white;
-    font-size: 2vw;
+    font-size: 1.8vw !important;
     background-color: rgba(0, 0, 0, 0);
     margin: 1vw 0;
 }

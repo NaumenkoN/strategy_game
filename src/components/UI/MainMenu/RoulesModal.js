@@ -98,8 +98,9 @@ const RoulesModal = () => {
                         the player initially has 50 stocks, which is equivalent to $500 in dividends each round.
                         They can be sold by clicking on the "Sell Stocks" button in the information block of the
                         corresponding player. Remember that selling stocks you lose income for the passage of the
-                        circle. If you have 0 stocks, then you will not get anything for passing the circle. You
-                        can buy stocks only if the corresponding card has fallen on the roulette table.
+                        circle. If you have 0 stocks, then you will not get anything for passing the circle.
+                        Selling stoсks brings in $200 for every 10 stoсks. You can buy stocks only if the
+                        corresponding card has fallen on the roulette table.
                     </p>
                     <h2 className={styles.module}>Take a credit</h2>
                     <p className={styles.text}>

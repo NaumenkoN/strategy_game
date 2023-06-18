@@ -4,7 +4,8 @@ const fieldsSlice = createSlice({
     name: "fields",
     initialState: {
         player1: {
-            money: 8000,
+            name: "player1",
+            money: 800,
             stocks: 50,
             expectedTaxes: 0,
             fields: [],
@@ -19,7 +20,8 @@ const fieldsSlice = createSlice({
             isOpenRouletteModal: false,
         },
         player2: {
-            money: 8000,
+            name: "player2",
+            money: 800,
             stocks: 50,
             expectedTaxes: 0,
             fields: [],
@@ -35,7 +37,7 @@ const fieldsSlice = createSlice({
             isOpenRouletteModal: false,
         },
         rental: { isOpen: false, to: "", from: "", amount: 0 },
-        fieldsReparingAmount: 50,
+        fieldsRepairingAmount: 50,
         isOpenBuyModal: false,
         isOpenBuildingModal: false,
         isOpenSellStocksModal: false,
@@ -81,17 +83,24 @@ const fieldsSlice = createSlice({
             comRental: 0.3,
             taxesLiving: 0.03,
             taxesCom: 0.05,
-            livFieldPrice: 200,
-            comFieldPrice: 400,
             engineerIndex: 1.5,
             engineerPrice: 600,
             managerIndex: 1.5,
             managerPrice: 1000,
+            livingPrice: 200,
+            comPrice: 400,
+            fightMoney: 50,
         },
 
         fields: {
             1: { status: "start" },
-            2: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
+            2: {
+                status: "empty",
+                floor: 1,
+                price: 200,
+                rentalAmount: 0,
+                inArrest: false,
+            },
             3: { status: "empty", floor: 1, price: 200, rentalAmount: 0, inArrest: false },
             4: {
                 status: "emptyC",
@@ -185,8 +194,40 @@ const fieldsSlice = createSlice({
         closeRestartGameModal(state) {
             state.isOpenRestartGameModal = false;
         },
+        playersGameSettings(state, action) {
+            fieldsSlice.caseReducers.restartGame(state);
+            state.player1.name = action.payload.player1Name;
+            state.player2.name = action.payload.player2Name;
+            state.player1.money = action.payload.playerMoney;
+            state.player2.money = action.payload.playerMoney;
+            state.player1.stocks = action.payload.playerStocks;
+            state.player2.stocks = action.payload.playerStocks;
+            state.player1.jailFreeCard = action.payload.jailCard;
+            state.player2.jailFreeCard = action.payload.jailCard;
+            state.indexes.fightMoney = action.payload.fightWithdrawal;
+            state.fieldsRepairingAmount = action.payload.fieldsRepairignAmount;
+            state.indexes.managerPrice = action.payload.managerPrice;
+            state.indexes.engineerPrice = action.payload.engineerPrice;
+            state.indexes.managerIndex = action.payload.managerIndex;
+            state.indexes.engineerIndex = action.payload.engineerIndex;
+            state.indexes.comPrice = action.payload.comFieldPrice;
+            state.indexes.taxesCom = action.payload.comTaxes;
+            state.indexes.comRental = action.payload.comFieldRentalIndex;
+            state.indexes.livingPrice = action.payload.livingFieldPrice;
+            state.indexes.taxesLiving = action.payload.livingTaxes;
+            state.indexes.livingRental = action.payload.livFieldRentalIndex;
+            if (state.indexes.comPrice !== 400 || state.indexes.livingPrice !== 200) {
+                for (let i = 1; i <= 48; i++) {
+                    state.fields[i].status === "empty" && (state.fields[i].price = state.indexes.livingPrice);
+
+                    state.fields[i].status === "emptyC" && (state.fields[i].price = state.indexes.comPrice);
+                }
+            }
+        },
         restartGame(state) {
             // player1 state
+
+            state.player1.name = "player1";
             state.player1.money = 800;
             state.player1.stocks = 50;
             state.player1.expectedTaxes = 0;
@@ -201,6 +242,7 @@ const fieldsSlice = createSlice({
             state.player1.isOpenBuyStocks = false;
             state.player1.isOpenRouletteModal = false;
             //player2 state
+            state.player2.name = "player2";
             state.player2.stocks = 50;
             state.player2.money = 800;
             state.player2.expectedTaxes = 0;
@@ -225,7 +267,12 @@ const fieldsSlice = createSlice({
                 ) {
                     continue;
                 }
-                if (state.fields[i].status === "empty" || state.fields[i].status === "emptyC") {
+                if (state.fields[i].status === "empty") {
+                    state.fields[i].price = 200;
+                    continue;
+                }
+                if (state.fields[i].status === "emptyC") {
+                    state.fields[i].price = 400;
                     continue;
                 }
                 if (
@@ -238,6 +285,7 @@ const fieldsSlice = createSlice({
                     state.fields[i].manager = 1;
                     state.fields[i].rentalAmount = 0;
                     state.fields[i].inArrest = false;
+                    state.fields[i].price = 400;
                 }
                 if (
                     (state.fields[i].status === "player1" || state.fields[i].status === "player2") &&
@@ -247,6 +295,7 @@ const fieldsSlice = createSlice({
                     state.fields[i].floor = 1;
                     state.fields[i].rentalAmount = 0;
                     state.fields[i].inArrest = false;
+                    state.fields[i].price = 200;
                 }
             }
 
@@ -267,6 +316,14 @@ const fieldsSlice = createSlice({
             state.warningModal = false;
             state.gameIsOver = false;
             state.rouletteState = null;
+            state.indexes.comRental = 0.3;
+            state.indexes.livingRental = 0.25;
+            state.indexes.engineerIndex = 1.5;
+            state.indexes.engineerPrice = 600;
+            state.indexes.managerIndex = 1.5;
+            state.indexes.managerPrice = 1000;
+            state.indexes.taxesCom = 0.05;
+            state.indexes.taxesLiving = 0.03;
         },
         settingPlayerRouletteisClose(state) {
             state.rouletteState = null;
@@ -317,6 +374,7 @@ const fieldsSlice = createSlice({
         },
         rouletteSpin(state, action) {
             const player = action.payload;
+            console.log(player);
 
             const number = Math.trunc(Math.random() * 22);
             state.rouletteState = state.rouletteItems[number];
@@ -373,7 +431,7 @@ const fieldsSlice = createSlice({
                 state.isOpenRouletteResultModal = true;
                 state.isOpenRouletteModal = false;
                 if (state[player].fields.length > 0) {
-                    state[player].money -= state[player].fields.length * state.fieldsReparingAmount;
+                    state[player].money -= state[player].fields.length * state.fieldsRepairingAmount;
                 }
             }
 
@@ -397,15 +455,15 @@ const fieldsSlice = createSlice({
             }
         },
         hireManager(state, action) {
-            if (state[`${action.payload[0]}`].money < 1000) {
+            if (state[`${action.payload[0]}`].money < state.indexes.managerPrice) {
                 state.isOpenEnoughtlessMoneyModal = true;
             }
-            if (state[`${action.payload[0]}`].money >= 1000) {
+            if (state[`${action.payload[0]}`].money >= state.indexes.managerPrice) {
                 // setting new value to manager field
-                state.fields[`${action.payload[1]}`].manager = 1.5;
+                state.fields[`${action.payload[1]}`].manager = state.indexes.managerIndex;
 
                 // getting money from player
-                state[`${action.payload[0]}`].money -= 1000;
+                state[`${action.payload[0]}`].money -= state.indexes.managerPrice;
 
                 // setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
@@ -413,15 +471,15 @@ const fieldsSlice = createSlice({
                     (state.fields[`${action.payload[1]}`].employees / 10) *
                     state.fields[`${action.payload[1]}`].engineer *
                     state.fields[`${action.payload[1]}`].manager *
-                    0.3;
+                    state.indexes.comRental;
             }
         },
         fireManager(state, action) {
             // setting new value to manager field
             state.fields[`${action.payload[1]}`].manager = 1;
 
-            // getting money from player
-            state[`${action.payload[0]}`].money += 500;
+            // setting money to player
+            state[`${action.payload[0]}`].money += state.indexes.managerPrice / 2;
 
             // setting new rental amount
             state.fields[`${action.payload[1]}`].rentalAmount =
@@ -429,16 +487,16 @@ const fieldsSlice = createSlice({
                 (state.fields[`${action.payload[1]}`].employees / 10) *
                 state.fields[`${action.payload[1]}`].engineer *
                 state.fields[`${action.payload[1]}`].manager *
-                0.3;
+                state.indexes.comRental;
         },
 
         hireEngineer(state, action) {
-            if (state[`${action.payload[0]}`].money >= 600) {
+            if (state[`${action.payload[0]}`].money >= state.indexes.engineerPrice) {
                 // setting new walue to engineer field
-                state.fields[`${action.payload[1]}`].engineer = 1.5;
+                state.fields[`${action.payload[1]}`].engineer = state.indexes.engineerIndex;
 
                 // getting money from player
-                state[`${action.payload[0]}`].money -= 600;
+                state[`${action.payload[0]}`].money -= state.indexes.engineerPrice;
 
                 // setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
@@ -446,9 +504,9 @@ const fieldsSlice = createSlice({
                     (state.fields[`${action.payload[1]}`].employees / 10) *
                     state.fields[`${action.payload[1]}`].engineer *
                     state.fields[`${action.payload[1]}`].manager *
-                    0.3;
+                    state.indexes.comRental;
             }
-            if (state[`${action.payload[0]}`].money < 600) {
+            if (state[`${action.payload[0]}`].money < state.indexes.engineerPrice) {
                 state.isOpenEnoughtlessMoneyModal = true;
             }
         },
@@ -456,8 +514,8 @@ const fieldsSlice = createSlice({
             // setting new walue to engineer field
             state.fields[`${action.payload[1]}`].engineer = 1;
 
-            // getting money from player
-            state[`${action.payload[0]}`].money += 250;
+            // setting money to player
+            state[`${action.payload[0]}`].money += state.indexes.managerPrice / 2;
 
             // setting new rental amount
             state.fields[`${action.payload[1]}`].rentalAmount =
@@ -465,7 +523,7 @@ const fieldsSlice = createSlice({
                 (state.fields[`${action.payload[1]}`].employees / 10) *
                 state.fields[`${action.payload[1]}`].engineer *
                 state.fields[`${action.payload[1]}`].manager *
-                0.3;
+                state.indexes.comRental;
         },
         closeWarningModal(state) {
             state.warningModal = false;
@@ -481,11 +539,13 @@ const fieldsSlice = createSlice({
         debtReturning(state, action) {
             const player = action.payload[0];
             console.log("debt returning");
+            console.log(player);
 
             if (state[player].debt > 0) {
                 if (state[player].money < state[player].debt && state[player].fields.length !== 0) {
                     console.log("money < debt && field != 0");
                     fieldsSlice.caseReducers.openBuyBuildingModal(state, action);
+                    state[player].isOpenBuildingModal = true;
                     state.emergencySellActives = false;
                     state.warningModal = true;
                     state.isOpenBuyModal = false;
@@ -497,7 +557,7 @@ const fieldsSlice = createSlice({
                     state[player].fields.length === 0 &&
                     state[player].stocks !== 0
                 ) {
-                    console.log("money < debt && stocks != 0");
+                    console.log("= 0 != 0 debt");
                     state[player].isOpenSellStocksModal = true;
                     state.warningModal = true;
                     state.isOpenBuildingModal = false;
@@ -505,19 +565,22 @@ const fieldsSlice = createSlice({
                     state.emergencySellActives = false;
                 }
                 if (state[player].money >= state[player].debt) {
-                    console.log("money >= debt ");
+                    console.log(">= debt");
+
                     state.emergencySellActives = true;
                     state[player].money -= state[player].debt;
                     state[player].debt = 0;
                     state.isOpenSellStocksModal = false;
-                    state[player].isOpenSellStocksModal = false;
+                    state.isOpenBuildingModal = false;
                     state[player].isOpenBuildingModal = false;
+                    state[player].isOpenSellStocksModal = false;
                 }
                 if (
                     state[player].money < state[player].debt &&
                     state[player].fields.length === 0 &&
                     state[player].stocks === 0
                 ) {
+                    console.log("gameoverdebtret");
                     fieldsSlice.caseReducers.gameOver(state);
                 }
             }
@@ -546,25 +609,27 @@ const fieldsSlice = createSlice({
                     state.warningModal = true;
                 }
                 if (state[player].fields.length === 0 && state[player].stocks === 0) {
+                    state.isOpenBuildingModal = false;
+                    console.log("=== 0");
                     fieldsSlice.caseReducers.gameOver(state);
                     state.isOpenBuyModal = false;
                     state.isOpenSellStocksModal = false;
                 }
             }
             if (state[player].money >= state[player].debt) {
+                console.log("> debt");
                 state.emergencySellActives = true;
-                state[player].isOpenBuildingModal = false;
-                state[player].isOpenSellStocksModal = false;
                 state.isOpenBuildingModal = false;
                 state.isOpenSellStocksModal = false;
-                console.log("money >= debt");
+                state[player].isOpenBuildingModal = false;
+                state[player].isOpenSellStocksModal = false;
             }
         },
         rentalAndSalesIndex(state, action) {
             if (action.payload[0] === "arrest") {
-                state[`${action.payload[1]}`].fields.map((field) => {
-                    state.fields[field].rentalAmount = state.fields[field].rentalAmount / 2;
-                });
+                state[`${action.payload[1]}`].fields.map(
+                    (field) => (state.fields[field].rentalAmount = state.fields[field].rentalAmount / 2)
+                );
                 state[action.payload[1]].inJailRentalIndex = 0.5;
             }
             if (action.payload[0] === "free") {
@@ -572,7 +637,7 @@ const fieldsSlice = createSlice({
                     state[action.payload[1]].inJailRentalIndex = 1;
                     if (state.fields[field].floor) {
                         state.fields[field].rentalAmount =
-                            state.fields[field].price * state.fields[field].floor * 0.25;
+                            state.fields[field].price * state.fields[field].floor * state.indexes.livingRental;
                     }
                     if (state.fields[field].employees) {
                         state.fields[field].rentalAmount =
@@ -580,7 +645,7 @@ const fieldsSlice = createSlice({
                             (state.fields[field].employees / 10) *
                             state.fields[field].engineer *
                             state.fields[field].manager *
-                            0.3;
+                            state.indexes.comRental;
                     }
                 });
             }
@@ -589,7 +654,7 @@ const fieldsSlice = createSlice({
             const expectedTaxesLiving = state[`${action.payload}`].fields
                 .filter((num) => num !== 4 && num !== 16 && num !== 28 && num !== 40)
                 .map((field) => [state.fields[field].price, state.fields[field].floor])
-                .reduce((acc, item) => acc + item[0] * 0.03 * item[1], 0);
+                .reduce((acc, item) => acc + item[0] * state.indexes.taxesLiving * item[1], 0);
 
             const expectedTaxesCommercial = state[`${action.payload}`].fields
                 .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
@@ -599,7 +664,10 @@ const fieldsSlice = createSlice({
                     state.fields[field].engineer,
                     state.fields[field].manager,
                 ])
-                .reduce((acc, item) => acc + item[0] * 0.05 * (item[1] / 10) * item[2] * item[3], 0);
+                .reduce(
+                    (acc, item) => acc + item[0] * state.indexes.taxesCom * (item[1] / 10) * item[2] * item[3],
+                    0
+                );
 
             state[`${action.payload}`].expectedTaxes = expectedTaxesLiving + expectedTaxesCommercial;
         },
@@ -634,7 +702,7 @@ const fieldsSlice = createSlice({
                 // setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
                     state.fields[`${action.payload[1]}`].price *
-                    0.25 *
+                    state.indexes.livingRental *
                     state.fields[`${action.payload[1]}`].floor *
                     state[`${action.payload[0]}`].inJailRentalIndex;
             }
@@ -652,7 +720,7 @@ const fieldsSlice = createSlice({
                 // setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
                     state.fields[`${action.payload[1]}`].price *
-                    0.3 *
+                    state.indexes.comRental *
                     (state.fields[`${action.payload[1]}`].employees / 10) *
                     state[`${action.payload[0]}`].inJailRentalIndex;
             }
@@ -672,7 +740,7 @@ const fieldsSlice = createSlice({
                 //setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
                     state.fields[`${action.payload[1]}`].price *
-                    0.3 *
+                    state.indexes.comRental *
                     (state.fields[`${action.payload[1]}`].employees / 10) *
                     state[`${action.payload[0]}`].inJailRentalIndex;
             }
@@ -690,12 +758,11 @@ const fieldsSlice = createSlice({
                 //setting new rental amount
                 state.fields[`${action.payload[1]}`].rentalAmount =
                     state.fields[`${action.payload[1]}`].price *
-                    0.25 *
+                    state.indexes.livingRental *
                     state.fields[`${action.payload[1]}`].floor *
                     state[`${action.payload[0]}`].inJailRentalIndex;
             }
             if (action.payload[3] === "livingFieldSell") {
-                console.log("living sell");
                 // setting new floor value and status
 
                 state.fields[`${action.payload[1]}`].status = "empty";
@@ -730,15 +797,13 @@ const fieldsSlice = createSlice({
             }
             //his block for money less then zero
 
-            if (state.emergencySellActives === false) {
-                console.log("?");
-
+            if (state.emergencySellActives === false && state[`${action.payload[0]}`].debt === 0) {
                 fieldsSlice.caseReducers.moneyLessThenZero(state, action);
             }
         },
         openBuyBuildingModal(state, action) {
             state.isOpenBuildingModal = true;
-
+            console.log(action.payload[0]);
             state[`${action.payload[0]}`].isOpenBuildingModal = true;
         },
         closeBuildingModal(state, action) {
@@ -789,8 +854,8 @@ const fieldsSlice = createSlice({
             state[`${action.payload[2]}`].money += state.fields[`${action.payload[1]}`].rentalAmount;
         },
         fightWithdrawal(state, action) {
-            state[`${action.payload[0]}`].money += 50;
-            state[`${action.payload[1]}`].money -= 50;
+            state[`${action.payload[0]}`].money += state.indexes.fightMoney;
+            state[`${action.payload[1]}`].money -= state.indexes.fightMoney;
         },
         closeFightModal(state) {
             state.isOpenFightModal = false;
@@ -803,11 +868,17 @@ const fieldsSlice = createSlice({
             state[`${action.payload}`].money -= state[`${action.payload}`].expectedTaxes;
         },
         openBuyModal(state, action) {
-            if (action.payload[2] === "living" && state[`${action.payload[0]}`].money >= 200) {
+            if (
+                action.payload[2] === "living" &&
+                state[`${action.payload[0]}`].money >= state.indexes.livingPrice
+            ) {
                 state.isOpenBuyModal = true;
                 state[`${action.payload[0]}`].isOpenBuyModal = true;
             }
-            if (action.payload[2] === "commercial" && state[`${action.payload[0]}`].money >= 400) {
+            if (
+                action.payload[2] === "commercial" &&
+                state[`${action.payload[0]}`].money >= state.indexes.comPrice
+            ) {
                 state.isOpenBuyCommercialModal = true;
                 state.isOpenBuyModal = true;
                 state[`${action.payload[0]}`].isOpenBuyModal = true;
@@ -846,7 +917,7 @@ const fieldsSlice = createSlice({
                 // setting rental amount
                 if (action.payload[2] === "living") {
                     state.fields[`${action.payload[0]}`].rentalAmount =
-                        0.25 *
+                        state.indexes.livingRental *
                         state.fields[`${action.payload[0]}`].price *
                         state.fields[`${action.payload[0]}`].floor *
                         state[`${action.payload[1]}`].inJailRentalIndex;
@@ -854,7 +925,7 @@ const fieldsSlice = createSlice({
                 if (action.payload[2] === "commercial") {
                     state.fields[`${action.payload[0]}`].rentalAmount =
                         state.fields[`${action.payload[0]}`].price *
-                        0.3 *
+                        state.indexes.comRental *
                         state.fields[`${action.payload[0]}`].engineer *
                         state.fields[`${action.payload[0]}`].manager *
                         (state.fields[`${action.payload[0]}`].employees / 10) *
@@ -876,6 +947,7 @@ const fieldsSlice = createSlice({
 
 export default fieldsSlice.reducer;
 export const {
+    playersGameSettings,
     closeCreditModal,
     openCreditModal,
     closeRentalWithdrawalModal,

@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import SimpleButton from "../ModalWindows/ModalButtons/SimpleButton";
 import { closeMainMenu, openRoulesModal, openSettings } from "../../../store/mainMenu";
 import { openRestartGameModal } from "../../../store/fields";
+import { startGameIndex } from "../../../store/diceAndPlayerPositions";
 
 import hoverSound from "../../../media/hover-sound.mp3";
 import clickSound from "../../../media/click-sound.mp3";
 import mainSound from "../../../media/mainMenuSound.mp3";
+import moveSound from "../../../media/playerMove.mp3";
 
 const MainMenu = () => {
     const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const MainMenu = () => {
     const mouseOverAudio = new Audio(hoverSound);
     const mouseClickAudio = new Audio(clickSound);
     const mainMenuSound = new Audio(mainSound);
+    const openSound = new Audio(moveSound);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -38,19 +41,22 @@ const MainMenu = () => {
             dispatch(openRestartGameModal());
         }
         if (!gameIsStarted) {
+            dispatch(startGameIndex());
             dispatch(closeMainMenu());
         }
     };
 
     const openRoulesHandler = () => {
         mouseClickAudio.play();
+
         dispatch(openRoulesModal());
     };
     const settingsHandler = () => {
-        dispatch(openSettings());
         mouseClickAudio.play();
+
+        dispatch(openSettings());
     };
-    const onmouseEnterHandler = () => {
+    const onMouseEnterHandler = () => {
         mouseOverAudio.play();
     };
     return (
@@ -58,32 +64,32 @@ const MainMenu = () => {
             <div className={styles[`control-buttons`]}>
                 {gameIsStarted && (
                     <SimpleButton
-                        onMouseEnter={onmouseEnterHandler}
+                        onMouseEnter={onMouseEnterHandler}
                         className={styles.button}
                         type={"button"}
-                        message={"return to game"}
+                        message={"Return to Game"}
                         handler={returntoGameHandler}
                     />
                 )}
                 <SimpleButton
-                    onMouseEnter={onmouseEnterHandler}
+                    onMouseEnter={onMouseEnterHandler}
                     className={styles.button}
                     type={"button"}
-                    message={"new game"}
+                    message={"New Game"}
                     handler={newGameHandler}
                 />
                 <SimpleButton
-                    onMouseEnter={onmouseEnterHandler}
+                    onMouseEnter={onMouseEnterHandler}
                     className={styles.button}
                     type={"button"}
-                    message={"roules"}
+                    message={"Roules"}
                     handler={openRoulesHandler}
                 />
                 <SimpleButton
-                    onMouseEnter={onmouseEnterHandler}
+                    onMouseEnter={onMouseEnterHandler}
                     className={styles.button}
                     type={"button"}
-                    message={"settings"}
+                    message={"Settings"}
                     handler={settingsHandler}
                 />
             </div>

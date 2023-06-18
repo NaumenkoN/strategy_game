@@ -8,9 +8,12 @@ import sound from "../../../../media/roulette-sound.mp3";
 
 const RouletteModal = () => {
     const dispatch = useDispatch();
+    const player1Name = useSelector((state) => state.fields.player1.name);
+    const player2Name = useSelector((state) => state.fields.player2.name);
     const isOpenRouletteModalp1 = useSelector((state) => state.fields.player1.isOpenRouletteModal);
     const isOpenRouletteModalp2 = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const activePlayer = (isOpenRouletteModalp1 && "player1") || (isOpenRouletteModalp2 && "player2");
+    const activePlayerName = (isOpenRouletteModalp1 && player1Name) || (isOpenRouletteModalp2 && player2Name);
 
     const rouletteSound = new Audio(sound);
 
@@ -29,7 +32,7 @@ const RouletteModal = () => {
                     <h1 className={styles.header}>Roulette</h1>
                     <h2
                         className={styles.description}
-                    >{`${activePlayer}, you are on the roulette field. Spin the wheel, let\`s see what you got!`}</h2>
+                    >{`${activePlayerName}, you are on the roulette field. Spin the wheel, let\`s see what you got!`}</h2>
                     <ArgButton
                         className={styles.button}
                         message={"Spin the wheel"}

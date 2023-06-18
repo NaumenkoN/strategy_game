@@ -1,14 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const activePlayer = 1;
-const playersPosition = { player1: 1, player2: 1 };
-const playersInJail = { p1InJail: 0, p2InJail: 0 };
-const circlesPassed = { p1circle: false, p2circle: false };
-const playersIsActive = {
-    player1IsActive: true,
-    player2IsActive: false,
-};
-
 const diceAndPositionsSlice = createSlice({
     name: "dice",
     initialState: {
@@ -19,12 +10,31 @@ const diceAndPositionsSlice = createSlice({
         fightDiceIsDropted: false,
         showFightDices: false,
         winner: 0,
+        setUpTurnButtonIsClicked: false,
         gameIsStarted: false,
-        playersPosition: { ...playersPosition, ...playersIsActive, ...playersInJail, ...circlesPassed },
-        activePlayer: activePlayer,
+        playersPosition: {
+            player1: 1,
+            player2: 1,
+            player1IsActive: true,
+            player2IsActive: false,
+            p1InJail: 0,
+            p2InJail: 0,
+            p1circle: false,
+            p2circle: false,
+        },
+        activePlayer: 1,
     },
     reducers: {
+        startGameIndex(state) {
+            state.gameIsStarted = true;
+        },
+        setPlayerFirsTurn(state, action) {
+            state.setUpTurnButtonIsClicked = true;
+            state.activePlayer = action.payload;
+        },
         restartPositions(state) {
+            state.setUpTurnButtonIsClicked = false;
+            state.activePlayer = 1;
             state.playersPosition.player1 = 1;
             state.playersPosition.player2 = 1;
             state.playersPosition.p1InJail = 0;
@@ -70,18 +80,11 @@ const diceAndPositionsSlice = createSlice({
             }
         },
         nextTurn(state, action) {
-            if (state.gameIsStarted === false) {
-                state.gameIsStarted = true;
-            }
             if (state.firstDice === state.secondDice) {
                 return;
             }
 
-            if (state.activePlayer === Object.keys(playersPosition).length) {
-                state.activePlayer = 1;
-                return;
-            }
-            state.activePlayer += 1;
+            state.activePlayer === 2 ? (state.activePlayer = 1) : (state.activePlayer = 2);
         },
         dropTwoDices(state) {
             state.firstDice = Math.trunc(Math.random() * 6) + 1;
@@ -133,7 +136,7 @@ const diceAndPositionsSlice = createSlice({
             }
             if (state.playersPosition[playerInJail] > 0 && state.firstDice === state.secondDice) {
                 state.playersPosition[playerInJail] = 0;
-                state.activePlayer = 1;
+                state.activePlayer = player === "player1" ? 1 : 2;
                 return;
             }
             if (state.playersPosition[playerInJail] > 0) {
@@ -210,6 +213,7 @@ const diceAndPositionsSlice = createSlice({
 
 export default diceAndPositionsSlice.reducer;
 export const {
+    setPlayerFirsTurn,
     restartPositions,
     dropFightDices,
     dropTwoDices,
@@ -221,6 +225,5 @@ export const {
     winner,
     rouletteMoving,
     setInJail,
+    startGameIndex,
 } = diceAndPositionsSlice.actions;
-
-// export const thunk = () => (dispatch, getState) => dispatch(dropTwoDices());

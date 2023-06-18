@@ -12,7 +12,6 @@ import {
 } from "../store/fields";
 import { openMainMenu, closeMainMenu } from "../store/mainMenu";
 import PlayerInfo from "./UI/MainScreenInfo/PlayerInfo";
-import SimpleButton from "./UI/ModalWindows/ModalButtons/SimpleButton";
 import audio from "../media/rolling-dice.mp3";
 import clickSound1 from "../media/click-sound.mp3";
 import playerMoveSound from "../media/playerMove.mp3";
@@ -45,6 +44,7 @@ const GameInfo = () => {
     const p2JailCard = useSelector((state) => state.fields.player2.jailFreeCard);
     const p2JailDaysLeft = useSelector((state) => state.dice.playersPosition.p2InJail);
     const p2stocks = useSelector((state) => state.fields.player2.stocks);
+    const player1Name = useSelector((state) => state.fields.player1.name);
     // Player1
     const p1stocks = useSelector((state) => state.fields.player1.stocks);
     const player1OnwnedFields = useSelector((state) => state.fields.player1.fields);
@@ -55,6 +55,7 @@ const GameInfo = () => {
     const player1Debt = useSelector((state) => state.fields.player1.debt);
     const expectedTaxesP1 = useSelector((state) => state.fields.player1.expectedTaxes);
     const player1CreditCount = useSelector((state) => state.fields.player1.creditCount);
+    const player2Name = useSelector((state) => state.fields.player2.name);
 
     const playerIsActive = activePlayer === 1 ? "player1" : "player2";
     const audioPlay = new Audio(audio);
@@ -154,8 +155,9 @@ const GameInfo = () => {
                 <PlayerInfo
                     className={styles["player1"]}
                     index={1}
-                    playerName={"player1"}
+                    playerName={player1Name}
                     activePlayer={activePlayer}
+                    activePlayerName={playerIsActive}
                     playerSteps={player1Steps}
                     playerOnwnedFields={player1OnwnedFields}
                     playerMoney={player1Money}
@@ -174,8 +176,9 @@ const GameInfo = () => {
                 <PlayerInfo
                     className={styles["player2"]}
                     index={2}
-                    playerName={"player2"}
+                    playerName={player2Name}
                     activePlayer={activePlayer}
+                    activePlayerName={playerIsActive}
                     playerSteps={player2Steps}
                     playerOnwnedFields={player2OnwnedFields}
                     playerMoney={player2Money}

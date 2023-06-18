@@ -16,7 +16,6 @@ import {
     rentalAndSalesIndex,
     debtReturning,
     gameOver,
-    settingPlayerRouletteisClose,
     moneyLessThenZero,
     openRentalWithdrawalModal,
 } from "../store/fields";
@@ -34,6 +33,7 @@ const WalkingRoad = () => {
     const player1fields = useSelector((state) => state.fields.player1.fields);
     const player2fields = useSelector((state) => state.fields.player2.fields);
     const fields = useSelector((state) => state.fields.fields);
+    const fieldsSlice = useSelector((state) => state.fields);
     const p1circlesPassed = useSelector((state) => state.dice.playersPosition.p1circle);
     const p2circlesPassed = useSelector((state) => state.dice.playersPosition.p2circle);
     const p1IsOpenRouletModal = useSelector((state) => state.fields.player1.isOpenRouletteModal);
@@ -47,7 +47,8 @@ const WalkingRoad = () => {
 
     // playground
 
-    console.log(fields);
+    // console.log(fields);
+    // console.log(fieldsSlice);
 
     // function to check the players positions
 
@@ -68,17 +69,17 @@ const WalkingRoad = () => {
             dispatch(openBuyModal([player1, steps, "commercial"]));
         }
         // ----- CHECKING FIELD IS JAIL -----
-        if (steps === 12 || steps === 24 || steps === 36 || steps === 48) {
-            dispatch(inJail(jail));
-            dispatch(rentalAndSalesIndex(["arrest", player1]));
-            if (playerIsOpenRouletteModal !== true) {
-                dispatch(openJailModal());
-            }
-        }
+        // if (steps === 12 || steps === 24 || steps === 36 || steps === 48) {
+        //     dispatch(inJail(jail));
+        //     dispatch(rentalAndSalesIndex(["arrest", player1]));
+        //     if (playerIsOpenRouletteModal !== true) {
+        //         dispatch(openJailModal());
+        //     }
+        // }
         // ----- CHECKING FIELD IS ROULETTE -----
-        if (steps === 7 || steps === 19 || steps === 31 || steps === 43) {
-            dispatch(openRouletteModal(player1));
-        }
+        // if (steps === 7 || steps === 19 || steps === 31 || steps === 43) {
+        //     dispatch(openRouletteModal(player1));
+        // }
     };
 
     // ----- Player1 cheking position -----
