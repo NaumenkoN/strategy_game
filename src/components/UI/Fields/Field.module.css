@@ -6,7 +6,7 @@
     list-style-type: none;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: 0.7rem;
+    font-size: 0.7vw;
     height: 7vh;
     width: 7.3vw;
 
@@ -22,16 +22,16 @@
     gap: 0;
     justify-content: space-around;
     align-items: center;
-    margin-left: 0.5vw;
+    padding-left: 2.5vw;
 }
 
 .house {
     background-image: url("../../../media/thehouse.png");
     background-size: cover;
-    height: 1.5vw;
-    width: 1.5vw;
+    height: 2.5vh;
+    width: 2.5vh;
     z-index: 3;
-    margin-left: 0.1vw;
+    margin-left: 0.4vw;
 }
 
 /* commercial */

@@ -46,18 +46,19 @@ const Game = () => {
         <ul className={styles.map}>
             {!isOpenMainMenu && (
                 <>
-                    {isOpenTakeCreditModal && <TakeCreditModal />}
-                    {isOpenRentalWithdrawalModal && <RentalWithdrawal />}
-                    {isGameIsOver && <GameOverModal />}
+                    {isOpenRouletteModal && <RouletteModal />}
                     {isOpenRouletteResultModal && <RouletteResultModal />}
                     {isOpenRouletteSkocksModal && <RouletteStocksModal />}
+                    {isOpenTakeCreditModal && <TakeCreditModal />}
+                    {isOpenSellStocksModal && <SellStocksModal />}
+                    {isOpenFightModal && <FightModal />}
+                    {isOpenRentalWithdrawalModal && <RentalWithdrawal />}
+
+                    {isGameIsOver && <GameOverModal />}
                     {isOpenWarningModal && <WarningModal />}
                     {isOpenBuildingModal && <BuildingModal />}
-                    {isOpenBuyModal && <BuyModal />}
-                    {isOpenFightModal && <FightModal />}
-                    {isOpenSellStocksModal && <SellStocksModal />}
                     {jailModalIsOpen && <JailModal />}
-                    {isOpenRouletteModal && <RouletteModal />}
+                    {isOpenBuyModal && <BuyModal />}
                     {isOpenEnoughtlessMoneyModal && <EnoughtlessMoneyModal />}
                     <WalkingRoad />
                     <GameInfo />

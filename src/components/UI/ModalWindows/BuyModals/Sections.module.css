@@ -1,7 +1,27 @@
+/* input rows disabled */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
 /* general */
 
+.arg-button {
+    width: 3vw;
+    text-align: center;
+}
+
 .active-player {
-    font-size: 2vw;
+    font-size: 1.6vw;
+    font-family: "Montserrat-Regular";
     position: absolute;
     top: -1vw;
     left: 0.6vw;
@@ -14,6 +34,7 @@
     margin: 1vw 0 1vw 0;
     text-align: center;
     font-size: 2vw;
+    font-family: "BreeSerif";
 }
 
 .scroll {
@@ -45,6 +66,7 @@
 }
 
 .field-number {
+    font-family: "Montserrat-Regular";
     font-size: 1.5vw;
     text-align: center;
     margin: 0.5vw auto 0.5;
@@ -52,6 +74,7 @@
 }
 
 .quantity {
+    font-family: "Montserrat-Regular";
     margin: 0.5vw 0;
     font-size: 0.7vw;
     text-align: center;
@@ -81,7 +104,6 @@
 .input {
     display: flex;
 }
-
 /* commercial */
 
 .field-c {
@@ -103,3 +125,4 @@
     justify-content: space-around;
     margin-bottom: 0.5vw;
 }
+/* /////// */

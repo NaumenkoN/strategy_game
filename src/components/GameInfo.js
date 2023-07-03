@@ -33,6 +33,7 @@ const GameInfo = () => {
     const diceRight = useSelector((state) => state.dice.secondDice);
     const activePlayer = useSelector((state) => state.dice.activePlayer);
     const fields = useSelector((state) => state.fields.fields);
+    const gameMusics = useSelector((state) => state.menu.gameMusic);
 
     // Player2
     const player2Money = useSelector((state) => state.fields.player2.money);
@@ -58,6 +59,7 @@ const GameInfo = () => {
     const player2Name = useSelector((state) => state.fields.player2.name);
 
     const playerIsActive = activePlayer === 1 ? "player1" : "player2";
+    const pactivePlayerName = activePlayer === 1 ? player1Name : player2Name;
     const audioPlay = new Audio(audio);
     const clickSound = new Audio(clickSound1);
     const playerMove = new Audio(playerMoveSound);
@@ -66,9 +68,13 @@ const GameInfo = () => {
     const dices = ["", dice1, dice2, dice3, dice4, dice5, dice6];
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            // gameMusic.play();
-        }, 500);
+        let interval;
+        if (gameMusics) {
+            interval = setInterval(() => {
+                gameMusic.play();
+            }, 500);
+        }
+
         return () => {
             gameMusic.pause();
             clearInterval(interval);
@@ -91,8 +97,8 @@ const GameInfo = () => {
             dispatch(dropTwoDices());
         }, 1600);
         setTimeout(() => {
-            dispatch(addStep(playerIsActive));
             dispatch(nextTurn());
+            dispatch(addStep(playerIsActive));
             playerMove.play();
         }, 2600);
     };
@@ -115,23 +121,10 @@ const GameInfo = () => {
         dispatch(openMainMenu());
     };
 
-    // setting 'spase' button to roll dices
-    useEffect(() => {
-        const onKeyPress = (e) => {
-            if (e.key === " ") {
-                diceDroppingHandler();
-            }
-        };
-        document.addEventListener("keypress", onKeyPress);
-        return () => {
-            document.removeEventListener("keypress", onKeyPress);
-        };
-    }, []);
-
     return (
         <>
             <MenuMoveButton
-                message={"Next move"}
+                message={`Next Move "${pactivePlayerName}"`}
                 type={"button"}
                 handler={diceDroppingHandler}
                 className={styles["moove-button"]}

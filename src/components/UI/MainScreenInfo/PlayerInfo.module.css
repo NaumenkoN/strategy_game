@@ -17,17 +17,21 @@
     border-color: grey;
 }
 .active-buttons {
-    background-color: grey;
+    box-shadow: 0 0 0 rgb(0, 0, 0) !important;
+    background-color: grey !important;
 }
 
 .player-name {
     margin-left: 1vw;
+    font-family: "BreeSerif";
+
     font-size: 2vw;
     text-align: center;
 }
 
 .player-info {
     margin-left: 1vw;
+    font-family: "BreeSerif";
     font-size: 1vw;
     text-align: center;
 }

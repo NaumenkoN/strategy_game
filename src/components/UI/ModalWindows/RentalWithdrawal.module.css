@@ -3,7 +3,7 @@
     height: 6vw;
     position: fixed;
     right: 32vw;
-    top: -10.5vw;
+    top: -15%;
     padding: 1vw;
 }
 
@@ -11,6 +11,7 @@
     text-align: center;
     margin-top: 0.7vw;
     font-size: 1.7vw;
+    font-family: "Montserrat-Regular";
 }
 
 .animation-downslide {

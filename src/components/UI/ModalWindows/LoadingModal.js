@@ -10,13 +10,7 @@ const LoadingModal = (props) => {
     return (
         <>
             <div className={styles.backdrop}></div>
-            {/* {props.isLoad === true ? (
-                <button className={styles.button} onClick={closeLoadingModalHandler}>
-                    Click to Start
-                </button>
-            ) : (
-                <div className={styles.modal}>Loading....</div>
-            )} */}
+
             <button className={styles.button} onClick={closeLoadingModalHandler}>
                 Click to Start
             </button>

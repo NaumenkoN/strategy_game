@@ -1,10 +1,13 @@
 .modal-props {
     background-image: url("../../../media/roulesImage.webp");
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: 60vw;
-    height: 40vw;
-    top: -8vw;
+    height: 65%;
+    top: -8%;
     left: -10vw;
+    overflow: scroll;
 }
 
 .close-button {
@@ -16,8 +19,8 @@
 .info {
     text-align: center;
     width: 35vw;
-    height: 33vw;
-    margin: 2vw auto;
+    height: 85%;
+    margin: 4% auto;
     overflow-y: scroll;
 }
 
@@ -27,4 +30,6 @@
 
 .text {
     text-align: left;
+    font-family: "Montserrat-Regular";
+    font-size: 1.2vw;
 }

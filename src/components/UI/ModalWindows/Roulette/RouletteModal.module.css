@@ -5,14 +5,42 @@
 }
 
 .header {
-    font-size: 3vw;
+    font-size: 2.5vw;
+    font-family: "BreeSerif";
+    margin-top: 3vw;
 }
 
 .button {
     margin-top: 2vw;
-    width: 10vw;
+    width: 12vw;
     height: 4vw;
     font-size: 1.2vw;
     background-color: gold !important;
     box-shadow: -2px 0 15px rgb(250, 102, 10);
+}
+
+.description {
+    font-size: 1.6vw;
+    font-family: "Montserrat-Regular";
+}
+
+.roulette-animation {
+    width: 8vw;
+    height: 8vw;
+    margin: 0 auto;
+    background-image: url("../../../../media/roulette.png");
+    background-size: cover;
+    background-color: transparent !important;
+
+    animation: spin 6000ms;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
 }

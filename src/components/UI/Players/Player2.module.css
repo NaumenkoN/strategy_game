@@ -1,12 +1,12 @@
 .player {
     width: 1.6vw;
-    height: 4vw;
+    height: 75%;
     margin-left: 1.9vw;
     background-image: url("../../../media/blue-player.svg");
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
-    bottom: -1vw;
+    bottom: 0;
     text-align: center;
     font-size: 1vw;
     animation: bums 3500ms ease-out;

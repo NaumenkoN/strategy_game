@@ -1,0 +1,34 @@
+.background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: black;
+    filter: blur(4px);
+}
+
+.header {
+    display: block;
+    color: white;
+    position: fixed;
+    top: 27vw;
+    left: 30vw;
+    z-index: 100;
+    animation: fade 1500ms linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}

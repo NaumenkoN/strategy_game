@@ -581,6 +581,7 @@ const fieldsSlice = createSlice({
                     state[player].stocks === 0
                 ) {
                     console.log("gameoverdebtret");
+                    state.isOpenBuildingModal = false;
                     fieldsSlice.caseReducers.gameOver(state);
                 }
             }

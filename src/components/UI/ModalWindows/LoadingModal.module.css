@@ -17,6 +17,7 @@
     top: 48%;
     left: 43%;
     z-index: 2;
+    font-family: "Montserrat-Regular";
     font-size: 2.3vw;
     animation: fade 1500ms ease-in-out;
     animation-iteration-count: infinite;

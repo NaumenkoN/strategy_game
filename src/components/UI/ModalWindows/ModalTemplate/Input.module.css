@@ -1,6 +1,12 @@
 .label {
+    margin-right: 0.2vw;
 }
 
 .input {
     width: 2vw;
+    height: 1.2vw;
+    font-family: "Montserrat-Regular";
+    font-size: 0.8vw;
+    border: 0.1px solid black;
+    border-radius: 3px;
 }

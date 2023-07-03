@@ -1,6 +1,6 @@
 import styles from "./MainMenu.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SimpleButton from "../ModalWindows/ModalButtons/SimpleButton";
 import { closeMainMenu, openRoulesModal, openSettings } from "../../../store/mainMenu";
 import { openRestartGameModal } from "../../../store/fields";
@@ -14,6 +14,7 @@ import moveSound from "../../../media/playerMove.mp3";
 const MainMenu = () => {
     const dispatch = useDispatch();
     const gameIsStarted = useSelector((state) => state.dice.gameIsStarted);
+    const mainMusic = useSelector((state) => state.menu.mainMusic);
 
     const mouseOverAudio = new Audio(hoverSound);
     const mouseClickAudio = new Audio(clickSound);
@@ -21,14 +22,18 @@ const MainMenu = () => {
     const openSound = new Audio(moveSound);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            // mainMenuSound.play();
-        }, 500);
+        let interval;
+        if (mainMusic) {
+            interval = setInterval(() => {
+                mainMenuSound.play();
+            }, 500);
+        }
+
         return () => {
             mainMenuSound.pause();
             clearInterval(interval);
         };
-    }, []);
+    }, [mainMusic]);
 
     const returntoGameHandler = () => {
         mouseClickAudio.play();

@@ -1,5 +1,5 @@
 import styles from "./FightModal.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { closeFightModal, fightWithdrawal } from "../../../store/fields";
 import { dropFightDices, hideFightDices, winner } from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,12 +15,14 @@ const FightModal = () => {
     const firstDice = useSelector((state) => state.dice.firstFightDice);
     const secondDice = useSelector((state) => state.dice.secondFightDice);
 
-    const fightDiceIsDropted = useSelector((state) => state.dice.fightDiceIsDropted);
+    const DiceIsDropted = useSelector((state) => state.dice.fightDiceIsDropted);
+    const [fightDiceIsDropted, setFightDiceIsDropted] = useState(false);
     const whoWinner = useSelector((state) => state.dice.winner);
 
     const fightSound = new Audio(sound);
 
     const fightDiceHandler = () => {
+        setFightDiceIsDropted(true);
         fightSound.play();
         setTimeout(() => {
             dispatch(dropFightDices());
@@ -34,6 +36,7 @@ const FightModal = () => {
             setTimeout(() => {
                 dispatch(hideFightDices());
                 dispatch(closeFightModal());
+                setFightDiceIsDropted(false);
             }, 3000);
         }
         if (firstDice < secondDice) {
@@ -42,13 +45,14 @@ const FightModal = () => {
             setTimeout(() => {
                 dispatch(hideFightDices());
                 dispatch(closeFightModal());
+                setFightDiceIsDropted(false);
             }, 3000);
         }
         if (firstDice === secondDice && firstDice !== null) {
             dispatch(hideFightDices());
             dispatch(dropFightDices());
         }
-    }, [fightDiceIsDropted, firstDice]);
+    }, [DiceIsDropted, firstDice]);
 
     return (
         <>
@@ -59,7 +63,7 @@ const FightModal = () => {
                     <br />
                     And you got into fight!
                 </h1>
-                <h2 className={styles.header}>Throw the dices and we'll see who wins 😏...</h2>
+                <h2 className={styles.header2}>Throw the dices and we'll see who wins 😏...</h2>
                 <div className={styles.info}>
                     <div className={styles.players}>
                         {whoWinner === 1 && (
@@ -73,12 +77,14 @@ const FightModal = () => {
                             </div>
                         )}
 
-                        <SimpleButton
-                            className={styles["run-button"]}
-                            message={"Fight!"}
-                            handler={fightDiceHandler}
-                            disabled={fightDiceIsDropted}
-                        />
+                        {!fightDiceIsDropted && (
+                            <SimpleButton
+                                className={styles["run-button"]}
+                                message={"Fight!"}
+                                handler={fightDiceHandler}
+                                disabled={DiceIsDropted}
+                            />
+                        )}
                     </div>
                 </div>
             </ModalWindow>

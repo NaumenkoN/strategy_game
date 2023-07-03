@@ -10,18 +10,19 @@ import audio from "../../../media/enoughtlessMoney.mp3";
 const EnoughtlessMoneyModal = () => {
     const dispatch = useDispatch();
 
-    const closeEnoughtlessMoneyModalHandler = (e) => {
-        dispatch(closeEnoughtlessMoneyModal());
-    };
     const sound = new Audio(audio);
     useEffect(() => {
         sound.play();
+    }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(closeEnoughtlessMoneyModal());
+        }, 2000);
     }, []);
     return (
         <>
             <Backdrop />
             <ModalWindow>
-                <CloseButton handler={closeEnoughtlessMoneyModalHandler} />
                 <h1 className={styles.header}>Money is not enought!</h1>
             </ModalWindow>
         </>

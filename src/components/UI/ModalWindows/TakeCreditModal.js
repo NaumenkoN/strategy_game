@@ -23,9 +23,9 @@ const TakeCreditModal = () => {
                 <div className={styles.info}>
                     <h1 className={styles.header}>Shure you need a credit 1000$?</h1>
 
-                    <h1 className={styles.action}>You should return 1500 passing circle next time.</h1>
+                    <h1 className={styles.action}>You should return 1500$ passing circle next time.</h1>
                     <div className={styles["buttons-group"]}>
-                        <SimpleButton className={styles.button} message={"YEAS"} handler={takeCreditHandler} />
+                        <SimpleButton className={styles.button} message={"YES"} handler={takeCreditHandler} />
                         <SimpleButton className={styles.button} message={"NO"} handler={closeCreditModalHandler} />
                     </div>
                 </div>

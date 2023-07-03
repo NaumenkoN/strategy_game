@@ -1,15 +1,25 @@
 .header {
     text-align: center;
+    font-size: 2.5vw;
+    font-family: "BreeSerif";
+}
+.header2 {
+    text-align: center;
+    font-size: 1.6vw;
+    font-family: "Montserrat-Regular";
+    width: 80%;
+    margin: 2vw auto;
 }
 
 .players {
-    font-size: 2vw;
+    font-family: "Montserrat-Regular";
+    font-size: 1.6vw;
     text-align: center;
 }
 
 .run-button {
     font-size: 1.6vw;
-    margin-top: 2vw;
+    margin-top: 1vw;
     width: 10vw;
     height: 3vw;
     background-color: gold;

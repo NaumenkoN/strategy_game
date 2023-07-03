@@ -69,17 +69,17 @@ const WalkingRoad = () => {
             dispatch(openBuyModal([player1, steps, "commercial"]));
         }
         // ----- CHECKING FIELD IS JAIL -----
-        // if (steps === 12 || steps === 24 || steps === 36 || steps === 48) {
-        //     dispatch(inJail(jail));
-        //     dispatch(rentalAndSalesIndex(["arrest", player1]));
-        //     if (playerIsOpenRouletteModal !== true) {
-        //         dispatch(openJailModal());
-        //     }
-        // }
+        if (steps === 12 || steps === 24 || steps === 36 || steps === 48) {
+            dispatch(inJail(jail));
+            dispatch(rentalAndSalesIndex(["arrest", player1]));
+            if (playerIsOpenRouletteModal !== true) {
+                dispatch(openJailModal());
+            }
+        }
         // ----- CHECKING FIELD IS ROULETTE -----
-        // if (steps === 7 || steps === 19 || steps === 31 || steps === 43) {
-        //     dispatch(openRouletteModal(player1));
-        // }
+        if (steps === 7 || steps === 19 || steps === 31 || steps === 43) {
+            dispatch(openRouletteModal(player1));
+        }
     };
 
     // ----- Player1 cheking position -----

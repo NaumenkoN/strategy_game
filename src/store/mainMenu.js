@@ -7,8 +7,22 @@ const mainMenuSlice = createSlice({
         isOpenLoadingModal: true,
         isOpenRoulesModal: false,
         isOpenSettingsModal: false,
+        mainMusic: true,
+        gameMusic: true,
     },
     reducers: {
+        resetGameMusic(state) {
+            state.gameMusic = true;
+        },
+        toogleGameMusic(state) {
+            state.gameMusic ? (state.gameMusic = false) : (state.gameMusic = true);
+        },
+        resetMainMusic(state) {
+            state.mainMusic = true;
+        },
+        toogleMainMusic(state) {
+            state.mainMusic ? (state.mainMusic = false) : (state.mainMusic = true);
+        },
         openMainMenu(state) {
             state.isOpenMainMenu = true;
         },
@@ -35,6 +49,10 @@ const mainMenuSlice = createSlice({
 
 export default mainMenuSlice.reducer;
 export const {
+    resetMainMusic,
+    resetGameMusic,
+    toogleMainMusic,
+    toogleGameMusic,
     openMainMenu,
     openSettings,
     closeSettings,

@@ -28,9 +28,12 @@ const diceAndPositionsSlice = createSlice({
         startGameIndex(state) {
             state.gameIsStarted = true;
         },
-        setPlayerFirsTurn(state, action) {
+        setPlayerFirstTurn(state, action) {
             state.setUpTurnButtonIsClicked = true;
             state.activePlayer = action.payload;
+        },
+        resetTurnButton(state) {
+            state.setUpTurnButtonIsClicked = false;
         },
         restartPositions(state) {
             state.setUpTurnButtonIsClicked = false;
@@ -79,7 +82,7 @@ const diceAndPositionsSlice = createSlice({
                 state.playersPosition[player] = 47;
             }
         },
-        nextTurn(state, action) {
+        nextTurn(state) {
             if (state.firstDice === state.secondDice) {
                 return;
             }
@@ -121,10 +124,6 @@ const diceAndPositionsSlice = createSlice({
             const totalSteps = state.playersPosition[player] + addSteps;
 
             if (state.playersPosition[playerInJail] === 0) {
-                if (state.firstDice !== state.secondDice) {
-                    state.playersPosition[player1IsActive] = false;
-                    state.playersPosition[player2IsActive] = true;
-                }
                 if (totalSteps > 48) {
                     state.playersPosition[player1Circle] = true;
 
@@ -132,6 +131,10 @@ const diceAndPositionsSlice = createSlice({
                 }
                 if (totalSteps <= 48) {
                     state.playersPosition[player] += addSteps;
+                }
+                if (state.firstDice !== state.secondDice) {
+                    state.playersPosition[player1IsActive] = false;
+                    state.playersPosition[player2IsActive] = true;
                 }
             }
             if (state.playersPosition[playerInJail] > 0 && state.firstDice === state.secondDice) {
@@ -142,62 +145,6 @@ const diceAndPositionsSlice = createSlice({
             if (state.playersPosition[playerInJail] > 0) {
                 state.playersPosition[playerInJail] = state.playersPosition[playerInJail] - 1;
             }
-
-            // if (state.activePlayer === 1) {
-            //     state.playersPosition.p2circle = false;
-            //     const totalSteps = state.playersPosition.player1 + addSteps;
-
-            //     if (state.playersPosition.p1InJail === 0) {
-            //         if (state.firstDice !== state.secondDice) {
-            //             state.playersPosition.player1IsActive = false;
-            //             state.playersPosition.player2IsActive = true;
-            //         }
-            //         if (totalSteps > 48) {
-            //             state.playersPosition.p1circle = true;
-
-            //             state.playersPosition.player1 = totalSteps - 48;
-            //         }
-            //         if (totalSteps <= 48) {
-            //             state.playersPosition.player1 += addSteps;
-            //         }
-            //     }
-            //     if (state.playersPosition.p1InJail > 0 && state.firstDice === state.secondDice) {
-            //         state.playersPosition.p1InJail = 0;
-            //         state.activePlayer = 1;
-            //         return;
-            //     }
-            //     if (state.playersPosition.p1InJail > 0) {
-            //         state.playersPosition.p1InJail = state.playersPosition.p1InJail - 1;
-            //     }
-            // }
-
-            // if (state.activePlayer === 2) {
-            //     state.playersPosition.p1circle = false;
-            //     const totalSteps = state.playersPosition.player2 + addSteps;
-            //     if (state.playersPosition.p2InJail === 0) {
-            //         if (state.firstDice !== state.secondDice) {
-            //             state.playersPosition.player2IsActive = false;
-            //             state.playersPosition.player1IsActive = true;
-            //         }
-
-            //         if (totalSteps > 48) {
-            //             state.playersPosition.p2circle = true;
-
-            //             state.playersPosition.player2 = totalSteps - 48;
-            //         }
-            //         if (totalSteps <= 48) {
-            //             state.playersPosition.player2 += addSteps;
-            //         }
-            //     }
-            //     if (state.playersPosition.p2InJail > 0 && state.firstDice === state.secondDice) {
-            //         state.playersPosition.p2InJail = 0;
-            //         state.activePlayer = 2;
-            //         return;
-            //     }
-            //     if (state.playersPosition.p2InJail > 0) {
-            //         state.playersPosition.p2InJail = state.playersPosition.p2InJail - 1;
-            //     }
-            // }
         },
 
         inJail(state, action) {
@@ -213,7 +160,8 @@ const diceAndPositionsSlice = createSlice({
 
 export default diceAndPositionsSlice.reducer;
 export const {
-    setPlayerFirsTurn,
+    resetTurnButton,
+    setPlayerFirstTurn,
     restartPositions,
     dropFightDices,
     dropTwoDices,

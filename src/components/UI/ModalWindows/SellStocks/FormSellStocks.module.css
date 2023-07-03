@@ -1,24 +1,35 @@
 .control-buttons {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 2vw;
 }
 
 .header {
     text-align: center;
+    font-size: 1.6vw;
+    font-weight: normal;
+    font-family: "Montserrat-Regular";
 }
 
 .input {
+    font-size: 1.5vw;
+    font-family: "Montserrat-Regular";
     text-align: center;
-    margin-top: 2vw;
-}
-
-.control-buttons {
-    margin-top: 3vw;
+    margin-top: 1vw;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button {
     font-size: 1vw;
+    background-color: gold;
+}
+
+.button:hover {
+    background-color: rgb(222, 189, 1);
+}
+.button:active {
+    background-color: rgb(242, 206, 2);
 }

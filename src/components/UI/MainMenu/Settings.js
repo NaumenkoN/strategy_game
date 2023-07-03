@@ -1,7 +1,20 @@
 import styles from "./Settings.module.css";
-import { closeSettings, closeMainMenu } from "../../../store/mainMenu";
+import SoundsSwitcher from "./SoundsSwitcher";
+import {
+    closeSettings,
+    closeMainMenu,
+    toogleMainMusic,
+    resetMainMusic,
+    toogleGameMusic,
+    resetGameMusic,
+} from "../../../store/mainMenu";
 import { playersGameSettings } from "../../../store/fields";
-import { restartPositions, setPlayerFirsTurn, startGameIndex } from "../../../store/diceAndPlayerPositions";
+import {
+    restartPositions,
+    setPlayerFirstTurn,
+    startGameIndex,
+    resetTurnButton,
+} from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import ModalWindow from "../ModalWindows/ModalTemplate/ModalWindow";
@@ -17,6 +30,8 @@ const Settings = () => {
     const dispatch = useDispatch();
     const playersTurn = useSelector((state) => state.dice.activePlayer);
     const buttonIsClicked = useSelector((state) => state.dice.setUpTurnButtonIsClicked);
+
+    const gameIsStarted = useSelector((state) => state.dice.gameIsStarted);
 
     const [player1Name, setPlayer1Name] = useState("player1");
     const [player2Name, setPlayer2Name] = useState("player2");
@@ -35,12 +50,17 @@ const Settings = () => {
     const [engineerIndex, setEngineerIndex] = useState(1.5);
     const [engineerPrice, setEngineerPrice] = useState(600);
     const [managerPrice, setManagerPrice] = useState(1000);
+    const switchMainStatus = useSelector((state) => state.menu.mainMusic);
+    const switchGameStatus = useSelector((state) => state.menu.gameMusic);
 
     const clickSound = new Audio(clickAudio);
     const rollingDice = new Audio(dice);
 
     const resetToDefault = () => {
         clickSound.play();
+        dispatch(resetTurnButton());
+        dispatch(resetMainMusic());
+        dispatch(resetGameMusic());
         setPlayer1Name("player1");
         setPlayer2Name("player2");
         setPlayerMoney(800);
@@ -62,7 +82,7 @@ const Settings = () => {
 
     const closeSettingsHandler = () => {
         dispatch(closeSettings());
-        resetToDefault();
+        // resetToDefault();
     };
 
     const startGameHandler = ({
@@ -108,7 +128,7 @@ const Settings = () => {
             })
         );
         dispatch(restartPositions());
-        dispatch(setPlayerFirsTurn(playersTurn));
+        dispatch(setPlayerFirstTurn(playersTurn));
         dispatch(closeSettings());
         dispatch(closeMainMenu());
         dispatch(startGameIndex());
@@ -118,9 +138,14 @@ const Settings = () => {
         rollingDice.play();
         setTimeout(() => {
             const dice = Math.trunc(Math.random() * 2) + 1;
-            dispatch(setPlayerFirsTurn(dice));
+            dispatch(setPlayerFirstTurn(dice));
         }, 2600);
     };
+
+    const classesCircle = switchMainStatus ? styles["switcher-circle--on"] : styles["switcher-circle--of"];
+    const classesSwitcher = switchMainStatus ? styles.switcherOn : styles.switcherOf;
+    const classesCircle2 = switchGameStatus ? styles["switcher-circle--on"] : styles["switcher-circle--of"];
+    const classesSwitcher2 = switchGameStatus ? styles.switcherOn : styles.switcherOf;
 
     // 'onChange handlers
 
@@ -178,6 +203,16 @@ const Settings = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
     };
+    const mainMenuMusicHandler = (e) => {
+        dispatch(toogleMainMusic());
+    };
+    const gameMusicHandler = () => {
+        dispatch(toogleGameMusic());
+    };
+    const returnToGame = () => {
+        dispatch(closeSettings());
+        dispatch(closeMainMenu());
+    };
 
     return (
         <>
@@ -186,18 +221,39 @@ const Settings = () => {
                 <CloseButton className={styles["close-button"]} handler={closeSettingsHandler} />
 
                 <form className={styles.form} onSubmit={onSubmitHandler}>
+                    <SoundsSwitcher
+                        message={<p className={styles.p}>Main menu music:</p>}
+                        handler={mainMenuMusicHandler}
+                        classesCircle={classesCircle}
+                        classesSwitcher={classesSwitcher}
+                    />
+                    <SoundsSwitcher
+                        message={<p className={styles.p}>Game music:</p>}
+                        handler={gameMusicHandler}
+                        classesCircle={classesCircle2}
+                        classesSwitcher={classesSwitcher2}
+                    />
+
                     <div className={styles.input}>
-                        <p className={styles.p}>Whose first step:</p>
+                        <p className={styles.p}>Player first step:</p>
                         <SimpleButton
-                            message={!buttonIsClicked ? "Set up" : playersTurn === 1 ? "player1" : "player2"}
+                            message={
+                                !buttonIsClicked ? (
+                                    <p className={styles.p0}>Set up</p>
+                                ) : playersTurn === 1 ? (
+                                    <p className={styles.p0}>{player1Name}</p>
+                                ) : (
+                                    <p className={styles.p0}>{player2Name}</p>
+                                )
+                            }
                             className={styles["setup-button"]}
                             handler={whoseTurnSetupHandler}
-                            disabled={!buttonIsClicked}
+                            disabled={buttonIsClicked || gameIsStarted}
                         />
                     </div>
                     <Input
                         className={styles.input}
-                        labelMessage={"Player1 name"}
+                        labelMessage={<p className={styles.p}>Player1 name</p>}
                         onChange={player1NameHandler}
                         value={player1Name}
                         id={"player1-name"}
@@ -207,7 +263,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Player2 name"}
+                        labelMessage={<p className={styles.p}>Player2 name</p>}
                         onChange={player2NameHandler}
                         value={player2Name}
                         id={"player2-name"}
@@ -217,7 +273,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Players money"}
+                        labelMessage={<p className={styles.p}>Players money</p>}
                         onChange={playerMoneyHandler}
                         value={playerMoney}
                         id={"player-money"}
@@ -228,7 +284,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Players stocks"}
+                        labelMessage={<p className={styles.p}>Players stocks</p>}
                         onChange={playerStocksHandler}
                         value={playerStocks}
                         id={"player-stocks"}
@@ -239,7 +295,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Jail cards"}
+                        labelMessage={<p className={styles.p}>Jail cards</p>}
                         onChange={jailCardHandler}
                         value={jailCard}
                         id={"jail-card"}
@@ -249,7 +305,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Fight withdrawal"}
+                        labelMessage={<p className={styles.p}>Fight withdrawal</p>}
                         onChange={fightWithdrawalHandler}
                         value={fightWithdrawal}
                         id={"Fightwithdrawal"}
@@ -260,7 +316,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Filds repairing amount"}
+                        labelMessage={<p className={styles.p}>Filds repairing amount</p>}
                         onChange={fieldsRepairignAmountHandler}
                         value={fieldsRepairignAmount}
                         id={"fildsreparignAmount"}
@@ -271,7 +327,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Living field price"}
+                        labelMessage={<p className={styles.p}>Living field price</p>}
                         onChange={livingFieldPriceHandler}
                         value={livingFieldPrice}
                         id={"livingFields-price"}
@@ -282,7 +338,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Commercial field price"}
+                        labelMessage={<p className={styles.p}>Commercial field price</p>}
                         onChange={CommercialFieldPriceHandler}
                         value={comFieldPrice}
                         id={"comFields-price"}
@@ -293,7 +349,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Living field rental index"}
+                        labelMessage={<p className={styles.p}>Living field rental index</p>}
                         onChange={livFieldrentalIndexHandler}
                         value={livFieldRentalIndex}
                         id={"livFields-index"}
@@ -304,7 +360,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Commercial field rental index"}
+                        labelMessage={<p className={styles.p}>Com. field rental index</p>}
                         onChange={comFieldrentalIndexHandler}
                         value={comFieldRentalIndex}
                         id={"comFields-index"}
@@ -315,7 +371,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Living field taxes index"}
+                        labelMessage={<p className={styles.p}>Living field taxes index</p>}
                         onChange={livTaxesIndexHandler}
                         value={livingTaxes}
                         id={"livFields-taxes"}
@@ -326,7 +382,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Commercial field taxes index"}
+                        labelMessage={<p className={styles.p}>Commercial field taxes index</p>}
                         onChange={comTaxesIndexHandler}
                         value={comTaxes}
                         id={"comFields-taxes"}
@@ -337,7 +393,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Manager index"}
+                        labelMessage={<p className={styles.p}>Manager index</p>}
                         onChange={managerIndexHandler}
                         value={managerIndex}
                         id={"manager-index"}
@@ -348,7 +404,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Engineer index"}
+                        labelMessage={<p className={styles.p}>Engineer index</p>}
                         onChange={engineerIndexHandler}
                         value={engineerIndex}
                         id={"engineer-index"}
@@ -359,7 +415,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Engineer price"}
+                        labelMessage={<p className={styles.p}>Engineer price</p>}
                         onChange={engineerPriceHandler}
                         value={engineerPrice}
                         id={"engineer-price"}
@@ -370,7 +426,7 @@ const Settings = () => {
                     />
                     <Input
                         className={styles.input}
-                        labelMessage={"Manager price"}
+                        labelMessage={<p className={styles.p}>Manager price</p>}
                         onChange={managerPriceHandler}
                         value={managerPrice}
                         id={"manager-price"}
@@ -403,7 +459,13 @@ const Settings = () => {
                                 engineerPrice,
                                 managerPrice,
                             }}
-                            message={"New Game"}
+                            message={"Start Game"}
+                        />
+                        <SimpleButton
+                            className={styles.button}
+                            type={"submit"}
+                            handler={returnToGame}
+                            message={"Return to Game"}
                         />
                         <SimpleButton
                             className={styles.button}

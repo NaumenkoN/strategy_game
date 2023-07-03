@@ -3,20 +3,23 @@
     right: 0.4rem;
     top: 0.5rem;
     font-size: 1rem;
+    font-family: "BreeSerif";
     padding: 0.2vw 0.5vw;
     border-radius: 5px;
     border: none;
     background-color: rgba(0, 0, 0, 0);
     color: white;
     border: 1px solid gray;
+    font-size: 1vw;
 }
 
 .simple {
     border: 1px solid white;
     border-radius: 5px;
-    background-color: rgb(227, 226, 226);
+    background-color: rgb(231, 229, 229);
     color: black;
-
+    font-family: "BreeSerif";
+    font-size: 1vw;
     width: 5vw;
     height: 2vw;
     margin: 0.7vw 0.7vw;
@@ -24,31 +27,34 @@
 }
 
 .arg-button {
-    background-color: rgb(227, 226, 226);
+    font-size: 0.9vw;
+    font-family: "BreeSerif";
+    background-color: rgb(231, 229, 229);
     border-radius: 4px;
-    padding: 0.2vw 1vw;
+
     border: none;
+    width: 2vw;
 }
 
 .arg-button:hover {
-    background-color: rgb(175, 175, 175);
+    background-color: rgba(219, 216, 216, 0.5);
     cursor: pointer;
 }
 .simple:hover {
-    background-color: rgb(175, 175, 175);
+    background-color: rgba(219, 216, 216, 0.5);
     cursor: pointer;
 }
 .close:hover {
-    background-color: rgb(175, 175, 175);
+    background-color: rgba(219, 216, 216, 0.5);
     cursor: pointer;
 }
 
 .arg-button:active {
-    background-color: rgb(227, 226, 226);
+    background-color: white;
 }
 .simple:active {
-    background-color: rgb(227, 226, 226);
+    background-color: white;
 }
 .close:active {
-    background-color: rgb(227, 226, 226);
+    background-color: white;
 }

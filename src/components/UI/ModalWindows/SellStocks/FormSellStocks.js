@@ -2,7 +2,7 @@ import styles from "./FormSellStocks.module.css";
 import { sellingStocks } from "../../../../store/fields";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SimpleButton from "../ModalButtons/SimpleButton";
 import Input from "../ModalTemplate/Input";
 
@@ -23,7 +23,7 @@ const FormSellStocks = (props) => {
 
     return (
         <form>
-            <h1 className={styles.header}>{`You have ${activePlayerStocks} stocks.`}</h1>
+            <h2 className={styles.header}>{`You have ${activePlayerStocks} stocks.`}</h2>
             <Input
                 className={styles.input}
                 labelMessage={"Choise value multiple of 10:  "}

@@ -1,6 +1,6 @@
 import styles from "./RouletteResultModal.module.css";
 import { closeRouletteResultModal, settingPlayerRouletteisClose } from "../../../../store/fields";
-
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
@@ -36,16 +36,17 @@ const RouletteResultModal = () => {
         message = `You moving to a field ${result.slice(5)}`;
     }
 
-    const closeResultRouletteModalHandler = (e) => {
-        dispatch(closeRouletteResultModal());
-        dispatch(settingPlayerRouletteisClose());
-    };
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(closeRouletteResultModal());
+            dispatch(settingPlayerRouletteisClose());
+        }, 3000);
+    }, []);
 
     return (
         <>
             <Backdrop />
             <ModalWindow className={styles.modal}>
-                <CloseButton handler={closeResultRouletteModalHandler} />
                 <h1 className={styles.header}>{message}</h1>
             </ModalWindow>
         </>

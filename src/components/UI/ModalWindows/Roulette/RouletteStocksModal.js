@@ -1,6 +1,6 @@
 import styles from "./RouletteStocksModal.module.css";
 import { closeRouletteStocksModal, rouletteBuyStocks } from "../../../../store/fields";
-
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
@@ -27,12 +27,33 @@ const RouletteStocksModal = () => {
     const rouletteBuyStocksHandler = (player) => {
         dispatch(rouletteBuyStocks(player));
     };
+
+    useEffect(() => {
+        const onKeyPressYes = (e) => {
+            if (e.key === "y") {
+                rouletteBuyStocks();
+            }
+        };
+        document.addEventListener("keypress", onKeyPressYes);
+
+        const onKeyPressNo = (e) => {
+            console.log(e.key);
+            if (e.key === "n") {
+                closeRouletteStocksModal();
+            }
+        };
+        document.addEventListener("keypress", onKeyPressNo);
+        return () => {
+            document.removeEventListener("keypress", onKeyPressYes);
+            document.removeEventListener("keypress", onKeyPressNo);
+        };
+    }, []);
     return (
         <>
             <Backdrop />
             <ModalWindow>
                 <CloseButton handler={closeRouletteStocksModalHandler} />
-                <h1 className={styles.header}>Congratilations!</h1>
+                <h1 className={styles.header}>Congratulations!</h1>
                 <h2
                     className={styles.description}
                 >{`${activePlayerName}, you are able to buy a ${rouletteSkocksValue} extra stocks for ${
@@ -41,13 +62,13 @@ const RouletteStocksModal = () => {
                 <div className={styles.buttons}>
                     <ArgButton
                         className={styles.button}
-                        message={"Buy"}
+                        message={"YES"}
                         handler={rouletteBuyStocksHandler}
                         arguments={activePlayer}
                     />
                     <SimpleButton
                         className={styles.button}
-                        message={"Cancel"}
+                        message={"NO"}
                         handler={closeRouletteStocksModalHandler}
                     />
                 </div>

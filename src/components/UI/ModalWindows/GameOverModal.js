@@ -38,8 +38,8 @@ const GameOverModal = () => {
                 <div className={styles.info}>
                     <h1 className={styles.header}>Game Over!</h1>
                     <h2 className={styles.header2}>{looser} loose 🤷‍♂️</h2>
-                    <h3>You whant to restart?</h3>
-                    <SimpleButton className={styles.button} handler={restartGameHandler} message={"Yeas"} />
+                    <h2 className={styles.header2}>You whant to restart?</h2>
+                    <SimpleButton className={styles.button} handler={restartGameHandler} message={"Yes"} />
                     <SimpleButton className={styles.button} handler={MainMenuHandler} message={"Menu"} />
                 </div>
             </ModalWindow>

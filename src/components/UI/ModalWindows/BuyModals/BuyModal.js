@@ -1,6 +1,6 @@
 import styles from "./BuyModal.module.css";
 import { closeBuyModal, buyField } from "../../../../store/fields";
-
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
@@ -32,6 +32,27 @@ const BuyModal = () => {
         dispatch(buyField([activeField, activePlayer, fieldType]));
     };
 
+    // setting keyboard buttons
+    useEffect(() => {
+        const onKeyPressYes = (e) => {
+            if (e.key === "y") {
+                buyFieldHandler();
+            }
+        };
+        document.addEventListener("keypress", onKeyPressYes);
+
+        const onKeyPressNo = (e) => {
+            if (e.key === "n") {
+                closeBuyModalHandler();
+            }
+        };
+        document.addEventListener("keypress", onKeyPressNo);
+        return () => {
+            document.removeEventListener("keypress", onKeyPressYes);
+            document.removeEventListener("keypress", onKeyPressNo);
+        };
+    }, []);
+
     return (
         <>
             <Backdrop />
@@ -44,8 +65,12 @@ const BuyModal = () => {
                     <h2 className={styles.price}>Price: {fields[`${activeField}`].price}</h2>
                     <h1 className={styles.action}>{activePlayerName}, you whant to buy?</h1>
                     <div className={styles["buttons-group"]}>
-                        <SimpleButton className={styles.button} message={"YEAS"} handler={buyFieldHandler} />
-                        <SimpleButton className={styles.button} message={"NO"} handler={closeBuyModalHandler} />
+                        <SimpleButton className={styles.button} message={"YES (y)"} handler={buyFieldHandler} />
+                        <SimpleButton
+                            className={styles.button}
+                            message={"NO (n)"}
+                            handler={closeBuyModalHandler}
+                        />
                     </div>
                 </div>
             </ModalWindow>

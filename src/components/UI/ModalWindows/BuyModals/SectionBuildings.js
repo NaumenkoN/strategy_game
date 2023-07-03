@@ -57,7 +57,7 @@ const SectionBuildings = (props) => {
                     return (
                         <li key={index} className={styles.field}>
                             <div className={styles["field-number"]}>{field}</div>
-                            <h2 className={styles.quantity}>Buildings:{floorHeight[index]}</h2>
+                            <h2 className={styles.quantity}>Buildings: {floorHeight[index]}</h2>
                             <form onSubmit={props.onSubmitHandler}>
                                 <div className={styles.controls}>
                                     <Input
@@ -78,6 +78,7 @@ const SectionBuildings = (props) => {
                                         handler={buildLivingHandler}
                                         arguments={field}
                                         message={"buy"}
+                                        className={styles["arg-button"]}
                                     />
                                 </div>
                             </form>
@@ -101,6 +102,7 @@ const SectionBuildings = (props) => {
                                         handler={sellLivingHandler}
                                         arguments={field}
                                         message={"sell"}
+                                        className={styles["arg-button"]}
                                     />
                                 </div>
                             </form>

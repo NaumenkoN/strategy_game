@@ -2,6 +2,7 @@
     background-image: url(../media/earth2.webp);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 
     margin: 0;
     /* width: 100vw; */
@@ -23,4 +24,7 @@
         "39 f f f f f f f f f f f 23"
         "38 f f f f f f f f f f f 24"
         "37 36 35 34 33 32 31 30 29 28 27 26 25";
+}
+
+@media screen and (orientation: portrait) {
 }

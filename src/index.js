@@ -1,4 +1,7 @@
 import React from "react";
+import "./fonts/Montserrat-Regular.ttf";
+import "./fonts/BreeSerif-Regular.ttf";
+
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import "./index.css";

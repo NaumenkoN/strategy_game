@@ -95,10 +95,11 @@ const SectionEmployees = (props) => {
                                 <div className={styles["field-number"]}>{field}</div>
 
                                 {/* ----- employees ----- */}
-                                <h2 className={styles.quantity}>Employees:{activePlayerEmployees[index]}</h2>
+                                <h2 className={styles.quantity}>Employees: {activePlayerEmployees[index]}</h2>
                                 <form onSubmit={props.onSubmitHandler}>
                                     <div className={styles["controls-c"]}>
                                         <Input
+                                            className={styles.input}
                                             labelMessage={""}
                                             onChange={onChangeComBuildHandler}
                                             value={addEmployeesValue}
@@ -109,6 +110,7 @@ const SectionEmployees = (props) => {
                                             step={10}
                                         />
                                         <ArgButton
+                                            className={styles["arg-button"]}
                                             disabled={activePlayerEmployees[index] >= 40}
                                             type={"submit"}
                                             handler={buildCommercialHandler}
@@ -120,6 +122,7 @@ const SectionEmployees = (props) => {
                                 <form onSubmit={props.onSubmitHandler}>
                                     <div className={styles["controls-c"]}>
                                         <Input
+                                            className={styles.input}
                                             labelMessage={""}
                                             onChange={onChangeComSellHandler}
                                             value={sellEmployeesValue}
@@ -130,6 +133,7 @@ const SectionEmployees = (props) => {
                                             step={10}
                                         />
                                         <ArgButton
+                                            className={styles["arg-button"]}
                                             disabled={activePlayerEngineer[index] > 1}
                                             type={"submit"}
                                             handler={sellCommercialHandler}
@@ -144,6 +148,7 @@ const SectionEmployees = (props) => {
                                 } have engineer`}</h2>
                                 <div className={styles["controls-c"]}>
                                     <ArgButton
+                                        className={styles["arg-button"]}
                                         disabled={
                                             activePlayerEngineer[index] > 1 || activePlayerEmployees[index] !== 40
                                         }
@@ -153,6 +158,7 @@ const SectionEmployees = (props) => {
                                         message={"Hire"}
                                     />
                                     <ArgButton
+                                        className={styles["arg-button"]}
                                         disabled={activePlayerEngineer[index] === 1}
                                         type={"submit"}
                                         handler={fireEngineerHandler}
@@ -167,6 +173,7 @@ const SectionEmployees = (props) => {
                                 } have manager`}</h2>
                                 <div className={styles["controls-c"]}>
                                     <ArgButton
+                                        className={styles["arg-button"]}
                                         disabled={
                                             activePlayerEngineer[index] === 1 ||
                                             activePlayerEmployees[index] !== 40 ||
@@ -178,6 +185,7 @@ const SectionEmployees = (props) => {
                                         message={"Hire"}
                                     />
                                     <ArgButton
+                                        className={styles["arg-button"]}
                                         disabled={activePlayerManager[index] === 1}
                                         type={"submit"}
                                         handler={fireManagerHandler}
