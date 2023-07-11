@@ -1,5 +1,5 @@
 import styles from "./LoadingModal.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeLoadingModal } from "../../../store/mainMenu";
 
 const LoadingModal = (props) => {

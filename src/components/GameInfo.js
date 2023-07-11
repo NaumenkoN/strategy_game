@@ -6,33 +6,23 @@ import {
     openSellStocksModal,
     openBuyBuildingModal,
     expectedTaxes,
-    takeCredit,
     activateJailRealeaseCard,
     openCreditModal,
 } from "../store/fields";
-import { openMainMenu, closeMainMenu } from "../store/mainMenu";
+import { openMainMenu } from "../store/mainMenu";
 import PlayerInfo from "./UI/MainScreenInfo/PlayerInfo";
 import audio from "../media/rolling-dice.mp3";
 import clickSound1 from "../media/click-sound.mp3";
 import playerMoveSound from "../media/playerMove.mp3";
 import gameSound from "../media/gameSound.mp3";
-
-// import gameSound2 from "../media/gameSound2.mp3";
-import dice1 from "../media/dices/dice1.png";
-import dice2 from "../media/dices/dice2.png";
-import dice3 from "../media/dices/dice3.png";
-import dice4 from "../media/dices/dice4.png";
-import dice5 from "../media/dices/dice5.png";
-import dice6 from "../media/dices/dice6.png";
 import MenuMoveButton from "../components/UI/ModalWindows/ModalButtons/MenuMoveButtons";
+import Dices from "./UI/MainScreenInfo/Dices";
 
 const GameInfo = () => {
     const dispatch = useDispatch();
     // General
-    const diceLeft = useSelector((state) => state.dice.firstDice);
-    const diceRight = useSelector((state) => state.dice.secondDice);
+
     const activePlayer = useSelector((state) => state.dice.activePlayer);
-    const fields = useSelector((state) => state.fields.fields);
     const gameMusics = useSelector((state) => state.menu.gameMusic);
 
     // Player2
@@ -65,7 +55,6 @@ const GameInfo = () => {
     const playerMove = new Audio(playerMoveSound);
     // const gameMusic2 = new Audio(gameSound2);
     const gameMusic = new Audio(gameSound);
-    const dices = ["", dice1, dice2, dice3, dice4, dice5, dice6];
 
     useEffect(() => {
         let interval;
@@ -123,28 +112,7 @@ const GameInfo = () => {
 
     return (
         <>
-            <MenuMoveButton
-                message={`Next Move "${pactivePlayerName}"`}
-                type={"button"}
-                handler={diceDroppingHandler}
-                className={styles["moove-button"]}
-            />
-            <MenuMoveButton
-                message={"MENU"}
-                type={"button"}
-                handler={mainMenuHandler}
-                className={styles["main-menu"]}
-            />
-
             <div className={styles["game-info"]}>
-                <div className={styles.dices}>
-                    <div className={styles["dice-holder"]}>
-                        <img className={styles.dice} src={dices[diceLeft]}></img>
-                    </div>
-                    <div className={styles["dice-holder"]}>
-                        <img className={styles.dice} src={dices[diceRight]}></img>
-                    </div>
-                </div>
                 <PlayerInfo
                     className={styles["player1"]}
                     index={1}
@@ -165,6 +133,21 @@ const GameInfo = () => {
                     takeCreditHandler={takeCreditHandler}
                     jailreleaseHandler={jailreleaseHandler}
                 />
+                <div className={styles["control-group"]}>
+                    <Dices />
+                    <MenuMoveButton
+                        message={`Next Move "${pactivePlayerName}"`}
+                        type={"button"}
+                        handler={diceDroppingHandler}
+                        className={styles["moove-button"]}
+                    />
+                    <MenuMoveButton
+                        message={"MENU"}
+                        type={"button"}
+                        handler={mainMenuHandler}
+                        className={styles["main-menu"]}
+                    />
+                </div>
 
                 <PlayerInfo
                     className={styles["player2"]}

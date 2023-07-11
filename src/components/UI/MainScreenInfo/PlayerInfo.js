@@ -1,12 +1,11 @@
 import styles from "./PlayerInfo.module.css";
 import Button from "./Button";
-import { useSelector, useDispatch } from "react-redux";
 
 const PlayerInfo = (props) => {
     const classes = styles.info + " " + props.className;
     const isActiveInfo = props.activePlayer !== props.index ? styles.active : "";
     const isActiveButtons = props.activePlayer !== props.index ? styles["active-buttons"] : "";
-    console.log(isActiveButtons);
+
     return (
         <div className={`${classes} ${isActiveInfo}`}>
             <h1 className={styles["player-name"]}>{props.playerName}</h1>

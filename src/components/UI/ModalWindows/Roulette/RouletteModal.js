@@ -1,7 +1,7 @@
 import styles from "./RouletteModal.module.css";
 import { rouletteSpin } from "../../../../store/fields";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
 import ArgButton from "../ModalButtons/ArgButton";

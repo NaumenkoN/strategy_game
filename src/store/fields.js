@@ -374,7 +374,6 @@ const fieldsSlice = createSlice({
         },
         rouletteSpin(state, action) {
             const player = action.payload;
-            console.log(player);
 
             const number = Math.trunc(Math.random() * 22);
             state.rouletteState = state.rouletteItems[number];
@@ -538,12 +537,9 @@ const fieldsSlice = createSlice({
         },
         debtReturning(state, action) {
             const player = action.payload[0];
-            console.log("debt returning");
-            console.log(player);
 
             if (state[player].debt > 0) {
                 if (state[player].money < state[player].debt && state[player].fields.length !== 0) {
-                    console.log("money < debt && field != 0");
                     fieldsSlice.caseReducers.openBuyBuildingModal(state, action);
                     state[player].isOpenBuildingModal = true;
                     state.emergencySellActives = false;
@@ -557,7 +553,6 @@ const fieldsSlice = createSlice({
                     state[player].fields.length === 0 &&
                     state[player].stocks !== 0
                 ) {
-                    console.log("= 0 != 0 debt");
                     state[player].isOpenSellStocksModal = true;
                     state.warningModal = true;
                     state.isOpenBuildingModal = false;
@@ -565,8 +560,6 @@ const fieldsSlice = createSlice({
                     state.emergencySellActives = false;
                 }
                 if (state[player].money >= state[player].debt) {
-                    console.log(">= debt");
-
                     state.emergencySellActives = true;
                     state[player].money -= state[player].debt;
                     state[player].debt = 0;
@@ -580,19 +573,16 @@ const fieldsSlice = createSlice({
                     state[player].fields.length === 0 &&
                     state[player].stocks === 0
                 ) {
-                    console.log("gameoverdebtret");
                     state.isOpenBuildingModal = false;
                     fieldsSlice.caseReducers.gameOver(state);
                 }
             }
         },
         moneyLessThenZero(state, action) {
-            console.log("money les then zero");
             const player = action.payload[0];
 
             if (state[player].money < 0) {
                 if (state[player].fields.length !== 0) {
-                    console.log("fields !== 0");
                     state[player].isOpenBuildingModal = true;
                     fieldsSlice.caseReducers.openBuyBuildingModal(state, action);
                     state.emergencySellActives = false;
@@ -601,7 +591,6 @@ const fieldsSlice = createSlice({
                     // state.isOpenBuyCommercialModal = false;
                 }
                 if (state[player].fields.length === 0 && state[player].stocks !== 0) {
-                    console.log("stocks !== 0");
                     state[player].isOpenSellStocksModal = true;
                     state[player].isOpenBuildingModal = true;
 
@@ -611,14 +600,13 @@ const fieldsSlice = createSlice({
                 }
                 if (state[player].fields.length === 0 && state[player].stocks === 0) {
                     state.isOpenBuildingModal = false;
-                    console.log("=== 0");
+
                     fieldsSlice.caseReducers.gameOver(state);
                     state.isOpenBuyModal = false;
                     state.isOpenSellStocksModal = false;
                 }
             }
             if (state[player].money >= state[player].debt) {
-                console.log("> debt");
                 state.emergencySellActives = true;
                 state.isOpenBuildingModal = false;
                 state.isOpenSellStocksModal = false;
@@ -804,7 +792,6 @@ const fieldsSlice = createSlice({
         },
         openBuyBuildingModal(state, action) {
             state.isOpenBuildingModal = true;
-            console.log(action.payload[0]);
             state[`${action.payload[0]}`].isOpenBuildingModal = true;
         },
         closeBuildingModal(state, action) {

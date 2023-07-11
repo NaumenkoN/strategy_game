@@ -82,7 +82,6 @@ const Settings = () => {
 
     const closeSettingsHandler = () => {
         dispatch(closeSettings());
-        // resetToDefault();
     };
 
     const startGameHandler = ({
@@ -461,12 +460,14 @@ const Settings = () => {
                             }}
                             message={"Start Game"}
                         />
-                        <SimpleButton
-                            className={styles.button}
-                            type={"submit"}
-                            handler={returnToGame}
-                            message={"Return to Game"}
-                        />
+                        {gameIsStarted && (
+                            <SimpleButton
+                                className={styles.button}
+                                type={"submit"}
+                                handler={returnToGame}
+                                message={"Return to Game"}
+                            />
+                        )}
                         <SimpleButton
                             className={styles.button}
                             type={"submit"}

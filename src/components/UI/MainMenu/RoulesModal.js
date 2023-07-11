@@ -88,9 +88,9 @@ const RoulesModal = () => {
                     </p>
                     <h2 className={styles.module}>Players fight</h2>
                     <p className={styles.text}>
-                        If the players met on any of the fields of the game, a fight breaks out between them.
-                        Players roll one die each and whoever has the highest number wins, receiving $50 (can be
-                        configured) from the other player.
+                        If the players met on any of the fields of the game except a start field, a fight breaks
+                        out between them. Players roll one die each and whoever has the highest number - wins,
+                        receiving $50 (can be configured) from the other player.
                     </p>
                     <h2 className={styles.module}>Stocks</h2>
                     <p className={styles.text}>

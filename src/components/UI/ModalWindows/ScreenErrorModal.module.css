@@ -10,13 +10,25 @@
 }
 
 .header {
+    text-align: center;
     display: block;
     color: white;
-    position: fixed;
-    top: 27vw;
-    left: 30vw;
+    position: absolute;
+    margin: 25% 25%;
     z-index: 100;
     animation: fade 1500ms linear;
+    font-size: 3.5vw;
+    animation-iteration-count: infinite;
+}
+.header2 {
+    text-align: center;
+    display: none;
+    color: white;
+    position: absolute;
+    margin: 25% 25%;
+    z-index: 100;
+    animation: fade 1500ms linear;
+    font-size: 7vw;
     animation-iteration-count: infinite;
 }
 
@@ -25,10 +37,35 @@
         opacity: 100%;
     }
     50% {
-        opacity: 0;
+        opacity: 30%;
     }
 
     100% {
         opacity: 100%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .header {
+        display: none;
+    }
+    .header2 {
+        display: block;
+    }
+}
+@media screen and (min-width: 420px) {
+    .header {
+        display: block;
+    }
+    .header2 {
+        display: none;
+    }
+}
+@media screen and (orientation: portrait) {
+    .header {
+        display: none;
+    }
+    .header2 {
+        display: block;
     }
 }

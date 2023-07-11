@@ -25,3 +25,10 @@
     background-color: gold;
     box-shadow: -2px 0 15px rgb(250, 102, 10);
 }
+
+.run-button:hover {
+    background-color: rgb(227, 193, 0);
+}
+.run-button:active {
+    background-color: rgb(255, 217, 0);
+}

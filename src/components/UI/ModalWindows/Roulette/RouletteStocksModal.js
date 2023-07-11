@@ -7,7 +7,7 @@ import ModalWindow from "../ModalTemplate/ModalWindow";
 import CloseButton from "../../ModalWindows/ModalButtons/CloseButton";
 import ArgButton from "../../ModalWindows/ModalButtons/ArgButton";
 import SimpleButton from "../../ModalWindows/ModalButtons/SimpleButton";
-import buyStocksSound from "../../../../media/rentalWithdrawal.mp3";
+import clickSound from "../../../../media/click-sound.mp3";
 
 const RouletteStocksModal = () => {
     const dispatch = useDispatch();
@@ -18,13 +18,14 @@ const RouletteStocksModal = () => {
     const isOpenRouletteModalp2 = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const activePlayer = (isOpenRouletteModalp1 && "player1") || (isOpenRouletteModalp2 && "player2");
     const activePlayerName = (isOpenRouletteModalp1 && player1Name) || (isOpenRouletteModalp2 && player2Name);
+    const mouseClickAudio = new Audio(clickSound);
 
-    const buyStocks = new Audio(buyStocksSound);
     const closeRouletteStocksModalHandler = () => {
         dispatch(closeRouletteStocksModal());
     };
 
     const rouletteBuyStocksHandler = (player) => {
+        mouseClickAudio.play();
         dispatch(rouletteBuyStocks(player));
     };
 
@@ -37,7 +38,6 @@ const RouletteStocksModal = () => {
         document.addEventListener("keypress", onKeyPressYes);
 
         const onKeyPressNo = (e) => {
-            console.log(e.key);
             if (e.key === "n") {
                 closeRouletteStocksModal();
             }

@@ -4,6 +4,8 @@
     max-width: 100vw;
     height: 100vh;
     background-size: cover;
+    position: absolute;
+    z-index: 6;
 }
 .control-buttons {
     width: 17vw;

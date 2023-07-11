@@ -19,7 +19,6 @@ import RoulesModal from "./UI/MainMenu/RoulesModal";
 import TakeCreditModal from "./UI/ModalWindows/TakeCreditModal";
 import Settings from "./UI/MainMenu/Settings";
 import { useSelector } from "react-redux";
-import useSound from "use-sound";
 
 const Game = () => {
     const isOpenBuyModal = useSelector((state) => state.fields.isOpenBuyModal);
@@ -40,8 +39,6 @@ const Game = () => {
     const isOpenSettingsModal = useSelector((state) => state.menu.isOpenSettingsModal);
     const isOpenTakeCreditModal = useSelector((state) => state.fields.isOpenTakeCreditModal);
 
-    // const [play, { stop }] = useSound(mainSound, { volume: 0.5 });
-
     return (
         <ul className={styles.map}>
             {!isOpenMainMenu && (
@@ -53,17 +50,16 @@ const Game = () => {
                     {isOpenSellStocksModal && <SellStocksModal />}
                     {isOpenFightModal && <FightModal />}
                     {isOpenRentalWithdrawalModal && <RentalWithdrawal />}
-
                     {isGameIsOver && <GameOverModal />}
                     {isOpenWarningModal && <WarningModal />}
                     {isOpenBuildingModal && <BuildingModal />}
                     {jailModalIsOpen && <JailModal />}
                     {isOpenBuyModal && <BuyModal />}
                     {isOpenEnoughtlessMoneyModal && <EnoughtlessMoneyModal />}
-                    <WalkingRoad />
-                    <GameInfo />
                 </>
             )}
+            <WalkingRoad />
+            <GameInfo />
             {isOpenMainMenu && (
                 <>
                     {isOpenMainMenu && <MainMenu />}

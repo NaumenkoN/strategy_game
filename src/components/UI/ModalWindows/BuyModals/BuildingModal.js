@@ -6,7 +6,6 @@ import ModalWindow from "../ModalTemplate/ModalWindow";
 import Backdrop from "../ModalTemplate/Backdrop";
 import SectionBuildings from "./SectionBuildings";
 import SectionEmployees from "./SectionEmployees";
-import { act } from "react-dom/test-utils";
 
 const BuildingModal = () => {
     const dispatch = useDispatch();

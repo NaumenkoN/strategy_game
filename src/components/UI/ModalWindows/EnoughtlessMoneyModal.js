@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Backdrop from "./ModalTemplate/Backdrop";
 import ModalWindow from "./ModalTemplate/ModalWindow";
-import CloseButton from "./ModalButtons/CloseButton";
 import audio from "../../../media/enoughtlessMoney.mp3";
 
 const EnoughtlessMoneyModal = () => {

@@ -2,10 +2,9 @@ import styles from "./JailModal.module.css";
 import { closeJailModal } from "../../../store/fields";
 import jail from "../../../media/jail2.png";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Backdrop from "./ModalTemplate/Backdrop";
 import ModalWindow from "./ModalTemplate/ModalWindow";
-import CloseButton from "./ModalButtons/CloseButton";
 
 const JailModal = () => {
     const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const JailModal = () => {
                     You will miss 3 steps, if you cant throw double.
                     <br /> Or use "Jail Card" to release yourself at any time.
                 </h3>
-                <img className={styles.jail} src={jail} alt={"jail-photo"}></img>
+                <img className={styles.jail} src={jail} alt={"jail"}></img>
             </ModalWindow>
         </>
     );

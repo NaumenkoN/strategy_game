@@ -4,7 +4,7 @@ import SimpleButton from "../ModalWindows/ModalButtons/SimpleButton";
 const SoundsSwitcher = (props) => {
     return (
         <div className={styles.input}>
-            <p className={styles.p}>{props.message}</p>
+            <div className={styles.p}>{props.message}</div>
             <SimpleButton
                 className={props.classesSwitcher}
                 message={<div className={props.classesCircle}></div>}

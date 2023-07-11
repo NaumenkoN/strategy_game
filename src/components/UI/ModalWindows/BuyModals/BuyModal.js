@@ -62,7 +62,7 @@ const BuyModal = () => {
                     <h1 className={styles.header}>
                         Empty {isfieldIsCommercial && "Commercial"} Field #{activeField}
                     </h1>
-                    <h2 className={styles.price}>Price: {fields[`${activeField}`].price}</h2>
+                    <h2 className={styles.price}>Price: {fields[`${activeField}`].price}$</h2>
                     <h1 className={styles.action}>{activePlayerName}, you whant to buy?</h1>
                     <div className={styles["buttons-group"]}>
                         <SimpleButton className={styles.button} message={"YES (y)"} handler={buyFieldHandler} />

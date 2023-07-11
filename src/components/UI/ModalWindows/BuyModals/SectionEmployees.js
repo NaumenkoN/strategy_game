@@ -10,7 +10,6 @@ import {
     hireManager,
     fireManager,
 } from "../../../../store/fields";
-
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
@@ -34,6 +33,9 @@ const SectionEmployees = (props) => {
     // Buttons handlers
 
     const buildCommercialHandler = (field) => {
+        if (props.fields[field].employees + +addEmployeesValue > 40 || addEmployeesValue % 10 !== 0) {
+            return;
+        }
         buyField.play();
         dispatch(buyBuildings([props.activePlayer, field, addEmployeesValue, "commercial"]));
     };
@@ -46,7 +48,14 @@ const SectionEmployees = (props) => {
             if (confirm === false) {
                 return;
             }
-        } else {
+        }
+
+        if (
+            +sellEmployeesValue >= 10 &&
+            +sellEmployeesValue % 10 === 0 &&
+            props.fields[field].employees > +sellEmployeesValue
+        ) {
+            buyField.play();
             dispatch(getRidOfAssets([props.activePlayer, field, sellEmployeesValue, "employees"]));
         }
     };
@@ -87,115 +96,120 @@ const SectionEmployees = (props) => {
         <section>
             <h1 className={styles.header}>{`Manage your commercial fields`}</h1>
             <ul className={styles["fields-list"]}>
-                {props.activePlayerFields
-                    .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
-                    .map((field, index) => {
-                        return (
-                            <li key={index} className={styles["field-c"]}>
-                                <div className={styles["field-number"]}>{field}</div>
+                {props.activePlayerFields.length === 0 ? (
+                    <h2 className={styles["empty-array"]}>You have no fields</h2>
+                ) : (
+                    props.activePlayerFields
+                        .filter((num) => num === 4 || num === 16 || num === 28 || num === 40)
+                        .map((field, index) => {
+                            return (
+                                <li key={index} className={styles["field-c"]}>
+                                    <div className={styles["field-number"]}>{field}</div>
 
-                                {/* ----- employees ----- */}
-                                <h2 className={styles.quantity}>Employees: {activePlayerEmployees[index]}</h2>
-                                <form onSubmit={props.onSubmitHandler}>
+                                    {/* ----- employees ----- */}
+                                    <h2 className={styles.quantity}>Employees: {activePlayerEmployees[index]}</h2>
+                                    <form onSubmit={props.onSubmitHandler}>
+                                        <div className={styles["controls-c"]}>
+                                            <Input
+                                                className={styles.input}
+                                                labelMessage={""}
+                                                onChange={onChangeComBuildHandler}
+                                                value={addEmployeesValue}
+                                                id={"build-c"}
+                                                type={"number"}
+                                                min={10}
+                                                max={40 - activePlayerEmployees[index]}
+                                                step={10}
+                                            />
+                                            <ArgButton
+                                                className={styles["arg-button"]}
+                                                disabled={activePlayerEmployees[index] >= 40}
+                                                type={"submit"}
+                                                handler={buildCommercialHandler}
+                                                arguments={field}
+                                                message={"Hire"}
+                                            />
+                                        </div>
+                                    </form>
+                                    <form onSubmit={props.onSubmitHandler}>
+                                        <div className={styles["controls-c"]}>
+                                            <Input
+                                                className={styles.input}
+                                                labelMessage={""}
+                                                onChange={onChangeComSellHandler}
+                                                value={sellEmployeesValue}
+                                                id={"sell-build-c"}
+                                                type={"number"}
+                                                min={10}
+                                                max={activePlayerEmployees[index]}
+                                                step={10}
+                                            />
+                                            <ArgButton
+                                                className={styles["arg-button"]}
+                                                disabled={activePlayerEngineer[index] > 1}
+                                                type={"submit"}
+                                                handler={sellCommercialHandler}
+                                                arguments={field}
+                                                message={"Fire"}
+                                            />
+                                        </div>
+                                    </form>
+                                    {/* ----- engineer ----- */}
+                                    <h2 className={styles.quantity}>{`You ${
+                                        activePlayerEngineer[index] === 1 ? "dont" : ""
+                                    } have engineer`}</h2>
                                     <div className={styles["controls-c"]}>
-                                        <Input
-                                            className={styles.input}
-                                            labelMessage={""}
-                                            onChange={onChangeComBuildHandler}
-                                            value={addEmployeesValue}
-                                            id={"build-c"}
-                                            type={"number"}
-                                            min={10}
-                                            max={40 - activePlayerEmployees[index]}
-                                            step={10}
-                                        />
                                         <ArgButton
                                             className={styles["arg-button"]}
-                                            disabled={activePlayerEmployees[index] >= 40}
+                                            disabled={
+                                                activePlayerEngineer[index] > 1 ||
+                                                activePlayerEmployees[index] !== 40
+                                            }
                                             type={"submit"}
-                                            handler={buildCommercialHandler}
+                                            handler={hireEngineerHandler}
                                             arguments={field}
                                             message={"Hire"}
                                         />
-                                    </div>
-                                </form>
-                                <form onSubmit={props.onSubmitHandler}>
-                                    <div className={styles["controls-c"]}>
-                                        <Input
-                                            className={styles.input}
-                                            labelMessage={""}
-                                            onChange={onChangeComSellHandler}
-                                            value={sellEmployeesValue}
-                                            id={"sell-build-c"}
-                                            type={"number"}
-                                            min={10}
-                                            max={activePlayerEmployees[index]}
-                                            step={10}
-                                        />
                                         <ArgButton
                                             className={styles["arg-button"]}
-                                            disabled={activePlayerEngineer[index] > 1}
+                                            disabled={activePlayerEngineer[index] === 1}
                                             type={"submit"}
-                                            handler={sellCommercialHandler}
+                                            handler={fireEngineerHandler}
                                             arguments={field}
                                             message={"Fire"}
                                         />
                                     </div>
-                                </form>
-                                {/* ----- engineer ----- */}
-                                <h2 className={styles.quantity}>{`You ${
-                                    activePlayerEngineer[index] === 1 ? "dont" : ""
-                                } have engineer`}</h2>
-                                <div className={styles["controls-c"]}>
-                                    <ArgButton
-                                        className={styles["arg-button"]}
-                                        disabled={
-                                            activePlayerEngineer[index] > 1 || activePlayerEmployees[index] !== 40
-                                        }
-                                        type={"submit"}
-                                        handler={hireEngineerHandler}
-                                        arguments={field}
-                                        message={"Hire"}
-                                    />
-                                    <ArgButton
-                                        className={styles["arg-button"]}
-                                        disabled={activePlayerEngineer[index] === 1}
-                                        type={"submit"}
-                                        handler={fireEngineerHandler}
-                                        arguments={field}
-                                        message={"Fire"}
-                                    />
-                                </div>
 
-                                {/* ----- manager ----- */}
-                                <h2 className={styles.quantity}>{`You ${
-                                    activePlayerManager[index] === 1 ? "dont" : ""
-                                } have manager`}</h2>
-                                <div className={styles["controls-c"]}>
-                                    <ArgButton
-                                        className={styles["arg-button"]}
-                                        disabled={
-                                            activePlayerEngineer[index] === 1 ||
-                                            activePlayerEmployees[index] !== 40 ||
-                                            activePlayerManager > 1
-                                        }
-                                        type={"submit"}
-                                        handler={hireManagerHandler}
-                                        arguments={field}
-                                        message={"Hire"}
-                                    />
-                                    <ArgButton
-                                        className={styles["arg-button"]}
-                                        disabled={activePlayerManager[index] === 1}
-                                        type={"submit"}
-                                        handler={fireManagerHandler}
-                                        arguments={field}
-                                        message={"Fire"}
-                                    />
-                                </div>
-                            </li>
-                        );
-                    })}
+                                    {/* ----- manager ----- */}
+                                    <h2 className={styles.quantity}>{`You ${
+                                        activePlayerManager[index] === 1 ? "dont" : ""
+                                    } have manager`}</h2>
+                                    <div className={styles["controls-c"]}>
+                                        <ArgButton
+                                            className={styles["arg-button"]}
+                                            disabled={
+                                                activePlayerEngineer[index] === 1 ||
+                                                activePlayerEmployees[index] !== 40 ||
+                                                activePlayerManager > 1
+                                            }
+                                            type={"submit"}
+                                            handler={hireManagerHandler}
+                                            arguments={field}
+                                            message={"Hire"}
+                                        />
+                                        <ArgButton
+                                            className={styles["arg-button"]}
+                                            disabled={activePlayerManager[index] === 1}
+                                            type={"submit"}
+                                            handler={fireManagerHandler}
+                                            arguments={field}
+                                            message={"Fire"}
+                                        />
+                                    </div>
+                                </li>
+                            );
+                        })
+                )}
             </ul>
         </section>
     );

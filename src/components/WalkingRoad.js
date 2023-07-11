@@ -2,7 +2,6 @@ import styles from "./WalkingRoad.module.css";
 import Player1 from "./UI/Players/Player1";
 import Player2 from "./UI/Players/Player2";
 import Field from "./UI/Fields/Field";
-import rentalSound from "../media/rentalWithdrawal.mp3";
 import rentalSound2 from "../media/rentalWithdrawal2.mp3";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -32,27 +31,21 @@ const WalkingRoad = () => {
     const player2stocks = useSelector((state) => state.fields.player2.stocks);
     const player1fields = useSelector((state) => state.fields.player1.fields);
     const player2fields = useSelector((state) => state.fields.player2.fields);
+    const p1InJail = useSelector((state) => state.dice.playersPosition.p1InJail);
+    const p2InJail = useSelector((state) => state.dice.playersPosition.p1InJail);
     const fields = useSelector((state) => state.fields.fields);
-    const fieldsSlice = useSelector((state) => state.fields);
     const p1circlesPassed = useSelector((state) => state.dice.playersPosition.p1circle);
     const p2circlesPassed = useSelector((state) => state.dice.playersPosition.p2circle);
     const p1IsOpenRouletModal = useSelector((state) => state.fields.player1.isOpenRouletteModal);
     const p2IsOpenRouletModal = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const playerIsOnRoulette = (p1IsOpenRouletModal && "player1") || (p2IsOpenRouletModal && "player2");
     const rouletteState = useSelector((state) => state.fields.rouletteState);
-    const moveToFieldAfterRouletteSpin = useSelector((state) => state.dice.moveToFieldAfterRouletteSpin);
 
-    const RentalWithdrawal = new Audio(rentalSound);
     const RentalWithdrawal2 = new Audio(rentalSound2);
-
-    // playground
-
-    // console.log(fields);
-    // console.log(fieldsSlice);
 
     // function to check the players positions
 
-    const checkingPlayersPosition = (player1, player2, steps, jail, playerIsOpenRouletteModal) => {
+    const checkingPlayersPosition = (player1, player2, steps, jail, playerIsOpenRouletteModal, playerInJail) => {
         dispatch(rentalAndSalesIndex(["free", player1]));
 
         // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL -----
@@ -69,7 +62,7 @@ const WalkingRoad = () => {
             dispatch(openBuyModal([player1, steps, "commercial"]));
         }
         // ----- CHECKING FIELD IS JAIL -----
-        if (steps === 12 || steps === 24 || steps === 36 || steps === 48) {
+        if ((steps === 12 || steps === 24 || steps === 36 || steps === 48) && playerInJail === 0) {
             dispatch(inJail(jail));
             dispatch(rentalAndSalesIndex(["arrest", player1]));
             if (playerIsOpenRouletteModal !== true) {
@@ -84,24 +77,26 @@ const WalkingRoad = () => {
 
     // ----- Player1 cheking position -----
     useEffect(() => {
+        const playerInJail = p1InJail;
         const player1 = "player1";
         const player2 = "player2";
         const steps = player1Steps;
         const inJail = "p1InJail";
         const playerIsOpenRouletteModal = p1IsOpenRouletModal;
 
-        checkingPlayersPosition(player1, player2, steps, inJail, playerIsOpenRouletteModal);
+        checkingPlayersPosition(player1, player2, steps, inJail, playerIsOpenRouletteModal, playerInJail);
     }, [player1Steps]);
 
     // ----- Player2 cheking position -----
     useEffect(() => {
+        const playerInJail = p2InJail;
         const player1 = "player2";
         const player2 = "player1";
         const steps = player2Steps;
         const inJail = "p2InJail";
         const playerIsOpenRouletteModal = p2IsOpenRouletModal;
 
-        checkingPlayersPosition(player1, player2, steps, inJail, playerIsOpenRouletteModal);
+        checkingPlayersPosition(player1, player2, steps, inJail, playerIsOpenRouletteModal, playerInJail);
     }, [player2Steps]);
 
     // ----- Checking game is over -----

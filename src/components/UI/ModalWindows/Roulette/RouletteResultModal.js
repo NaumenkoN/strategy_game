@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "../ModalTemplate/Backdrop";
 import ModalWindow from "../ModalTemplate/ModalWindow";
-import CloseButton from "../ModalButtons/CloseButton";
 
 const RouletteResultModal = () => {
     const dispatch = useDispatch();

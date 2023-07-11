@@ -11,9 +11,16 @@
 .header2 {
     font-size: 1.6vw;
     font-family: "Montserrat-Regular";
+    margin-top: 0;
 }
 
 .button {
     background-color: gold !important;
     box-shadow: -2px 0 15px rgb(250, 102, 10);
+}
+.button:hover {
+    background-color: rgb(232, 197, 1) !important;
+}
+.button:active {
+    background-color: rgb(251, 214, 2) !important;
 }
