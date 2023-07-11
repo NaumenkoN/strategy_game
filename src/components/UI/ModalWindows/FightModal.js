@@ -1,7 +1,12 @@
 import styles from "./FightModal.module.css";
 import { useEffect, useState } from "react";
 import { closeFightModal, fightWithdrawal } from "../../../store/fields";
-import { dropFightDices, hideFightDices, winner } from "../../../store/diceAndPlayerPositions";
+import {
+    dropFightDices,
+    hideFightDices,
+    winner,
+    setPrevPosAsCurrent,
+} from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "./ModalTemplate/Backdrop";
 import ModalWindow from "./ModalTemplate/ModalWindow";
@@ -38,6 +43,9 @@ const FightModal = () => {
                 dispatch(closeFightModal());
                 setFightDiceIsDropted(false);
             }, 3000);
+
+            // setset previous position as current to prevent default behavior when reload a page
+            dispatch(setPrevPosAsCurrent());
         }
         if (firstDice < secondDice) {
             dispatch(fightWithdrawal(["player2", "player1"]));
@@ -47,6 +55,9 @@ const FightModal = () => {
                 dispatch(closeFightModal());
                 setFightDiceIsDropted(false);
             }, 3000);
+
+            // setset previous position as current to prevent default behavior when reload a page
+            dispatch(setPrevPosAsCurrent());
         }
         if (firstDice === secondDice && firstDice !== null) {
             dispatch(hideFightDices());

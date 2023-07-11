@@ -1,5 +1,6 @@
 import styles from "./JailModal.module.css";
 import { closeJailModal } from "../../../store/fields";
+import { setPrevPosAsCurrent } from "../../../store/diceAndPlayerPositions";
 import jail from "../../../media/jail2.png";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -12,6 +13,7 @@ const JailModal = () => {
     useEffect(() => {
         setTimeout(() => {
             dispatch(closeJailModal());
+            dispatch(setPrevPosAsCurrent());
         }, 2000);
     }, []);
 

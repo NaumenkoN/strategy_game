@@ -12,6 +12,8 @@ const diceAndPositionsSlice = createSlice({
         winner: 0,
         setUpTurnButtonIsClicked: false,
         gameIsStarted: false,
+        p1PreviousPosition: 1,
+        p2PreviousPosition: 1,
         playersPosition: {
             player1: 1,
             player2: 1,
@@ -25,6 +27,10 @@ const diceAndPositionsSlice = createSlice({
         activePlayer: 1,
     },
     reducers: {
+        setPrevPosAsCurrent(state) {
+            state.p1PreviousPosition = state.playersPosition.player1;
+            state.p2PreviousPosition = state.playersPosition.player2;
+        },
         startGameIndex(state) {
             state.gameIsStarted = true;
         },
@@ -55,6 +61,8 @@ const diceAndPositionsSlice = createSlice({
             state.showFightDices = false;
             state.winner = 0;
             state.gameIsStarted = false;
+            state.p1PreviousPosition = 1;
+            state.p2PreviousPosition = 1;
         },
         rouletteMoving(state, action) {
             const field = action.payload[0];
@@ -112,6 +120,7 @@ const diceAndPositionsSlice = createSlice({
         },
         addStep(state, action) {
             const addSteps = state.firstDice + state.secondDice;
+
             const player = action.payload;
 
             const player1Circle = player === "player1" ? "p1circle" : "p2circle";
@@ -119,8 +128,12 @@ const diceAndPositionsSlice = createSlice({
             const playerInJail = player === "player1" ? "p1InJail" : "p2InJail";
             const player1IsActive = player === "player1" ? "player1IsActive" : "player2IsActive";
             const player2IsActive = player === "player2" ? "player2IsActive" : "player1IsActive";
+            const addPreviousPositionToPlayer = player === "player1" ? "p1PreviousPosition" : "p2PreviousPosition";
 
+            state[addPreviousPositionToPlayer] = state.playersPosition[player];
             state.playersPosition[player2Circle] = false;
+            state.fightIsOver = true;
+            state.rouletteIsFinish = true;
             const totalSteps = state.playersPosition[player] + addSteps;
 
             if (state.playersPosition[playerInJail] === 0) {
@@ -160,6 +173,7 @@ const diceAndPositionsSlice = createSlice({
 
 export default diceAndPositionsSlice.reducer;
 export const {
+    setPrevPosAsCurrent,
     resetTurnButton,
     setPlayerFirstTurn,
     restartPositions,

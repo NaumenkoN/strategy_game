@@ -56,10 +56,11 @@ const Game = () => {
                     {jailModalIsOpen && <JailModal />}
                     {isOpenBuyModal && <BuyModal />}
                     {isOpenEnoughtlessMoneyModal && <EnoughtlessMoneyModal />}
+                    <WalkingRoad />
+                    <GameInfo />
                 </>
             )}
-            <WalkingRoad />
-            <GameInfo />
+
             {isOpenMainMenu && (
                 <>
                     {isOpenMainMenu && <MainMenu />}

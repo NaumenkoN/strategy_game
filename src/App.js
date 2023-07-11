@@ -4,10 +4,15 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import LoadingModal from "./components/UI/ModalWindows/LoadingModal";
 import ScreenErrorModal from "./components/UI/ModalWindows/ScreenErrorModal";
+import MobileDeviceModal from "./components/UI/ModalWindows/MobileDeviceModal";
+import device from "current-device";
 
 function App() {
     const isOpenLoadingModal = useSelector((state) => state.menu.isOpenLoadingModal);
     const [isShownErrorModal, setIsShownErrorModal] = useState(false);
+
+    const device = require("current-device").default;
+
     const mediaQuery = () => {
         if (window.innerWidth / window.innerHeight < 1.55) {
             setIsShownErrorModal(true);
@@ -26,9 +31,10 @@ function App() {
                 <link rel="canonical" href="" />
                 <meta name="description" content="Strategy Game" />
             </Helmet>
-            {isOpenLoadingModal && <LoadingModal />}
+            {!isShownErrorModal && isOpenLoadingModal && <LoadingModal />}
             {!isShownErrorModal && !isOpenLoadingModal && <Game />}
-            {isShownErrorModal && <ScreenErrorModal />}
+            {device.type === "desktop" && isShownErrorModal && <ScreenErrorModal />}
+            {device.type === "mobile" && <MobileDeviceModal />}
         </>
     );
 }

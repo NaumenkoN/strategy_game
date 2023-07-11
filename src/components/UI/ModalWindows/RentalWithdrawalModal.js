@@ -1,6 +1,7 @@
 import styles from "./RentalWithdrawal.module.css";
 import ModalWindow from "./ModalTemplate/ModalWindow";
 import { closeRentalWithdrawalModal } from "../../../store/fields";
+import { setPrevPosAsCurrent } from "../../../store/diceAndPlayerPositions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -19,6 +20,7 @@ const RentalWithdrawal = () => {
         if (isOpen) {
             setTimeout(() => {
                 dispatch(closeRentalWithdrawalModal());
+                dispatch(setPrevPosAsCurrent());
             }, 3000);
         }
     }, [isOpen]);

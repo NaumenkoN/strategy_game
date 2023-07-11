@@ -40,19 +40,27 @@ const WalkingRoad = () => {
     const p2IsOpenRouletModal = useSelector((state) => state.fields.player2.isOpenRouletteModal);
     const playerIsOnRoulette = (p1IsOpenRouletModal && "player1") || (p2IsOpenRouletModal && "player2");
     const rouletteState = useSelector((state) => state.fields.rouletteState);
+    const p1PreviousPosition = useSelector((state) => state.dice.p1PreviousPosition);
+    const p2PreviousPosition = useSelector((state) => state.dice.p2PreviousPosition);
 
     const RentalWithdrawal2 = new Audio(rentalSound2);
 
+    console.log(p1PreviousPosition, player1Steps, p2PreviousPosition, player2Steps);
+
     // function to check the players positions
 
-    const checkingPlayersPosition = (player1, player2, steps, jail, playerIsOpenRouletteModal, playerInJail) => {
+    const checkingPlayersPosition = (player1, player2, steps, Jail, playerIsOpenRouletteModal, playerInJail) => {
         dispatch(rentalAndSalesIndex(["free", player1]));
 
         // ----- CHECKING LIVING FIELD TO BUY IS EMPTY, IF NOT PAYING RENTAL -----
         if (steps && fields[`${steps}`].status === "empty") {
             dispatch(openBuyModal([player1, steps, "living"]));
         }
-        if (steps && fields[`${steps}`].status === player2) {
+        if (
+            steps &&
+            fields[`${steps}`].status === player2 &&
+            (p1PreviousPosition !== player1Steps || p2PreviousPosition !== player2Steps)
+        ) {
             dispatch(rentalCounting([player1, steps, player2]));
             RentalWithdrawal2.play();
             dispatch(openRentalWithdrawalModal([player1, steps, player2]));
@@ -61,16 +69,16 @@ const WalkingRoad = () => {
         if (steps && fields[`${steps}`].status === "emptyC") {
             dispatch(openBuyModal([player1, steps, "commercial"]));
         }
+
         // ----- CHECKING FIELD IS JAIL -----
-        if ((steps === 12 || steps === 24 || steps === 36 || steps === 48) && playerInJail === 0) {
-            dispatch(inJail(jail));
+        const playerPrevPosition = player1 === "player1" ? p1PreviousPosition : p2PreviousPosition;
+        if ((steps === 12 || steps === 24 || steps === 36 || steps === 48) && playerPrevPosition !== steps) {
+            dispatch(openJailModal());
+            dispatch(inJail(Jail));
             dispatch(rentalAndSalesIndex(["arrest", player1]));
-            if (playerIsOpenRouletteModal !== true) {
-                dispatch(openJailModal());
-            }
         }
         // ----- CHECKING FIELD IS ROULETTE -----
-        if (steps === 7 || steps === 19 || steps === 31 || steps === 43) {
+        if ((steps === 7 || steps === 19 || steps === 31 || steps === 43) && playerPrevPosition !== steps) {
             dispatch(openRouletteModal(player1));
         }
     };
@@ -118,18 +126,23 @@ const WalkingRoad = () => {
     }, [player1money, player2money]);
 
     // ----- (FIGHT) checking is players on the same position -----
+
     useEffect(() => {
-        if (player1Steps === player2Steps && player1Steps !== 1) {
+        if (
+            player1Steps === player2Steps &&
+            p1PreviousPosition !== player1Steps &&
+            p2PreviousPosition !== player2Steps
+        ) {
             dispatch(openFightModal());
         }
     }, [player1Steps, player2Steps]);
-    // ----- check did a player is pass the circle -----
+    // ----- check did a player pass the circle -----
     useEffect(() => {
         p1circlesPassed && dispatch(circlePassMoney("player1")) && dispatch(debtReturning(["player1"]));
         p2circlesPassed && dispatch(circlePassMoney("player2")) && dispatch(debtReturning(["player2"]));
     }, [p1circlesPassed, p2circlesPassed]);
 
-    // cheking is roulette spining result === some field -----
+    // ----- cheking is roulette spining result === some field -----
 
     useEffect(() => {
         if (

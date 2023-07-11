@@ -4,12 +4,14 @@ import ModalWindow from "./ModalTemplate/ModalWindow";
 import SimpleButton from "./ModalButtons/SimpleButton";
 import { closeCreditModal, takeCredit } from "../../../store/fields";
 import { useDispatch, useSelector } from "react-redux";
+import buySound from "../../../media/rentalWithdrawal.mp3";
 const TakeCreditModal = () => {
     const dispatch = useDispatch();
     const playerIsActive = useSelector((state) => state.dice.activePlayer);
-
+    const sound = new Audio(buySound);
     const player = (playerIsActive === 1 && "player1") || (playerIsActive === 2 && "player2");
     const takeCreditHandler = () => {
+        sound.play();
         dispatch(takeCredit(player));
         dispatch(closeCreditModal());
     };

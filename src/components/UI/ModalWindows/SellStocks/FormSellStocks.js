@@ -11,6 +11,7 @@ const FormSellStocks = (props) => {
     const dispatch = useDispatch();
     const [stocksValue, setStocksValue] = useState(0);
     const activePlayerStocks = useSelector((state) => state.fields[`${props.activePlayer}`].stocks);
+    const emergencySellActives = useSelector((state) => state.fields.emergencySellActives);
     const mouseClickAudio = new Audio(clickSound);
 
     const onSubmitHandler = (e) => {
@@ -45,7 +46,12 @@ const FormSellStocks = (props) => {
                     handler={onSubmitHandler}
                     type={"submit"}
                 />
-                <SimpleButton className={styles.button} message={"Cancel"} handler={props.handler} />
+                <SimpleButton
+                    disabled={!emergencySellActives}
+                    className={styles.button}
+                    message={"Cancel"}
+                    handler={props.handler}
+                />
             </div>
         </form>
     );

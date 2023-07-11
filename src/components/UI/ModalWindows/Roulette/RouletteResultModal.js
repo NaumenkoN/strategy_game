@@ -1,5 +1,6 @@
 import styles from "./RouletteResultModal.module.css";
 import { closeRouletteResultModal, settingPlayerRouletteisClose } from "../../../../store/fields";
+import { setPrevPosAsCurrent } from "../../../../store/diceAndPlayerPositions";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "../ModalTemplate/Backdrop";
@@ -39,6 +40,7 @@ const RouletteResultModal = () => {
         setTimeout(() => {
             dispatch(closeRouletteResultModal());
             dispatch(settingPlayerRouletteisClose());
+            dispatch(setPrevPosAsCurrent());
         }, 3000);
     }, []);
 

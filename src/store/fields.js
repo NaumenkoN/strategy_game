@@ -822,7 +822,7 @@ const fieldsSlice = createSlice({
             }
         },
 
-        closeSellConfirmModal(state, action) {
+        closeSellConfirmModal(state) {
             state.isOpenSellConfirmModal = false;
         },
         openRentalWithdrawalModal(state, action) {

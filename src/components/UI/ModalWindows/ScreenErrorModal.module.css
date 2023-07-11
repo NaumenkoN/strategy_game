@@ -14,21 +14,27 @@
     display: block;
     color: white;
     position: absolute;
-    margin: 25% 25%;
+    top: 40%;
+    bottom: 40%;
+    left: 34.5%;
+    right: 34.5%;
+    margin: 0;
+    padding: 0;
     z-index: 100;
     animation: fade 1500ms linear;
-    font-size: 3.5vw;
+    font-size: 2rem;
     animation-iteration-count: infinite;
 }
+
 .header2 {
     text-align: center;
-    display: none;
+    display: block;
     color: white;
     position: absolute;
-    margin: 25% 25%;
+    margin: 40vh 25%;
     z-index: 100;
     animation: fade 1500ms linear;
-    font-size: 7vw;
+    font-size: 2rem;
     animation-iteration-count: infinite;
 }
 
@@ -45,27 +51,7 @@
     }
 }
 
-@media screen and (max-width: 420px) {
-    .header {
-        display: none;
-    }
-    .header2 {
-        display: block;
-    }
+@media screen and (max-width: 400px) {
 }
-@media screen and (min-width: 420px) {
-    .header {
-        display: block;
-    }
-    .header2 {
-        display: none;
-    }
-}
-@media screen and (orientation: portrait) {
-    .header {
-        display: none;
-    }
-    .header2 {
-        display: block;
-    }
+@media screen and (min-width: 400px) {
 }
