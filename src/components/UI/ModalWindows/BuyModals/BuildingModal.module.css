@@ -15,7 +15,7 @@
     height: 83vh !important;
     position: fixed;
     z-index: 11;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .close-button {
