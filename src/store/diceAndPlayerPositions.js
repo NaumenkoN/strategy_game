@@ -119,8 +119,7 @@ const diceAndPositionsSlice = createSlice({
             state.winner = action.payload;
         },
         addStep(state, action) {
-            // const addSteps = state.firstDice + state.secondDice;
-            const addSteps = 5;
+            const addSteps = state.firstDice + state.secondDice;
 
             const player = action.payload;
 
