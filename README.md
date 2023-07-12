@@ -61,7 +61,7 @@ You must be careful with this option. Because stocks are what bring you income e
 
 # Roulette
 
-Roulette gives you many options, both good and bad. For example, only here you can get the opportunity to buy more sctocks or get a release card from prison or get to repair all your fields.
+Roulette gives you many options, both good and bad. For example, only here you can get the opportunity to buy more stocks or get a release card from prison or get to repair all your fields.
 
 <img src="./src/media/for readme/roulette.webp" width="100%" /><br/><br/>
 
