@@ -40,7 +40,7 @@ Finally, we have the main screen of the game. In the center are the main control
 
 # Buying field
 
-If you land on an empty field and you have enough money to buy it, you will be prompted to buy it. Since this is the most frequent operation after the roll of the dice, the purchase was also implemented using the "Y" button or the refusal to purchase "N". After the purchase, the field is painted in the color of the player and the first house appears on it. Approximately the same thing happens with the purchase of a commercial field, only employees appear there. you will see an example in the next slides.
+If you land on an empty field and you have enough money to buy it, you will be prompted to buy it. Since this is the most frequent operation after the roll of the dice, the purchase was also implemented using the "y" button or the refusal to purchase "n". After the purchase, the field is painted in the color of the player and the first house appears on it. Approximately the same thing happens with the purchase of a commercial field, only employees appear there. You will see an example in the next slides.
 
 <img src="./src/media/for readme/buyfield.webp" width="100%" />
 <img src="./src/media/for readme/ownedField.webp" width="100%" /><br/><br/>
