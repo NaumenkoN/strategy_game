@@ -34,7 +34,7 @@ The game is very flexible in settings. Of course, we can choose the names for th
 
 # Game
 
-Finally, we have the main screen of the game. In the center are the main controls, and on the sides are all the necessary information about the state of affairs of each player. The information of the active player is highlighted in white. Each player can in turn: sell shares, take out a loan, use a prison release card, if any, buy more houses or hire employees. Soon we will look at everything in more detail, but in the meantime, you can still add that the map has 4 prison fields, 4 roulette fields, 4 neutral fields and 4 commercial fields, all other fields are fields available for purchase and development.
+Finally, we have the main screen of the game. In the center are the main controls, and on the sides are all the necessary information about the state of affairs of each player. The information of the active player is highlighted in white. Each player can in turn: sell stocks, take out a loan, use a prison release card, if any, buy more houses or hire employees. Soon we will look at everything in more detail, but in the meantime, you can still add that the map has 4 prison fields, 4 roulette fields, 4 neutral fields and 4 commercial fields, all other fields are fields available for purchase and development.
 
 <img src="./src/media/for readme/game.webp" width="100%" /><br/><br/>
 
@@ -47,7 +47,7 @@ If you land on an empty field and you have enough money to buy it, you will be p
 
 # Sell stocks
 
-You must be careful with this option. Because stocks are what bring you income every lap you complete. The more shares you have, the better, and vice versa, you can be left without passive income at all.
+You must be careful with this option. Because stocks are what bring you income every lap you complete. The more stocks you have, the better, and vice versa, you can be left without passive income at all.
 
 <img src="./src/media/for readme/sellStocks.webp" width="100%" /><br/><br/>
 
