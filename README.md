@@ -11,11 +11,12 @@ The idea to create this game was born on the wave of the confluence of two inter
 Since I'm only just getting into the backend part of web development, you can't play it online, only from one device and only from the desktop. In addition, despite the fact that its a rather large project, you can hardly find duplicate code. But nevertheless, I planned to implement the multiplayer feature somewhere in the middle or towards the end of development, which turned out to be a big mistake. Now I need to spend about a week to fix it, but I have other tasks ahead of me :) In general, the game is designed for two players.<br/><br/>
 As for the game engine, there is something to brag about. An application controls about 300 states, and as a rule, changing one state leads to changing several more. 79 rudusers in three slices are responsible for this.<br/><br/>
 As I developed, I learned a lot of new things for myself, firstly it's Redux Persist, so you don't have to worry about accidentally reloading the page or closing the tab, all states are saved in local storage. Secondly, I tried on sound design and learned how to control sounds in the application. At first I wanted to use a special library, but I realized that the standard tools are more than enough. There were also other new knowledge gained as a result of development. And how many errors I got and how much time I spent on solving them, you can only imagine, it was a wonderful experience. But no less important is that I gained experience and learned mistakes from the very preparation for the project and its design.<br/><br/>
-Design. Where relevant, I try to apply an approach known as "rubber design". Therefore, on any screen with a ratio of 16:9 or more, it looks good. This approach avoids multiple @media in CSS. By the way, not a single media query is used in the entire application. The "current-device" library is used once to prevent the application from being used from mobile devices. And once I change the state of the boolean variable based on the ratio of the width and height of the screen and show the corresponding modal window:
-  if (window.innerWidth / window.innerHeight < 1.55) {
-             setIsShownErrorModal(true);
-         }
-{device.type === "desktop" && isShownErrorModal && <ScreenErrorModal />}<br/>
+Design. Where relevant, I try to apply an approach known as "rubber design". Therefore, on any screen with a ratio of 16:9 or more, it looks good. This approach avoids multiple @media in CSS. By the way, not a single media query is used in the entire application. The "current-device" library is used once to prevent the application to being used with mobile devices. And once I change the state of the boolean variable based on the ratio of the width and height of the screen and show the corresponding modal window:<br/><br/>
+  if (window.innerWidth / window.innerHeight < 1.55) {<br/>
+             setIsShownErrorModal(true);<br/>
+         }<br/>
+{device.type === "desktop" && isShownErrorModal && \<ScreenErrorModal />}<br/>
+{device.type === "mobile" && \<MobileDeviceModal />}<br/><br/>
 Great, let's start reviewing the game itself, are you interested? :)
 
 # Main Menu
