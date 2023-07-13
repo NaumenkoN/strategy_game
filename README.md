@@ -4,7 +4,7 @@
 
 # How it was
 
-The idea to create this game was born on the wave of the confluence of two interests. Initially, during the lockdown due to covid-19, my friends and I constantly played Monopoly and often added our own rules to the game to make it more fun. At the same time, the idea was born to create ьн own board game, which was never realized. When I started learning web development, I was faced with the task of working out the skills of the Redux Toolkit. After thinking a little, I realized that such a game must manage a huge number of states and the logic of the game itself is not easy. It was a challenge. And so, two ideas merged into one and this game was created, completely from scratch, without using even a line of someone else's code. 
+The idea to create this game was born on the wave of the confluence of two interests. Initially, during the lockdown due to covid-19, my friends and I constantly played Monopoly and often added our own rules to the game to make it more fun. At the same time, the idea was born to create my own board game, which was never realized. When I started learning web development, I was faced with the task of working out the skills of the Redux Toolkit. After thinking a little, I realized that such a game must manage a huge number of states and the logic of the game itself is not easy. It was a challenge. And so, two ideas merged into one and this game was created, completely from scratch, without using even a line of someone else's code. 
 
 # About the development of this project
 
