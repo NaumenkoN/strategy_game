@@ -7,7 +7,12 @@
 }
 
 .control-buttons--group {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
 
@@ -17,6 +22,7 @@
     border-color: grey;
 }
 .active-buttons {
+    -webkit-box-shadow: 0 0 0 rgb(0, 0, 0) !important;
     box-shadow: 0 0 0 rgb(0, 0, 0) !important;
     background-color: grey !important;
 }
