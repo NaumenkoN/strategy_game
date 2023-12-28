@@ -80,8 +80,9 @@ In any, if the players are on the same field, a fight breaks out between them, t
 # Asset Management
 
 Last but not least is the asset management window. Here we can buy, sell, hire and fire employees.
+<img width="1680" alt="Снимок экрана 2023-12-28 в 13 56 46" src="https://github.com/NaumenkoN/strategy_game/assets/114875059/df4e392d-bca5-41fa-9cf3-7d327b6b72b3">
 
-<img src="./src/media/for readme/assetsManagement.webp" width="100%" /><br/><br/>
+<br/><br/>
 
 
 # Conclusion
