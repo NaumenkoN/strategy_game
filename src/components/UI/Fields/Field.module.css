@@ -1,5 +1,8 @@
 .field {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
     position: relative;
 
@@ -15,12 +18,16 @@
 
 /* houses */
 .list {
+    display: -ms-grid;
     display: grid;
     grid-template-areas:
         "1 2"
         "3 4";
     gap: 0;
+    -ms-flex-pack: distribute;
     justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     padding-left: 2.5vw;
 }
@@ -37,6 +44,7 @@
 /* commercial */
 
 .commercial {
+    display: -ms-grid;
     display: grid;
     grid-template-areas:
         "1 1"
@@ -47,6 +55,7 @@
 }
 
 .employees {
+    -ms-grid-row: 1;
     grid-area: 1;
     background-image: url("../../../media/employees.png");
     background-size: cover;
@@ -67,6 +76,7 @@
 }
 
 .engineer {
+    -ms-grid-row: 2;
     grid-area: 2;
     background-image: url("../../../media/engineer.png");
     background-size: cover;
@@ -79,6 +89,7 @@
 }
 
 .manager {
+    -ms-grid-row: 3;
     grid-area: 3;
     background-image: url("../../../media/manager.png");
     background-size: cover;
@@ -94,19 +105,23 @@
 
 .blue {
     background-color: rgb(143, 191, 245);
+    -webkit-box-shadow: 0 0 5px rgb(143, 191, 245);
     box-shadow: 0 0 5px rgb(143, 191, 245);
 }
 
 .green {
     background-color: rgb(122, 251, 46);
+    -webkit-box-shadow: 0 0 5px rgb(122, 251, 46);
     box-shadow: 0 0 5px rgb(122, 251, 46);
 }
 
 .dark-blue {
     background-color: rgb(8, 83, 169) !important;
+    -webkit-box-shadow: 0 0 5px rgb(8, 83, 169) !important;
     box-shadow: 0 0 5px rgb(8, 83, 169) !important;
 }
 .dark-green {
     background-color: rgb(47, 124, 3) !important;
+    -webkit-box-shadow: 0 0 5px rgb(47, 124, 3) !important;
     box-shadow: 0 0 5px rgb(47, 124, 3) !important;
 }
