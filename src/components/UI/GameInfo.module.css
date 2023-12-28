@@ -1,0 +1,89 @@
+.game-info {
+    grid-area: f;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 99.5%;
+    height: 99.15%;
+
+    margin-bottom: 0.2rem;
+}
+
+.control-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: -10vh;
+}
+
+.dices {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    border-radius: 8px;
+}
+
+.dice {
+    border-radius: 5px;
+    width: 4vw;
+    padding: 0.5vh 0.5vw;
+}
+
+.moove-button {
+    background-color: gold !important;
+    -webkit-box-shadow: -2px 0 15px rgb(250, 102, 10);
+    box-shadow: -2px 0 15px rgb(250, 102, 10);
+    font-family: "BreeSerif";
+    font-size: 2vh;
+    height: 7vh;
+    min-height: 4vh;
+    width: 12vw;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 7vh;
+}
+
+.main-menu {
+    background-color: gold;
+    -webkit-box-shadow: -2px 0 15px rgb(250, 102, 10);
+    box-shadow: -2px 0 15px rgb(250, 102, 10);
+    font-family: "BreeSerif";
+    font-size: 1vw;
+    height: 4vh;
+    min-height: 4%;
+    width: 40%;
+    border-radius: 8px;
+    border: none;
+    margin-top: 1vh;
+}
+
+.moove-button:hover {
+    background-color: rgb(222, 189, 2) !important;
+}
+.moove-button:active {
+    background-color: rgb(255, 217, 0) !important;
+}
+.main-menu:hover {
+    background-color: rgb(222, 189, 2) !important;
+}
+.main-menu:active {
+    background-color: rgb(255, 217, 0) !important;
+}
