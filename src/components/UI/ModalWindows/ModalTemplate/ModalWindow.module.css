@@ -4,6 +4,7 @@
     height: 25vw;
     background-color: black;
     border: 2px solid white;
+    -webkit-box-shadow: 0 0 10px white;
     box-shadow: 0 0 10px white;
     border-radius: 6px;
     position: fixed;
@@ -12,7 +13,19 @@
 }
 
 .animation-bums {
+    -webkit-animation: appear 300ms ease-out;
     animation: appear 300ms ease-out;
+}
+@-webkit-keyframes appear {
+    0% {
+        scale: 0.2;
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100%;
+        scale: 1;
+    }
 }
 @keyframes appear {
     0% {
