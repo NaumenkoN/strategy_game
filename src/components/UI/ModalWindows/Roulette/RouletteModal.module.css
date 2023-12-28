@@ -16,6 +16,7 @@
     height: 4vw;
     font-size: 1.2vw;
     background-color: gold !important;
+    -webkit-box-shadow: -2px 0 15px rgb(250, 102, 10);
     box-shadow: -2px 0 15px rgb(250, 102, 10);
 }
 
@@ -32,15 +33,31 @@
     background-size: cover;
     background-color: transparent !important;
 
+    -webkit-animation: spin 6000ms;
+
     animation: spin 6000ms;
 }
 
-@keyframes spin {
+@-webkit-keyframes spin {
     0% {
+        -webkit-transform: rotateZ(0deg);
         transform: rotateZ(0deg);
     }
 
     100% {
+        -webkit-transform: rotateZ(360deg);
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotateZ(0deg);
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotateZ(360deg);
         transform: rotateZ(360deg);
     }
 }
