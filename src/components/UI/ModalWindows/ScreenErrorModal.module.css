@@ -6,6 +6,7 @@
     left: 0;
     z-index: 99;
     background-color: black;
+    -webkit-filter: blur(4px);
     filter: blur(4px);
 }
 
@@ -21,8 +22,10 @@
     margin: 0;
     padding: 0;
     z-index: 100;
+    -webkit-animation: fade 1500ms linear;
     animation: fade 1500ms linear;
     font-size: 2rem;
+    -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
 }
 
@@ -33,9 +36,24 @@
     position: absolute;
     margin: 40vh 25%;
     z-index: 100;
+    -webkit-animation: fade 1500ms linear;
     animation: fade 1500ms linear;
     font-size: 2rem;
+    -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 30%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
 }
 
 @keyframes fade {

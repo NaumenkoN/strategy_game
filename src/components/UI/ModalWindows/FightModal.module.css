@@ -24,6 +24,8 @@
     height: 3vw;
     background-color: gold;
     box-shadow: -2px 0 15px rgb(250, 102, 10);
+    -webkit-box-shadow: -2px 0 15px rgb(250, 102, 10);
+    box-shadow: -2px 0 15px rgb(250, 102, 10);
 }
 
 .run-button:hover {

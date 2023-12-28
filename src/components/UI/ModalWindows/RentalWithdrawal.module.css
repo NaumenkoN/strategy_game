@@ -15,15 +15,31 @@
 }
 
 .animation-downslide {
+    -webkit-animation: downslide 1000ms ease-out;
     animation: downslide 1000ms ease-out;
 }
 
-@keyframes downslide {
+@-webkit-keyframes downslide {
     0% {
+        -webkit-transform: translateY(-40px);
         transform: translateY(-40px);
         opacity: 0;
     }
     100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 100%;
+    }
+}
+
+@keyframes downslide {
+    0% {
+        -webkit-transform: translateY(-40px);
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
         transform: translateY(0);
         opacity: 100%;
     }
