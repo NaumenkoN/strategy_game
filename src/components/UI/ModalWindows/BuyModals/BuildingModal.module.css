@@ -11,7 +11,7 @@
 
 .modal {
     margin: 8vh 7.9vw !important;
-    width: 83vw !important;
+    width: 83.5vw !important;
     height: 83vh !important;
     position: fixed;
     z-index: 11;
@@ -26,7 +26,12 @@
 }
 
 .buttons-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
     flex-direction: row;
 }
 .building-fields {
